@@ -1,4 +1,4 @@
-﻿body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -27,32 +27,38 @@ header {
     position: relative;
     z-index: 1;
     opacity: 1;
-    transition: opacity 0.5s ease; /* Adjust the duration and timing function as needed */
+    transition: opacity 0.5s ease;
 }
 
-    .header-content img {
-        width: 100%; /* Make the image responsive to the container */
-    }
+.header-content img {
+    width: 100%;
+}
 
 .navbar {
     background-color: #666;
     padding: 0.5em;
 }
 
-    .navbar ul {
-        list-style: none;
-        padding: 0;
-    }
+.navbar ul {
+    list-style: none;
+    padding: 0;
+}
 
-    .navbar li {
-        display: inline;
-        margin-right: 10px;
-    }
+.navbar li {
+    display: inline;
+    margin-right: 10px;
+}
 
-    .navbar a {
-        color: #fff; /* Change the link color to white */
-        text-decoration: none;
-    }
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Add dividers between navbar items */
+.navbar li:not(:last-child) {
+    border-right: 1px solid #fff;
+    padding-right: 10px;
+}
 
 #featured-posts {
     max-width: 800px;
@@ -61,7 +67,7 @@ header {
     background-color: #000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     opacity: 1;
-    transition: opacity 0.5s ease; /* Adjust the duration and timing function as needed */
+    transition: opacity 0.5s ease;
 }
 
 footer {
@@ -75,9 +81,9 @@ footer {
     opacity: 1;
 }
 
-    .fade-on-scroll.fade {
-        opacity: 0.5;
-    }
+.fade-on-scroll.fade {
+    opacity: 0.5;
+}
 
 /* Set a max-width for all images in the body */
 body img {
@@ -93,8 +99,8 @@ body img {
     box-sizing: border-box;
 }
 
-    .video-container iframe {
-        width: 100%;
-        height: auto;
-        max-height: 100vh; /* Adjust the maximum height as needed */
-    }
+.video-container iframe {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+}
