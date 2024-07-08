@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -9,11 +9,11 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             flex-wrap: wrap;
         }
 
         section {
-            flex: 1;
             margin: 10px;
             box-sizing: border-box;
         }
@@ -28,9 +28,9 @@
             justify-content: space-between;
         }
 
-            .columns section {
-                flex-basis: calc(50% - 20px);
-            }
+        .columns section {
+            flex-basis: calc(50% - 20px);
+        }
 
         .banner {
             background-color: #808080;
@@ -47,30 +47,29 @@
     <div class="banner">
         <h1>Personal Life</h1>
     </div>
-    <section>
-        <h2>Early Life</h2>
-        <p>
-            Born in Paris, France, I quickly moved to the United States at the young age of 2. After three years, I moved back to Paris. After three more years, I returned to the US. After Three more years, I moved to London. After only one year, I moved to Boulder, Colorado and have been in the state ever since. Living between these two worlds, I was given an opportunity to understand how people change around our planet.
-        </p>
-    </section>
+    <div class="columns">
+        <section>
+            <h2>Early Life</h2>
+            <p>
+                Born in Paris, France, I quickly moved to the United States at the young age of 2. After three years, I moved back to Paris. After three more years, I returned to the US. After Three more years, I moved to London. After only one year, I moved to Boulder, Colorado and have been in the state ever since. Living between these two worlds, I was given an opportunity to understand how people change around our planet.
+            </p>
+        </section>
+
+        <section>
+            <h2>Chef's Life</h2>
+            <p>
+                While living in Boulder I worked at multiple different restaurants, but one of these restaurants made a huge impact on my professional life. I worked as a Garm Chef at a restaurant called Pizzeria Locale, or now, Pizzeria Alberico. This was such a life changing experience because during my time there, I had the chance to be guided by chefs at Pizzeria Alberico’s sister restaurant. These chefs changed the way I now see food, the way I see any tedious task, and the way I interact with coworkers. This sister restaurant, Frasca Food and Wine, is now the only place in Boulder to have earned a Michelin Star. Being able to work in this professional environment during my high school career was really what made me realize that through hard work, we can achieve great things.
+            </p>
+        </section>
+    </div>
 
     <section>
-        <h2>Chef's Life</h2>
-        <p>
-            While living in Boulder I worked at multiple different restaurants, but one of these restaurants made a huge impact on my professional life. I worked as a Garm Chef at a restaurant called Pizzeria Locale, or now, Pizzeria Alberico. This was such a life changing experience because during my time there, I had the chance to be guided by chefs at Pizzeria Alberico’s sister restaurant. These chefs changed the way I now see food, the way I see any tedious task, and the way I interact with coworkers. This sister restaurant, Frasca Food and Wine, is now the only place in Boulder to have earned a Michelin Star. Being able to work in this professional environment during my high school career was really what made me realize that through hard work, we can achieve great things.
-        </p>
-    </section>
-
-    
-
-   
         <h2>Precision Driving</h2>
         <p>
             I also have a deep love for cars and precision driving. I am currently working with a mechanic in Loveland to LS swap my track car. This car has been stripped and modified to compete in drifting competitions. I have spent many hours at the track practicing my driving skills in order to be able to compete during the summers. I am hoping that this is the year I finally get a sponsor so I can focus on driving and not have to worry about my car breaking all the time.
         </p>
+        <img src="IMG_g35.jpg" alt="g35">
     </section>
-
-<img src="IMG_g35.jpg" alt="g35">
 
 </body>
 
