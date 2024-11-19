@@ -1,213 +1,108 @@
-/* General Styling */
-body {
-    font-family: 'Arial', sans-serif;
+/* Reset default margins and paddings */
+* {
     margin: 0;
     padding: 0;
-    background-color: #111;
-    color: #f0f0f0;
-    line-height: 1.6;
-    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
-/* Header */
-header {
-    background: rgba(0, 0, 0, 0.8);
+body {
+    font-family: Arial, sans-serif;
     color: #fff;
-    padding: 2em 0.5em;
-    position: relative;
+    background-color: #000;
+    line-height: 1.6;
+}
+
+/* Sticky header and navbar */
+.sticky-header, .sticky-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 10;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 0;
     text-align: center;
-    border-bottom: 3px solid #333;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.5rem;
+.sticky-header h1, .sticky-header p {
+    margin: 5px 0;
 }
 
-header p {
-    font-size: 1.2rem;
-    margin-top: 0.5em;
-}
-
-/* Navbar */
-.navbar {
-    background: #333;
-    padding: 1em 1em;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    margin-bottom: 2em;
-}
-
-.navbar ul {
+.sticky-navbar ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     justify-content: center;
-    gap: 1.5em;
+    background-color: #333;
 }
 
-.navbar a {
+.sticky-navbar li {
+    margin: 0 15px;
+}
+
+.sticky-navbar a {
     color: #fff;
     text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s, color 0.3s;
-    padding: 0.5em 1em;
-}
-
-.navbar a:hover {
-    color: #1e90ff;
-    background: #444;
+    padding: 5px 10px;
     border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-/* Banner Image */
-.banner-image {
+.sticky-navbar a:hover {
+    background-color: #555;
+}
+
+/* Background image for the header */
+.background-image {
     width: 100%;
-    max-height: 80vh;
-    object-fit: cover;
+    height: 100vh;
     position: relative;
-    z-index: 1;
+    overflow: hidden;
 }
 
-.header-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
+.background-image img {
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2;
+    object-fit: cover;
 }
 
-/* Section Styling */
+/* Main content section */
 #featured-posts {
-    max-width: 900px;
-    margin: 2em auto;
+    background-color: #222;
     padding: 2em;
-    background: #222;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-    position: relative;
-    z-index: 3;
+    margin-top: 100vh; /* Start after the background image */
 }
 
 .content-box {
-    margin-bottom: 3em;
-    padding: 2em;
     background: #333;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    border: 2px solid #444;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .content-box h2 {
-    color: #1e90ff;
-    margin-top: 0;
+    margin-bottom: 10px;
 }
 
 .content-box p {
-    margin: 1em 0;
+    margin-bottom: 15px;
 }
 
-.read-more {
-    display: inline-block;
-    margin-top: 1em;
+.content-box .read-more {
     color: #1e90ff;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
 }
 
-.read-more:hover {
-    color: #f0f0f0;
-}
-
-/* Content Images */
-.content-image {
-    width: 100%;
-    margin: 2em 0;
-    border-radius: 10px;
-    border: 2px solid #444;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease;
-}
-
-.content-image:hover {
-    transform: scale(1.05);
+.content-box .read-more:hover {
+    text-decoration: underline;
 }
 
 /* Footer */
 footer {
-    background: #222;
-    color: #ccc;
-    padding: 2em 0;
-    margin-top: 2em;
-    border-top: 3px solid #444;
-}
-
-footer a {
-    color: #1e90ff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-footer a:hover {
-    color: #f0f0f0;
-    text-decoration: underline;
-}
-
-/* Fade-on-scroll effect */
-.fade-on-scroll {
-    opacity: 1;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.fade-on-scroll.fade {
-    opacity: 0.5;
-    transform: translateY(10%);
-}
-
-/* Larger Spacing Between Images */
-.content-image {
-    margin: 3em 0;
-}
-
-/* Scroll Effect on Overlay */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-body.scrolled::before {
-    opacity: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2rem;
-    }
-
-    header p {
-        font-size: 1rem;
-    }
-
-    .navbar ul {
-        flex-direction: column;
-        gap: 1em;
-    }
-
-    .content-box {
-        padding: 1.5em;
-    }
+    text-align: center;
+    padding: 1em;
+    background-color: #000;
+    color: #fff;
 }
