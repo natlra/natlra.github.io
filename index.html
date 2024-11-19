@@ -8,48 +8,73 @@
 </head>
 <body>
 
-<header class="sticky-header">
+<header>
     <h1>Nathan Abecassis</h1>
     <p>Colorado State University - Mechanical Engineering Student</p>
 </header>
 
-<nav class="navbar sticky-navbar">
-    <ul>
-        <li><a href="#featured-posts">Mech 200 Projects</a></li>
-        <li><a href="HTMLPersonal Life.html">Personal Life</a></li>
-        <li><a href="HTML2048.html">2048 MINI GAME</a></li>
-    </ul>
-</nav>
+<div class="header-overlay"></div>
 
-<div class="background-image">
-    <img src="PXL_20231203_231340750.jpg" alt="Horsetooth">
+<div class="header-content fade-on-scroll">
+    <nav class="navbar">
+        <ul>
+            <li><a href="#" onclick="scrollToSection('featured-posts')">Mech 200 Projects</a></li>
+            <li><a href="HTMLPersonal Life.html">Personal Life</a></li>
+            <li><a href="HTML2048.html">2048 MINI GAME</a></li>
+        </ul>
+    </nav>
+
+    <img src="PXL_20231203_231340750.jpg" alt="Horsetooth" class="banner-image">
+
+    <section id="featured-posts" class="fade-on-scroll">
+        <article class="content-box">
+            <h2>Clock Project</h2>
+            <p>Dive into the most intense project in Mech 200.</p>
+            <a href="HTMLclock1.html" class="read-more">Read more</a>
+        </article>
+
+        <img src="PXL_clock3.1.jpg" alt="Clock" class="content-image">
+
+        <article class="content-box">
+            <h2>Coaster Project</h2>
+            <p>HAAS CNC certification.</p>
+            <a href="HTMLCoaster.html" class="read-more">Read more</a>
+        </article>
+
+        <img src="PXL_20231211_194152822.jpg" alt="Coaster" class="content-image">
+
+        <article class="content-box">
+            <h2>Screwdriver Project</h2>
+            <p>End of year project.</p>
+            <a href="HTMLscrewdriver.html" class="read-more">Read more</a>
+        </article>
+
+        <img src="PXL_20231211_194352302.jpg" alt="Screwdriver" class="content-image">
+    </section>
+
+    <footer class="fade-on-scroll">
+        <p>
+            <a href="https://www.linkedin.com/in/nathan-abecassis-8146482a3/" target="_blank">LinkedIn</a>
+        </p>
+        <p>
+            <a href="https://www.thingiverse.com/natlra/designs" target="_blank">Thingiverse</a>
+        </p>
+    </footer>
 </div>
 
-<section id="featured-posts">
-    <article class="content-box">
-        <h2>Clock Project</h2>
-        <p>Dive into the most intense project in Mech 200.</p>
-        <a href="HTMLclock1.html" class="read-more">Read more</a>
-    </article>
-
-    <article class="content-box">
-        <h2>Coaster Project</h2>
-        <p>HAAS CNC certification.</p>
-        <a href="HTMLCoaster.html" class="read-more">Read more</a>
-    </article>
-
-    <article class="content-box">
-        <h2>Screwdriver Project</h2>
-        <p>End of year project.</p>
-        <a href="HTMLscrewdriver.html" class="read-more">Read more</a>
-    </article>
-</section>
-
-<footer>
-    <p><a href="https://www.linkedin.com/in/nathan-abecassis-8146482a3/" target="_blank">LinkedIn</a></p>
-    <p><a href="https://www.thingiverse.com/natlra/designs" target="_blank">Thingiverse</a></p>
-</footer>
-
 <script src="JavaScript200blog.js"></script>
+
+<script>
+    function scrollToSection(sectionId) {
+        var section = document.getElementById(sectionId);
+        if (section) {
+            window.scrollTo({
+                top: section.offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    }
+</script>
+
 </body>
 </html>
