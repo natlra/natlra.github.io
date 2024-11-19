@@ -1,4 +1,4 @@
-/* Reset default margins and paddings */
+/* General Reset */
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +10,7 @@ body {
     color: #fff;
     background-color: #000;
     line-height: 1.6;
+    scroll-behavior: smooth; /* Adds smooth scrolling for anchor links */
 }
 
 /* Header styling */
@@ -39,7 +40,7 @@ body {
 /* Navbar styling */
 .navbar {
     position: fixed;
-    top: 80px; /* Adjust this value based on the header height */
+    top: 80px; /* Adjust to create spacing between header and navbar */
     left: 0;
     width: 100%;
     z-index: 10;
@@ -72,7 +73,7 @@ body {
     background-color: #555;
 }
 
-/* Background image for the header */
+/* Background image */
 .background-image {
     width: 100%;
     height: 100vh;
@@ -100,6 +101,7 @@ body {
     margin: 20px 0;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
 }
 
 .content-box h2 {
@@ -110,12 +112,28 @@ body {
     margin-bottom: 15px;
 }
 
-.content-box .read-more {
+/* Styling for images in featured posts */
+.content-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Read more link styling */
+.read-more {
     color: #1e90ff;
     text-decoration: none;
 }
 
-.content-box .read-more:hover {
+.read-more:hover {
     text-decoration: underline;
 }
 
@@ -125,4 +143,14 @@ footer {
     padding: 1em;
     background-color: #000;
     color: #fff;
+}
+
+/* Fade effect on scroll */
+.fade-on-scroll.fade {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.fade-on-scroll {
+    opacity: 1;
 }
