@@ -38,10 +38,10 @@ body {
     color: #ccc;
 }
 
-/* Navbar styling */
+/* Fixed Navbar styling */
 .navbar {
-    position: sticky;
-    top: 70px; /* Sticky below the header */
+    position: fixed; /* Navbar remains static */
+    top: 70px; /* Below the header */
     left: 0;
     width: 100%;
     z-index: 15;
@@ -80,6 +80,7 @@ body {
     height: 100vh;
     position: relative;
     overflow: hidden;
+    margin-top: 120px; /* Ensure content starts below fixed navbar */
 }
 
 .background-image img {
