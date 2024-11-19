@@ -37,9 +37,9 @@ body {
 }
 
 /* Navbar styling */
-.sticky-navbar {
+.navbar {
     position: fixed;
-    top: 120px; /* Positioned below the header */
+    top: 80px; /* Adjust this value based on the header height */
     left: 0;
     width: 100%;
     z-index: 10;
@@ -48,7 +48,7 @@ body {
     padding: 10px 0;
 }
 
-.sticky-navbar ul {
+.navbar ul {
     list-style: none;
     display: flex;
     justify-content: center;
@@ -56,11 +56,11 @@ body {
     margin: 0;
 }
 
-.sticky-navbar li {
+.navbar li {
     margin: 0 15px;
 }
 
-.sticky-navbar a {
+.navbar a {
     color: #fff;
     text-decoration: none;
     padding: 5px 10px;
@@ -68,7 +68,7 @@ body {
     transition: background-color 0.3s;
 }
 
-.sticky-navbar a:hover {
+.navbar a:hover {
     background-color: #555;
 }
 
@@ -78,7 +78,7 @@ body {
     height: 100vh;
     position: relative;
     overflow: hidden;
-    margin-top: 120px; /* Leaves space for header and navbar */
+    margin-top: 140px; /* Leaves space for header and navbar */
 }
 
 .background-image img {
