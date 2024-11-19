@@ -15,7 +15,7 @@
 
 <nav class="navbar">
     <ul>
-        <li><a href="#" onclick="scrollToSection('featured-posts')">Mech 200 Projects</a></li>
+        <li><a href="#featured-posts">Mech 200 Projects</a></li>
         <li><a href="HTMLPersonal Life.html">Personal Life</a></li>
         <li><a href="HTML2048.html">2048 MINI GAME</a></li>
     </ul>
@@ -28,27 +28,21 @@
 <section id="featured-posts">
     <article class="content-box">
         <h2>Clock Project</h2>
-        <a href="HTMLclock1.html">
-            <img src="PXL_clock3.1.jpg" alt="Clock Project" class="content-image">
-        </a>
+        <img src="PXL_clock3.1.jpg" alt="Clock Project" class="content-image">
         <p>Dive into the most intense project in Mech 200.</p>
         <a href="HTMLclock1.html" class="read-more">Read more</a>
     </article>
 
     <article class="content-box">
         <h2>Coaster Project</h2>
-        <a href="HTMLCoaster.html">
-            <img src="PXL_20231211_194152822.jpg" alt="Coaster Project" class="content-image">
-        </a>
+        <img src="PXL_20231211_194152822.jpg" alt="Coaster Project" class="content-image">
         <p>HAAS CNC certification.</p>
         <a href="HTMLCoaster.html" class="read-more">Read more</a>
     </article>
 
     <article class="content-box">
         <h2>Screwdriver Project</h2>
-        <a href="HTMLscrewdriver.html">
-            <img src="PXL_20231211_194352302.jpg" alt="Screwdriver Project" class="content-image">
-        </a>
+        <img src="PXL_20231211_194352302.jpg" alt="Screwdriver Project" class="content-image">
         <p>End of year project.</p>
         <a href="HTMLscrewdriver.html" class="read-more">Read more</a>
     </article>
@@ -59,42 +53,6 @@
     <p><a href="https://www.thingiverse.com/natlra/designs" target="_blank">Thingiverse</a></p>
 </footer>
 
-<script>
-    // Scroll to specific section smoothly
-    function scrollToSection(sectionId) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            window.scrollTo({
-                top: section.offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-    // Add fade effect and overlay fade-out on scroll
-    document.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY; // Current scroll position
-        const body = document.body;
-
-        // Fade out header overlay after scrolling
-        if (scrollPosition > 50) {
-            body.classList.add('scrolled');
-        } else {
-            body.classList.remove('scrolled');
-        }
-
-        // Fade elements dynamically as they enter/leave the viewport
-        const fadeElements = document.querySelectorAll('.fade-on-scroll');
-        fadeElements.forEach(element => {
-            const rect = element.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                element.classList.remove('fade'); // Bring into full view
-            } else {
-                element.classList.add('fade'); // Dim when out of view
-            }
-        });
-    });
-</script>
-
+<script src="JavaScript200blog.js"></script>
 </body>
 </html>
