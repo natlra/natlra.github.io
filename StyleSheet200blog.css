@@ -41,7 +41,7 @@ body {
 /* Navbar styling */
 .navbar {
     position: sticky;
-    top: 60px; /* Sticky below the header */
+    top: 70px; /* Sticky below the header */
     left: 0;
     width: 100%;
     z-index: 15;
