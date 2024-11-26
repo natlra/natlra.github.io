@@ -41,7 +41,7 @@ body {
 /* Fixed Navbar styling */
 .navbar {
     position: fixed; /* Navbar remains static */
-    top: 0; /* Below the header */
+    top: 70px; /* Below the header */
     left: 0;
     width: 100%;
     z-index: 21; /* Ensure it's higher than .sticky-header's z-index */
