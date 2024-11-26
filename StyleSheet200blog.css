@@ -108,9 +108,8 @@ p {
     z-index: 1;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     margin-top: calc(115px + 2em); /* Adjust the space to prevent overlap with the navbar */
-    scroll-margin-top: 115px; /* Ensure the section aligns well when scrolling */
+    scroll-margin-top: 115px; /* Ensures the section aligns well when scrolling */
 }
-
 /* Content Box Styling */
 .content-box {
     background: #444;
