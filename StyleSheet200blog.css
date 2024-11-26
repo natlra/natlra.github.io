@@ -80,7 +80,7 @@ body {
     height: 100vh;
     position: relative;
     overflow: hidden;
-    margin-top: 120px; /* Ensure content starts below fixed navbar */
+    margin-top: 0; /* Ensure content starts below fixed navbar */
 }
 
 .background-image img {
