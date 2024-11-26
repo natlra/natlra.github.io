@@ -15,7 +15,7 @@ body {
 
 /* Sticky Header */
 .sticky-header {
-    position: sticky;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -44,7 +44,7 @@ body {
     top: 0; /* Below the header */
     left: 0;
     width: 100%;
-    z-index: 100; /* Ensure it's higher than .sticky-header's z-index */
+    z-index: 21; /* Ensure it's higher than .sticky-header's z-index */
     background-color: #333;
     border-bottom: 2px solid #444;
     padding: 10px 0;
