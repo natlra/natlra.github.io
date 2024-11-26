@@ -19,7 +19,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 20;
+    z-index: 100;
     background-color: rgba(0, 0, 0, 0.9);
     text-align: center;
     padding: 10px 0;
@@ -44,7 +44,7 @@ body {
     top: 0; /* Below the header */
     left: 0;
     width: 100%;
-    z-index: 21; /* Ensure it's higher than .sticky-header's z-index */
+    z-index: 100; /* Ensure it's higher than .sticky-header's z-index */
     background-color: #333;
     border-bottom: 2px solid #444;
     padding: 10px 0;
