@@ -47,7 +47,7 @@ p {
 /* Fixed Navbar styling */
 .navbar {
     position: fixed;
-    top: 115px;
+    top: 115px; /* Adjust this based on the height of the sticky header */
     left: 0;
     width: 100%;
     z-index: 21;
@@ -107,8 +107,8 @@ p {
     max-width: 800px;
     z-index: 1;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    /* Ensure it doesn't overlap header and navbar */
-    margin-top: calc(115px + 2em);
+    margin-top: calc(115px + 2em); /* Adjust the space to prevent overlap with the navbar */
+    scroll-margin-top: 115px; /* Ensure the section aligns well when scrolling */
 }
 
 /* Content Box Styling */
@@ -187,5 +187,5 @@ footer p {
 
 footer a img {
     width: auto;
-    height: 120px;
+    height: 240px;
 }
