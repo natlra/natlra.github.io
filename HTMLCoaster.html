@@ -5,38 +5,54 @@
     <title>Coaster Project</title>
     <link rel="stylesheet" href="StyleSheet200blog.css">
     <style>
-      body {
+   body {
     display: flex;
-    flex-direction: column; /* Stack all sections vertically */
+    flex-direction: column; /* Stack sections vertically */
     align-items: center; /* Center content horizontally */
     margin: 0;
     padding: 0;
 }
 
+header {
+    background-color: #808080;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}
+
 section {
-    width: 80%; /* Adjust the width for the sections */
+    width: 70%; /* Adjust the width of the sections */
     margin: 10px 0;
     box-sizing: border-box;
 }
 
 img {
     width: 100%;
+    margin: 10px 0;
 }
 
-/* Video container will be positioned to the side with fixed width */
+/* Wrap the content and the video together in a row */
+.content-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Video container to be on the side */
 .video-container {
-    width: 30%; /* Adjust the width of the video container */
+    width: 30%; /* Adjust width to make the video visible */
     margin: 10px;
     box-sizing: border-box;
-    align-self: flex-start; /* Position the video to the left */
 }
 
+/* Ensure iframe takes the full width and maintains aspect ratio */
 .video-container iframe {
     width: 100%;
-    height: auto;
+    height: 300px; /* Set a reasonable height */
 }
 
-/* Adjust styling for the content */
+/* Style for headings */
 h2 {
     font-size: 1.5em;
     margin-bottom: 0.5em;
@@ -48,24 +64,11 @@ p {
     margin-bottom: 1em;
 }
 
-header {
-    background-color: #808080;
-    padding: 10px;
-    text-align: center;
-    color: #fff;
-}
-
 footer {
     text-align: center;
     padding: 1.5em;
     background-color: #000;
     color: #fff;
-}
-
-/* Adjust image style for the coasters */
-img {
-    display: block;
-    margin: 10px 0;
 }
 
     </style>
