@@ -168,8 +168,13 @@ footer {
     font-size: 1.2em; /* Increase footer font size */
 }
 
-/* Centering the images inside the footer */
+/* Centering the images inside the footer and making them three times larger */
 footer p {
     display: inline-block; /* Make the paragraph inline-block to allow alignment */
     margin: 0 15px; /* Add margin to the sides of each logo */
+}
+
+footer a img {
+    width: 120px; /* Increase image size to 120px (3x from original 40px) */
+    height: auto; /* Maintain aspect ratio */
 }
