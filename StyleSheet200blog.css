@@ -11,6 +11,12 @@ body {
     background-color: #000;
     line-height: 1.6;
     scroll-behavior: smooth;
+    font-size: 1.1em; /* Adjust this value to slightly increase overall font size */
+}
+
+/* Paragraph font size adjustment */
+p {
+    font-size: 1.2em; /* Adjust this value to your desired size */
 }
 
 /* Sticky Header */
@@ -27,13 +33,13 @@ body {
 }
 
 .sticky-header h1 {
-    font-size: 1.8em;
+    font-size: 2em; /* Increase header size */
     margin: 0;
     color: #fff;
 }
 
 .sticky-header p {
-    font-size: 1em;
+    font-size: 1.2em; /* Increase paragraph size in sticky header */
     margin: 5px 0 0;
     color: #ccc;
 }
@@ -41,7 +47,7 @@ body {
 /* Fixed Navbar styling */
 .navbar {
     position: fixed; /* Navbar remains static */
-    top: 95px; /* Below the header */
+    top: 115px; /* Below the header */
     left: 0;
     width: 100%;
     z-index: 21; /* Ensure it's higher than .sticky-header's z-index */
@@ -59,13 +65,13 @@ body {
 }
 
 .navbar li {
-    margin: 0 15px;
+    margin: 0 20px; /* Slightly increase spacing */
 }
 
 .navbar a {
     color: #fff;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: 5px 12px; /* Slightly larger padding */
     border-radius: 5px;
     transition: background-color 0.3s;
 }
@@ -94,24 +100,26 @@ body {
 /* Main content section */
 #featured-posts {
     background-color: #222;
-    padding: 2em;
+    padding: 2.5em; /* Increase padding slightly */
 }
 
 .content-box {
     background: #333;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 25px; /* Slightly increase padding */
+    margin: 25px 0; /* Increase margin */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
 .content-box h2 {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.8em; /* Increase heading size */
 }
 
 .content-box p {
     margin-bottom: 15px;
+    font-size: 1.3em; /* Increase paragraph font size in content box */
 }
 
 /* Styling for images in featured posts */
@@ -135,6 +143,7 @@ body {
 .read-more {
     color: #1e90ff;
     text-decoration: none;
+    font-size: 1.1em; /* Slightly increase font size of "read more" */
 }
 
 .read-more:hover {
@@ -149,10 +158,12 @@ img {
     height: auto; /* Maintains aspect ratio */
     object-fit: cover; /* Ensures the image covers the entire area */
 }
+
 /* Footer */
 footer {
     text-align: center;
-    padding: 1em;
+    padding: 1.5em; /* Increase footer padding */
     background-color: #000;
     color: #fff;
+    font-size: 1.2em; /* Increase footer font size */
 }
