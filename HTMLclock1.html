@@ -1,10 +1,73 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <title>Clock Project</title>
-    <link rel="stylesheet" href="StyleSheet200blog.css">
+    
+   <style>
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background-color: #000;
+    line-height: 1.6;
+    font-size: 1.1em;
+}
+
+/* Paragraph font size adjustment */
+p {
+    font-size: 1.2em;
+}
+
+/* Styling for images in sections */
+.image-container {
+    position: relative;
+    margin: 20px 0;
+    border: 3px solid #fff;  /* Small border between images */
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Overlay content styling */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.overlay h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.overlay p {
+    font-size: 1.2em;
+}
+
+/* Hover effect to reveal paragraph over images */
+.image-container:hover .overlay {
+    opacity: 1;
+}
+</style>
 </head>
 <body>
     <header>
@@ -15,94 +78,33 @@
     </header>
 
     <section>
-        <div style="background-color: #333; padding: 10px; text-align: center; color: #fff;">
-            <h2>Project Overview</h2>
+        <div class="image-container">
+            <img src="PXL_clock1.1.jpg" alt="clock1">
+            <div class="overlay">
+                <h2>Project Overview</h2>
+                <p>This page provides an overview of the Clock Project, an exciting initiative focused on learning the basic controls of manual lathes and mills.</p>
+            </div>
         </div>
-        <p>This page provides an overview of the Clock Project, an exciting initiative focused on learning the basic controls of manual lathes and mills.</p>
-    </section>
-
-<img src="PXL_clock1.1.jpg" alt="clock1">
-    <section>
-        <div style="background-color: #333; padding: 10px; text-align: center; color: #fff;">
-            <h2>About</h2>
-        </div>
-        <p>The Clock Project is arguably the most challenging project in Mech 200. This project consists of producing four different parts that go together to build a clock. The clock is made up of an aluminum base, a brass pen/pencil holder, a steel pen/pencil holder, a plastic clock face and the clock assembly. Each piece is manufactured with very tight dimension tolerances and requires you to really think before you preform any operation. </p>
     </section>
 
     <section>
-        <div style="background-color: #333; padding: 10px; text-align: center; color: #fff;">
-            <h2>Features</h2>
+        <div class="image-container">
+            <img src="PXL_clock2.1.jpg" alt="clock2">
+            <div class="overlay">
+                <h2>About</h2>
+                <p>The Clock Project is arguably the most challenging project in Mech 200. This project consists of producing four different parts that go together to build a clock...</p>
+            </div>
         </div>
-        <p>Each clock part has to be manufactured with the correct machine and tooling. Some of these include:</p>
-        <ul>
-            <li>Pen/Pencil Holders: Manual Lathe</li>
-            <li>Aluminum Base: Vertical Mill</li>
-            <li>Plastic Face: Bandsaw </li>
-            <li>Finishing touches: Tumbler and Bead blaster</li>
-        </ul>
-    </section>
-
-<img src="PXL_clock2.1.jpg" alt="clock2">
-    <section>
-        <div style="background-color: #333; padding: 10px; text-align: center; color: #fff;">
-            <h2>Importance of Metrology</h2>
-        </div>
-        <p>While completing this project, it is extremely important to remember to use different metrology techniques while measuring. This will make it much easier to achieve constant dimensions that are within tolerance. </p>
     </section>
 
     <section>
-        <div style="background-color: #333; padding: 10px; text-align: center; color: #fff;">
-            <h2>Cost Estimate</h2>
+        <div class="image-container">
+            <img src="PXL_clock3.1.jpg" alt="clock3">
+            <div class="overlay">
+                <h2>Other Comments</h2>
+                <p>The clock was a very challenging project that put my manufacturing abilities to the test...</p>
+            </div>
         </div>
-        <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes. A detailed cost estimate ensures effective project budgeting and resource allocation.</p>
-        <ul>
-            <li>Aluminum Raw Stock: $10.27 </li>
-            <li>Steel Raw Stock: $2.40</li>
-            <li>Brass Raw Stock: $8.95 </li>
-            <li>Plastic Face: $5.85</li>
-            <li>Total Material Cost: $27.47</li>
-            <li>Labor Cost: $24.77 x ~22 hours = $544.94 </li>
-            <li>Total Individual Clock Cost: $572.41 </li>
-        </ul>
-    </section>
-
-    <section>
-        <div style="background-color: #333; padding: 10px; text-align: center; color: #fff;">
-            <h2>Reducing Manufacturing Costs</h2>
-        </div>
-        <p>Efficient manufacturing practices can help reduce costs. Consider the following strategies when manufacturing these clocks at a large scale:</p>
-        <ul>
-            <li>Utilization of CNC machining.</li>
-            <li>Generate G-code for Aluminium base and both pen/pencil holders so they can be manufactured using CNC technology.</li>
-            <li>Buy bulk raw stock to reduce individual material cost.</li>
-            <li>Try and match demand curve with supply.</li>
-        </ul>
-    </section>
-
-    <section>
-        <div style="background-color: #333; padding: 10px; text-align: center; color: #fff;">
-            <h2>Cost Estimate</h2>
-        </div>
-        <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes.</p>
-        <ul>
-            <li>Material Cost Reduces ~10% when buying bulk</li>
-            <li>New Material Cost: $24.73.</li>
-            <li>CNC Operation Cost: $24.77 x ~2.5 hours = $61.93 </li>
-            <li>New Individual Manufacturing Cost: $86.66</li>
-            <li>Manufacturing Cost x 10,000: $866,600</li>
-            <li>One Time Cost; CNC G-code: 24.77 x 3.5 hours = $68.70</li>
-            <li>Total Cost to Manufacture 10,000 clocks: $866,686.70</li>
-
-        </ul>
-    </section>
-
-<img src="PXL_clock3.1.jpg" alt="clock3">
-    <section>
-        <h2>Other Comments</h2>
-        <p>
-            The clock was a very challenging project that put my manufacturing abilities to the test. My only issue with this project is that it is extremely difficult to operate machines with such precision with no prior experience. This project forced me to concentrate on every single movement on the machine and helped me understand how to achieve such precision and accuracy while using manual machinery.
-        </p>
     </section>
 </body>
 </html>
-
