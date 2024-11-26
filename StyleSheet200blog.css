@@ -161,9 +161,15 @@ img {
 
 /* Footer */
 footer {
-    text-align: center;
+    text-align: center; /* Ensures footer content is centered */
     padding: 1.5em; /* Increase footer padding */
     background-color: #000;
     color: #fff;
     font-size: 1.2em; /* Increase footer font size */
+}
+
+/* Centering the images inside the footer */
+footer p {
+    display: inline-block; /* Make the paragraph inline-block to allow alignment */
+    margin: 0 15px; /* Add margin to the sides of each logo */
 }
