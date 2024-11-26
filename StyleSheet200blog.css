@@ -11,12 +11,12 @@ body {
     background-color: #000;
     line-height: 1.6;
     scroll-behavior: smooth;
-    font-size: 1.1em; /* Adjust this value to slightly increase overall font size */
+    font-size: 1.1em;
 }
 
 /* Paragraph font size adjustment */
 p {
-    font-size: 1.2em; /* Adjust this value to your desired size */
+    font-size: 1.2em;
 }
 
 /* Sticky Header */
@@ -33,24 +33,24 @@ p {
 }
 
 .sticky-header h1 {
-    font-size: 2em; /* Increase header size */
+    font-size: 2em;
     margin: 0;
     color: #fff;
 }
 
 .sticky-header p {
-    font-size: 1.2em; /* Increase paragraph size in sticky header */
+    font-size: 1.2em;
     margin: 5px 0 0;
     color: #ccc;
 }
 
 /* Fixed Navbar styling */
 .navbar {
-    position: fixed; /* Navbar remains static */
-    top: 115px; /* Below the header */
+    position: fixed;
+    top: 115px;
     left: 0;
     width: 100%;
-    z-index: 21; /* Ensure it's higher than .sticky-header's z-index */
+    z-index: 21;
     background-color: #333;
     border-bottom: 2px solid #444;
     padding: 10px 0;
@@ -65,13 +65,13 @@ p {
 }
 
 .navbar li {
-    margin: 0 20px; /* Slightly increase spacing */
+    margin: 0 20px;
 }
 
 .navbar a {
     color: #fff;
     text-decoration: none;
-    padding: 5px 12px; /* Slightly larger padding */
+    padding: 5px 12px;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
@@ -80,54 +80,64 @@ p {
     background-color: #555;
 }
 
-/* Background image */
+/* Fullscreen Background Image */
 .background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100vh;
-    position: relative;
+    z-index: -1; /* Ensure it stays behind other elements */
     overflow: hidden;
-    margin-top: 0; /* Ensure content starts below fixed navbar */
 }
 
 .background-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    max-width: 100vw; /* Ensures the image does not exceed the viewport width */
-    max-height: 100vh; /* Ensures the image does not exceed the viewport height */
 }
 
 /* Main content section */
 #featured-posts {
-    background-color: #222;
-    padding: 2.5em; /* Increase padding slightly */
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 3em 1em;
+    border-radius: 12px;
+    margin: 3em auto;
+    max-width: 800px;
+    z-index: 1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    /* Ensure it doesn't overlap header and navbar */
+    margin-top: calc(115px + 2em);
 }
 
+/* Content Box Styling */
 .content-box {
-    background: #333;
-    padding: 25px; /* Slightly increase padding */
-    margin: 25px 0; /* Increase margin */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background: #444;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     text-align: center;
+    opacity: 0.95;
 }
 
 .content-box h2 {
     margin-bottom: 15px;
-    font-size: 1.8em; /* Increase heading size */
+    font-size: 1.8em;
 }
 
 .content-box p {
     margin-bottom: 15px;
-    font-size: 1.3em; /* Increase paragraph font size in content box */
+    font-size: 1.3em;
 }
 
 /* Styling for images in featured posts */
 .content-image {
     width: 100%;
     height: auto;
-    max-width: 100vw; /* Ensures the image width fits within the viewport */
-    max-height: 100vh; /* Ensures the image height fits within the viewport */
+    max-width: 100vw;
+    max-height: 100vh;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     margin-bottom: 15px;
@@ -135,46 +145,47 @@ p {
 }
 
 .content-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
 }
 
 /* Read more link styling */
 .read-more {
     color: #1e90ff;
     text-decoration: none;
-    font-size: 1.1em; /* Slightly increase font size of "read more" */
+    font-size: 1.1em;
 }
 
 .read-more:hover {
     text-decoration: underline;
 }
 
+/* General Image Styling */
 img {
-    display: block; /* Removes any inline spacing issues */
-    max-width: 100vw; /* Ensures the image width fits the viewport width */
-    max-height: 100vh; /* Ensures the image height fits the viewport height */
-    width: 100%; /* Makes the image width responsive */
-    height: auto; /* Maintains aspect ratio */
-    object-fit: cover; /* Ensures the image covers the entire area */
+    display: block;
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 /* Footer */
 footer {
-    text-align: center; /* Ensures footer content is centered */
-    padding: 1.5em; /* Increase footer padding */
+    text-align: center;
+    padding: 1.5em;
     background-color: #000;
     color: #fff;
-    font-size: 1.2em; /* Increase footer font size */
+    font-size: 1.2em;
 }
 
-/* Centering the images inside the footer and making them three times larger */
+/* Footer Logo Styling */
 footer p {
-    display: inline-block; /* Make the paragraph inline-block to allow alignment */
-    margin: 0 15px; /* Add margin to the sides of each logo */
+    display: inline-block;
+    margin: 0 15px;
 }
 
 footer a img {
-    width: 120px; /* Increase image size to 120px (3x from original 40px) */
-    height: auto; /* Maintain aspect ratio */
+    width: auto;
+    height: 120px;
 }
