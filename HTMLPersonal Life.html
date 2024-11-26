@@ -1,75 +1,116 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <title>Personal Life</title>
-    <link rel="stylesheet" href="StyleSheet200blog.css">
-
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-        }
-
-        section {
-            margin: 10px;
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        img {
-            width: 100%;
+        /* Ensure the body and html take the full height */
+        html, body {
+            height: 100%; /* Make sure the background image covers the whole page */
         }
 
-        .columns {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .columns section {
-            flex-basis: calc(50% - 20px);
-        }
-
+        /* Sticky Banner Styling */
         .banner {
-            background-color: #808080;
-            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8); /* Slight transparency for overlay effect */
+            padding: 20px;
             text-align: center;
             color: #fff;
             width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Larger Heading in Banner */
+        .banner h1 {
+            font-size: 3em; /* Set the font size to the largest */
+            margin: 0;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-height: 100vh;
+            overflow-y: auto;  /* Allows vertical scrolling */
+            overflow-x: hidden; /* Prevents horizontal scrolling */
+
+            /* Background Image Styling */
+            background-image: url('IMG_g35.jpg');  /* Set the image as background */
+            background-size: cover; /* Ensures the image covers the screen */
+            background-position: center; /* Centers the image */
+            background-attachment: fixed; /* Keeps the image fixed when scrolling */
+        }
+
+        /* Main Content Wrapper */
+        .content {
+            margin: 20px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        /* Individual Section Styling */
+        section {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black for readability */
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            text-align: justify;
+        }
+
+        /* Distinct Header Styling */
+        section h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #D3D3D3; /* Grey color for distinction */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            border-bottom: 2px solid #808080; /* Grey border */
+            padding-bottom: 5px;
         }
     </style>
 </head>
 
 <body>
-
     <div class="banner">
         <h1>Personal Life</h1>
     </div>
-    <div class="columns">
+
+    <div class="content">
         <section>
             <h2>Early Life</h2>
             <p>
-                I was born in Paris, France, and moved to the United States at the age of two. After three years, I returned to Paris, then came back to the US for another three years. From there, I moved to London, but after just one year, I relocated to Colorado, where I've been ever since. Living across different cultures and regions has given me a unique perspective on how people adapt and change around the world.            </p>
+                I was born in Paris, France, and moved to the United States at the age of two. After three years, I returned to Paris, then came back to the US for another three years. From there, I moved to London, but after just one year, I relocated to Colorado, where I've been ever since. Living across different cultures and regions has given me a unique perspective on how people adapt and change around the world.
+            </p>
         </section>
 
         <section>
             <h2>Chef's Life</h2>
             <p>
-During my time in Boulder, I had the opportunity to work at several restaurants, but one in particular had a profound impact on my professional development. I served as a Garm Chef at Pizzeria Locale, now known as Pizzeria Alberico. This experience was transformative, as it allowed me to work alongside chefs from Frasca Food and Wine, Pizzeria Alberico’s sister restaurant. Their mentorship reshaped my approach to food, refined my perspective on attention to detail, and enhanced my ability to collaborate with colleagues. Frasca Food and Wine, now the only Michelin Star restaurant in Boulder, provided a unique environment where I learned firsthand that dedication and hard work can lead to exceptional achievements.            </p>
+                During my time in Boulder, I had the opportunity to work at several restaurants, but one in particular had a profound impact on my professional development. I served as a Garm Chef at Pizzeria Locale, now known as Pizzeria Alberico. This experience was transformative, as it allowed me to work alongside chefs from Frasca Food and Wine, Pizzeria Alberico’s sister restaurant. Their mentorship reshaped my approach to food, refined my perspective on attention to detail, and enhanced my ability to collaborate with colleagues. Frasca Food and Wine, now the only Michelin Star restaurant in Boulder, provided a unique environment where I learned firsthand that dedication and hard work can lead to exceptional achievements.
+            </p>
+        </section>
+
+        <section>
+            <h2>Drifting</h2>
+            <p>
+                I have a strong passion for cars and precision driving. Currently, I am collaborating with a mechanic in Loveland to perform an LS engine swap in my track car, which has been extensively modified for drifting competitions. I have dedicated countless hours to honing my driving skills at the track, with the goal of competing during the summer season. This year, I am hopeful to secure a sponsor, allowing me to focus more on my driving and less on the constant maintenance and repairs of my car.
+            </p>
         </section>
     </div>
-
-    <section>
-        <h2>Drifting</h2>
-        <p>
-I have a strong passion for cars and precision driving. Currently, I am collaborating with a mechanic in Loveland to perform an LS engine swap in my track car, which has been extensively modified for drifting competitions. I have dedicated countless hours to honing my driving skills at the track, with the goal of competing during the summer season. This year, I am hopeful to secure a sponsor, allowing me to focus more on my driving and less on the constant maintenance and repairs of my car.
-
-        </p>
-        <img src="IMG_g35.jpg" alt="g35">
-    </section>
-
 </body>
 
 </html>
