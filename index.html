@@ -66,19 +66,24 @@
 </footer>
 
 <script>
-    // Smooth scroll to "Projects" section when navbar link is clicked
+    // Smooth scroll to the first featured post when "Projects" link is clicked
     document.querySelector('.navbar a[href="#featured-posts"]').addEventListener('click', function(e) {
         e.preventDefault(); // Prevent default anchor click behavior
-        const target = document.querySelector('#featured-posts');
-        const headerHeight = document.querySelector('.sticky-header').offsetHeight;
-        const offset = (window.innerHeight - target.offsetHeight) / 2; // Calculate the offset to center the section
+        const targetSection = document.querySelector('#featured-posts');
+        const firstPost = targetSection.querySelector('article'); // Get the first article element in featured posts
+        const headerHeight = document.querySelector('.sticky-header').offsetHeight; // Get height of the sticky header
+        const postTop = firstPost.offsetTop; // Get the top offset of the first post
 
+        // Calculate the position to scroll so the first post is centered in the viewport
+        const offset = (window.innerHeight - firstPost.offsetHeight) / 2;
+        
         window.scrollTo({
-            top: target.offsetTop - offset, // Scroll to position the section in the middle
+            top: postTop - headerHeight - offset, // Scroll to center the first post
             behavior: 'smooth' // Smooth scrolling
         });
     });
 </script>
+
 
 
 
