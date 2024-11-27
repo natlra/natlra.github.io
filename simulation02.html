@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-code Visualizer</title>
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: row;
+            gap: 20px;
+        }
+        #simulationCanvas {
+            border: 2px solid white;
+            background-color: #34495e;
+            margin-bottom: 20px;
+            cursor: crosshair;
+        }
+        .controls {
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #16a085;
+            color: white;
+            border: none;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #gcodeOutput {
+            margin-top: 20px;
+            color: #ecf0f1;
+            font-size: 14px;
+            background-color: #34495e;
+            padding: 20px;
+            width: 700px;
+            height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border: 1px solid #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+<h1>G-code Visualizer - Custom Shape Tracing</h1>
+
+<div class="controls">
+    <button onclick="toggleDrawingMode()">Start Drawing</button>
+    <button onclick="traceShape()">Trace Shape</button>
+    <button onclick="clearCanvas()">Clear Shape</button>
+</div>
+
+<canvas id="simulationCanvas" width="600" height="600"></canvas>
+<div id="gcodeOutput"></div>
+
+<script>
+    const canvas = document.getElementById('simulationCanvas');
+    const ctx = canvas.getContext('2d');
+    const gcodeOutput = document.getElementById('gcodeOutput');
+
+    let drawingMode = false;
+    let currentX = 300, currentY = 300;
+    let path = [];
+    let gcode = [];
+    let isDrawing = false;
+    let traceIndex = 0;
+    let traceInterval;
+
+    // Function to enable/disable drawing mode
+    function toggleDrawingMode() {
+        drawingMode = !drawingMode;
+        if (drawingMode) {
+            path = [];
+            gcode = [];
+            currentX = 300;
+            currentY = 300;
+            updateGcodeOutput();
+            alert("Drawing Mode Enabled: Click to start drawing your shape.");
+        } else {
+            alert("Drawing Mode Disabled.");
+        }
+    }
+
+    // Function to draw the grid on the canvas
+    function drawGrid() {
+        const gridSpacing = 20; // Define the grid spacing
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+        // Draw vertical lines
+        for (let x = 0; x < canvasWidth; x += gridSpacing) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvasHeight);
+            ctx.strokeStyle = '#7f8c8d'; // Light gray color
+            ctx.stroke();
+        }
+
+        // Draw horizontal lines
+        for (let y = 0; y < canvasHeight; y += gridSpacing) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvasWidth, y);
+            ctx.strokeStyle = '#7f8c8d'; // Light gray color
+            ctx.stroke();
+        }
+    }
+
+    // Function to draw the path and grid
+    function drawPath() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+        drawGrid(); // Redraw the grid
+
+        // Draw the path
+        ctx.beginPath();
+        ctx.moveTo(path[0]?.x || currentX, path[0]?.y || currentY); // Start from the current position or first point
+        for (let i = 1; i < path.length; i++) {
+            ctx.lineTo(path[i].x, path[i].y);
+        }
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#e74c3c"; // Path color (red)
+        ctx.stroke();
+        
+        // Draw the current position (cutting tool)
+        ctx.beginPath();
+        ctx.arc(currentX, currentY, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#2ecc71'; // Cutter color (green)
+        ctx.fill();
+    }
+
+    // Function to show the G-code in the output panel
+    function updateGcodeOutput() {
+        gcodeOutput.textContent = gcode.join("\n");
+    }
+
+    // Function to generate G-code from the traced path
+    function generateGcodeFromPath() {
+        gcode = [];
+        gcode.push('G21'); // Set units to millimeters
+        gcode.push('G90'); // Use absolute positioning
+
+        path.forEach((point, index) => {
+            if (index === 0) {
+                gcode.push(`G0 X${point.x} Y${point.y}`); // Rapid move to start point
+            } else {
+                gcode.push(`G1 X${point.x} Y${point.y}`); // Linear cut to the next point
+            }
+        });
+
+        gcode.push('M30'); // End of program
+        updateGcodeOutput();
+    }
+
+    // Mouse event listeners for drawing on canvas
+    canvas.addEventListener('mousedown', (event) => {
+        if (!drawingMode) return;
+
+        isDrawing = true;
+        const rect = canvas.getBoundingClientRect();
+        currentX = event.clientX - rect.left;
+        currentY = event.clientY - rect.top;
+        path.push({ x: currentX, y: currentY }); // Add first point
+    });
+
+    canvas.addEventListener('mousemove', (event) => {
+        if (!isDrawing || !drawingMode) return;
+
+        const rect = canvas.getBoundingClientRect();
+        currentX = event.clientX - rect.left;
+        currentY = event.clientY - rect.top;
+        path.push({ x: currentX, y: currentY }); // Add point to path
+        drawPath(); // Redraw the path on canvas
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        if (!drawingMode) return;
+
+        isDrawing = false;
+        generateGcodeFromPath(); // Generate G-code from the traced path
+        drawPath(); // Final drawing
+    });
+
+    // Function to trace the shape step by step
+    function traceShape() {
+        if (path.length === 0) {
+            alert("Please draw a shape first.");
+            return;
+        }
+
+        gcodeOutput.scrollTop = 0;
+
+        traceIndex = 0;
+        clearInterval(traceInterval);
+        traceInterval = setInterval(() => {
+            if (traceIndex < path.length) {
+                currentX = path[traceIndex].x;
+                currentY = path[traceIndex].y;
+                drawPath();
+
+                gcodeOutput.innerHTML = gcode
+                    .map((line, index) => {
+                        if (index === traceIndex) {
+                            return `<span style="color: #e74c3c">${line}</span>`;
+                        }
+                        return line;
+                    })
+                    .join("\n");
+
+                traceIndex++;
+            } else {
+                currentX = path[path.length - 1].x;
+                currentY = path[path.length - 1].y;
+                drawPath();
+                gcodeOutput.innerHTML = gcode.join("\n");
+                clearInterval(traceInterval);
+            }
+        }, 100);
+    }
+
+    // Function to clear the drawn shape and reset the G-code output
+    function clearCanvas() {
+        path = [];
+        gcode = [];
+        currentX = 300;
+        currentY = 300;
+        drawPath(); // Redraw the grid and the initial state
+        updateGcodeOutput(); // Reset G-code output
+    }
+
+    // Initial drawing on the canvas
+    drawPath();
+</script>
+
+</body>
+</html>
