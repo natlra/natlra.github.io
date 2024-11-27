@@ -1,5 +1,4 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -7,59 +6,125 @@
     <link rel="stylesheet" href="StyleSheet200blog.css">
 
     <style>
-        body {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        section {
-            flex: 1;
-            margin: 10px;
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        img {
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background-color: #000;
+            line-height: 1.6;
+            font-size: 1.1em;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background-color: #808080;
+            padding: 10px;
+            color: #fff;
+        }
+
+        /* Styling for sections */
+        section {
+            position: relative;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Image background styling for each section */
+        .section-1 {
+            background-image: url('PXL_20231211_194639929.jpg');
+        }
+
+        .section-2 {
+            background-image: url('PXL_20231211_194608949.jpg');
+        }
+
+        .section-3 {
+            background-image: url('PXL_20231211_194707994.jpg');
+        }
+
+        /* Overlay content styling */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            color: white;
+            opacity: 0;
+            overflow: hidden; /* Prevents text from overflowing before hover */
+            transition: opacity 0.3s ease-in-out; /* Smooth transition for opacity */
         }
 
-        .columns {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+        section:hover .overlay {
+            opacity: 1;
         }
 
-            .columns section {
-                flex-basis: calc(50% - 20px);
-            }
+        .overlay h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .overlay p {
+            font-size: 1.2em;
+        }
+
+        /* Styling for lists and paragraphs */
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div style="background-color: #808080; padding: 10px; text-align: center; color: #fff;">
-            <h1>2023 Screwdriver Project</h1>
-            <p>Heat and Manufacturing</p>
-        </div>
+        <h1>2023 Screwdriver Project</h1>
+        <p>Heat and Manufacturing</p>
     </header>
 
-    <section>
-        <h2>Project Overview</h2>
-        <p>This page provides an overview of the Screwdriver Project, which focuses on manufacturing techniques involving heat.</p>
+    <!-- Section 1 with image background -->
+    <section class="section-1">
+        <div class="overlay">
+            <h2>Project Overview</h2>
+            <p>This page provides an overview of the Screwdriver Project, which focuses on manufacturing techniques involving heat.</p>
+        </div>
     </section>
 
-
-<img src="PXL_20231211_194639929.jpg" alt="screwdriver1">
-
-
-    
-    <section>
-        <h2>About This Project</h2>
-        <p>
-            This project concentrated on manufacturing techniques that require the heating of materials to modify its shape, structural integrity, and appearance. These different techniques are important to manufacturing because they provide a way to change multiple different aspects of a material using the same approach. Being able to repeat a process for multiple stages of manufacturing makes some operations much more efficient and reduces costs related to manufacturing.
-        </p>
+    <!-- Section 2 with image background -->
+    <section class="section-2">
+        <div class="overlay">
+            <h2>About This Project</h2>
+            <p>This project concentrated on manufacturing techniques that require the heating of materials to modify its shape, structural integrity, and appearance. These different techniques are important to manufacturing because they provide a way to change multiple different aspects of a material using the same approach. Being able to repeat a process for multiple stages of manufacturing makes some operations much more efficient and reduces costs related to manufacturing.</p>
+        </div>
     </section>
 
-    <div class="columns">
-        <section>
+    <!-- Section 3 with image background -->
+    <section class="section-3">
+        <div class="overlay">
             <h2>Cost Estimate</h2>
             <p>Producing the Screwdriver involves costs associated with materials, machine time, and the different finishing processes that have been utilized.</p>
             <ul>
@@ -71,9 +136,12 @@
                 <li>Labor Cost: $24.77 x ~5 hours = $123.85</li>
                 <li>Total Individual Screwdriver Cost: $145.15 </li>
             </ul>
-        </section>
+        </div>
+    </section>
 
-        <section>
+    <!-- Section 4 with image background -->
+    <section class="section-1">
+        <div class="overlay">
             <h2>Reducing Manufacturing Costs</h2>
             <p>Efficient manufacturing practices can help reduce costs. Consider the following strategies when manufacturing these screwdrivers at a large scale:</p>
             <ul>
@@ -81,13 +149,12 @@
                 <li>Buy bulk raw stock to reduce individual material cost.</li>
                 <li>Try and match the demand curve with supply.</li>
             </ul>
-        </section>
+        </div>
+    </section>
 
-       
-
-<img src="PXL_20231211_194608949.jpg" alt="screwdriver2">
-
-        <section>
+    <!-- Section 5 with image background -->
+    <section class="section-2">
+        <div class="overlay">
             <h2>10,000 Units Cost Estimate</h2>
             <p>Producing the screwdriver parts involves costs associated with materials, machine time, and finishing processes.</p>
             <ul>
@@ -97,18 +164,20 @@
                 <li>New Individual Manufacturing Cost: $68.71</li>
                 <li>Manufacturing Cost x 10,000: $687,100</li>
             </ul>
-        </section>
-    </div>
-
-
-<img src="PXL_20231211_194707994.jpg" alt="screwdriver3">
-    
-    <section>
-        <h2>Other Comments</h2>
-        <p>
-            The screwdriver was an easy and approachable lab. However, I do wish that I had extra guidance while doing the injection molding.
-            It was very easy to accidentally pour too much plastic out when testing, this means that there was not enough plastic left for the screwdriver mold.
-        </p>
+        </div>
     </section>
+
+    <!-- Section 6 with image background -->
+    <section class="section-3">
+        <div class="overlay">
+            <h2>Other Comments</h2>
+            <p>The screwdriver was an easy and approachable lab. However, I do wish that I had extra guidance while doing the injection molding. It was very easy to accidentally pour too much plastic out when testing, this means that there was not enough plastic left for the screwdriver mold.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>2023 Screwdriver Project</p>
+    </footer>
+
 </body>
 </html>
