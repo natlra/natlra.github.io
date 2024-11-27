@@ -10,24 +10,67 @@
             color: white;
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-start;
+            align-items: flex-start;
             height: 100vh;
             margin: 0;
-            flex-direction: row;
-            gap: 20px;
         }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #34495e; /* Dark Grey */
+            padding: 10px;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+        }
+        .navbar .menu-item {
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #2c3e50; /* Dark Grey */
+        }
+        .navbar .menu-item:hover {
+            background-color: #7f8c8d; /* Lighter Grey */
+        }
+        .navbar .active {
+            background-color: #7f8c8d; /* Lighter Grey */
+        }
+
+        /* Content Area */
+        .content {
+            margin-left: 220px; /* Space for navbar */
+            padding: 20px;
+            width: calc(100% - 220px);
+            background-color: #34495e; /* Dark Grey */
+            display: flex;
+            justify-content: space-between; /* Side by side layout */
+            align-items: flex-start;
+        }
+
+        /* Canvas styles */
         #simulationCanvas {
             border: 2px solid white;
             background-color: #34495e;
             margin-bottom: 20px;
             cursor: crosshair;
         }
+
         .controls {
             color: white;
             font-size: 16px;
             text-align: center;
         }
+
         button {
             padding: 10px;
             font-size: 16px;
@@ -37,32 +80,54 @@
             margin: 5px;
             cursor: pointer;
         }
+
+        /* G-code Output Styles */
         #gcodeOutput {
             margin-top: 20px;
             color: #ecf0f1;
             font-size: 14px;
             background-color: #34495e;
             padding: 20px;
-            width: 700px;
-            height: 400px;
+            width: 40%; /* Adjust width */
+            height: 600px; /* Ensure height matches canvas */
             overflow-y: auto;
             white-space: pre-wrap;
             border: 1px solid #ecf0f1;
+        }
+
+        /* Heading Style */
+        h1 {
+            font-size: 36px; /* Increased font size */
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-<h1>G-code Visualizer - Custom Shape Tracing</h1>
-
-<div class="controls">
-    <button onclick="toggleDrawingMode()">Start Drawing</button>
-    <button onclick="traceShape()">Trace Shape</button>
-    <button onclick="clearCanvas()">Clear Shape</button>
+<!-- Vertical Navbar -->
+<div class="navbar">
+    <div class="menu-item" onclick="window.location.href='simulation01.html'">Water Particle Simulation</div>
+    <div class="menu-item active" onclick="window.location.href='simulation02.html'">G-code Visualizer</div>
+    <div class="menu-item" onclick="window.location.href='simulation03.html'">Future Simulation</div>
 </div>
 
-<canvas id="simulationCanvas" width="600" height="600"></canvas>
-<div id="gcodeOutput"></div>
+<!-- Content Area -->
+<div class="content">
+    <div class="canvas-container">
+        <h1>G-code Visualizer - Custom Shape Tracing</h1>
+
+        <div class="controls">
+            <button onclick="toggleDrawingMode()">Start Drawing</button>
+            <button onclick="traceShape()">Trace Shape</button>
+            <button onclick="clearCanvas()">Clear Shape</button>
+        </div>
+
+        <canvas id="simulationCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <!-- G-code Output -->
+    <div id="gcodeOutput"></div>
+</div>
 
 <script>
     const canvas = document.getElementById('simulationCanvas');
