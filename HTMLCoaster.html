@@ -5,72 +5,89 @@
     <title>Coaster Project</title>
     <link rel="stylesheet" href="StyleSheet200blog.css">
     <style>
-   body {
-    display: flex;
-    flex-direction: column; /* Stack sections vertically */
-    align-items: center; /* Center content horizontally */
-    margin: 0;
-    padding: 0;
-}
+        body {
+            display: flex;
+            flex-direction: column; /* Stack sections vertically */
+            align-items: center; /* Center content horizontally */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Set a light background */
+        }
 
-header {
-    background-color: #808080;
-    padding: 10px;
-    text-align: center;
-    color: #fff;
-}
+        header {
+            background-color: #808080;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            width: 100%;
+        }
 
-section {
-    width: 70%; /* Adjust the width of the sections */
-    margin: 10px 0;
-    box-sizing: border-box;
-}
+        section {
+            position: relative;
+            width: 70%; /* Adjust the width of the sections */
+            margin: 10px 0;
+            box-sizing: border-box;
+            padding: 20px;
+            background-size: cover;
+            background-position: center;
+        }
 
-img {
-    width: 100%;
-    margin: 10px 0;
-}
+        /* Style for section images as background */
+        .section-1 {
+            background-image: url('PXL_coaster1.jpg');
+        }
 
-/* Wrap the content and the video together in a row */
-.content-container {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping if needed */
-    justify-content: space-between;
-    width: 100%;
-}
+        .section-2 {
+            background-image: url('PXL_coaster2.jpg');
+        }
 
-/* Video container to be on the side */
-.video-container {
-    width: 30%; /* Adjust width to make the video visible */
-    margin: 10px;
-    box-sizing: border-box;
-}
+        /* Ensure text is on top of background */
+        .section-content {
+            position: relative;
+            z-index: 2; /* Ensure text is on top */
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+            padding: 20px;
+            border-radius: 10px; /* Optional: rounded corners for text blocks */
+        }
 
-/* Ensure iframe takes the full width and maintains aspect ratio */
-.video-container iframe {
-    width: 100%;
-    height: 300px; /* Set a reasonable height */
-}
+        /* Style for headings */
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+            color: #fff;
+        }
 
-/* Style for headings */
-h2 {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
-}
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 1em;
+            color: #fff; /* White text for contrast */
+        }
 
-p {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin-bottom: 1em;
-}
+        footer {
+            text-align: center;
+            padding: 1.5em;
+            background-color: #000;
+            color: #fff;
+        }
 
-footer {
-    text-align: center;
-    padding: 1.5em;
-    background-color: #000;
-    color: #fff;
-}
+        /* Video container */
+        .video-container {
+            width: 30%;
+            margin: 10px;
+            box-sizing: border-box;
+        }
 
+        .video-container iframe {
+            width: 100%;
+            height: 300px;
+        }
+
+        img {
+            width: 100%;
+            margin: 10px 0;
+            display: none; /* Hide the images now that they are backgrounds */
+        }
     </style>
 </head>
 
@@ -82,59 +99,67 @@ footer {
         </div>
     </header>
 
-    <section>
-        <h2>Project Overview</h2>
-        <p>The Coaster Project is a part of the HAAS CNC vertical mill operater certification and is designed to help users become more familiar with the operating controls of the CNC mill. This project uses lightweight aerospace design to create a unique coaster. </p>
+    <section class="section-1">
+        <div class="section-content">
+            <h2>Project Overview</h2>
+            <p>The Coaster Project is a part of the HAAS CNC vertical mill operator certification and is designed to help users become more familiar with the operating controls of the CNC mill. This project uses lightweight aerospace design to create a unique coaster.</p>
+        </div>
     </section>
 
-    <img src="PXL_coaster1.jpg" alt="coaster1">
-
-    <section>
-        <h2>Cost Estimate</h2>
-        <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes. A detailed cost estimate ensures effective project budgeting and resource allocation.</p>
-        <ul>
-            <li>Aluminum Raw Stock: $7.89 </li>
-            <li>Total Material Cost: $7.89</li>
-            <li>Labor Cost: $24.77 x ~1 hours = $24.77 </li>
-            <li>Total Individual Clock Cost: $32.66 </li>
-        </ul>
+    <section class="section-2">
+        <div class="section-content">
+            <h2>Cost Estimate</h2>
+            <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes. A detailed cost estimate ensures effective project budgeting and resource allocation.</p>
+            <ul>
+                <li>Aluminum Raw Stock: $7.89</li>
+                <li>Total Material Cost: $7.89</li>
+                <li>Labor Cost: $24.77 x ~1 hours = $24.77</li>
+                <li>Total Individual Clock Cost: $32.66</li>
+            </ul>
+        </div>
     </section>
 
-    <section>
-        <h2>Reducing Manufacturing Costs</h2>
-        <p>By utilizing different manufacturing techniques, we can effectively reduce the cost of production for these coasters. Here are some examples:</p>
-        <ul>
-            <li>Buy bulk raw stock to reduce individual material cost.</li>
-            <li>Match the demand curve with supply.</li>
-            <li>Change the design to save time while cutting material </li>
-        </ul>
+    <section class="section-1">
+        <div class="section-content">
+            <h2>Reducing Manufacturing Costs</h2>
+            <p>By utilizing different manufacturing techniques, we can effectively reduce the cost of production for these coasters. Here are some examples:</p>
+            <ul>
+                <li>Buy bulk raw stock to reduce individual material cost.</li>
+                <li>Match the demand curve with supply.</li>
+                <li>Change the design to save time while cutting material.</li>
+            </ul>
+        </div>
     </section>
 
-    <section>
-        <h2>10,000 x Cost Estimate</h2>
-        <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes.</p>
-        <ul>
-            <li>Material Cost Reduces ~10% when buying bulk</li>
-            <li>New Material Cost: $7.10.</li>
-            <li>CNC Operation Cost: $24.77 x ~1 hours = $24.77 </li>
-            <li>New Individual Manufacturing Cost: $31.87</li>
-            <li>Manufacturing Cost x 10,000: $318,710</li>
-        </ul>
+    <section class="section-2">
+        <div class="section-content">
+            <h2>10,000 x Cost Estimate</h2>
+            <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes.</p>
+            <ul>
+                <li>Material Cost Reduces ~10% when buying bulk</li>
+                <li>New Material Cost: $7.10</li>
+                <li>CNC Operation Cost: $24.77 x ~1 hours = $24.77</li>
+                <li>New Individual Manufacturing Cost: $31.87</li>
+                <li>Manufacturing Cost x 10,000: $318,710</li>
+            </ul>
+        </div>
     </section>
 
-    <div class="other-comments">
-        <section>
+    <section class="section-1">
+        <div class="section-content">
             <h2>Other Comments</h2>
-            <p>Unfortunately, the lightweight design of the coaster is impractical for mass manufacturing and does not function properly. These triangular holes are very visually appealing but lets moisture follow the surface from the beverage to the table. The design of a coaster is supposed to isolate the beverage cup from the table, but with these holes present, this specific coaster design fails at being an effective coaster. </p>
-            <p>Here is a quick video that was taken after my HAAS exam. During my schedueled exam, a tool broke in the machine and so I was given the opportunity to redo the coaster. During the final deburing stages of my redo, I had the chance to quickly film some beautiful CNC operations.</p>
-        </section>
-    </div>
+            <p>Unfortunately, the lightweight design of the coaster is impractical for mass manufacturing and does not function properly. These triangular holes are very visually appealing but let moisture follow the surface from the beverage to the table. The design of a coaster is supposed to isolate the beverage cup from the table, but with these holes present, this specific coaster design fails at being an effective coaster.</p>
+            <p>Here is a quick video that was taken after my HAAS exam. During my scheduled exam, a tool broke in the machine, and I was given the opportunity to redo the coaster. During the final deburring stages of my redo, I had the chance to quickly film some beautiful CNC operations.</p>
+        </div>
+    </section>
 
     <div class="video-container">
         <iframe width="640" height="480" src="https://drive.google.com/file/d/12OM84oICmVDyi2sc_--9gYbmVtKjZoUU/preview" allow="autoplay"></iframe>
     </div>
 
-    <img src="PXL_coaster2.jpg" alt="coaster2">
+    <footer>
+        <p>Coaster Project 2023</p>
+    </footer>
 
 </body>
 </html>
