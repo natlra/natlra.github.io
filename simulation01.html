@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Particle Simulation</title>
-    <style>
+     <style>
         body { 
             display: flex; 
             justify-content: flex-start; 
@@ -95,7 +95,6 @@
     </style>
 </head>
 <body>
-    <!-- Vertical Navbar for simulations -->
     <div class="navbar">
         <div class="menu-item active" onclick="window.location.href='simulation01.html'">Water Particle Simulation</div>
         <div class="menu-item" onclick="window.location.href='simulation02.html'">G-code Visualizer</div>
@@ -103,12 +102,9 @@
         <div class="menu-item back-button" onclick="window.location.href='index.html'">Back to Home</div>
     </div>
 
-    <!-- Content Area -->
     <div class="content">
-        <!-- Heading -->
         <h1>Water Particle Simulation</h1>
 
-        <!-- Water Particle Simulation Content -->
         <div class="tab-content active" id="simulation">
             <div class="controls">
                 <div>
@@ -121,18 +117,6 @@
                 </div>
             </div>
             <canvas id="simulationCanvas" width="500" height="500"></canvas>
-        </div>
-
-        <!-- Another Simulation Content -->
-        <div class="tab-content" id="simulation2">
-            <h2>Another Simulation Placeholder</h2>
-            <p>This is where another simulation will be displayed.</p>
-        </div>
-
-        <!-- Future Simulation Content -->
-        <div class="tab-content" id="simulation3">
-            <h2>Future Simulation Placeholder</h2>
-            <p>This is where a future simulation will be displayed.</p>
         </div>
     </div>
 
@@ -149,13 +133,10 @@
         const containerWidth = canvas.width;
         const containerHeight = canvas.height;
 
-        // Constants for water boiling point
-        const boilingPoints = {
-            0.5: 81,  // Boiling point at 0.5 atm is 81°C
-            1: 100,   // Boiling point at 1 atm is 100°C
-            1.5: 110, // Boiling point at 1.5 atm is 110°C
-            2: 120    // Boiling point at 2 atm is 120°C
-        };
+        // Constants for Clausius-Clapeyron Relation
+        const R = 8.314;  // J/mol·K (Universal gas constant)
+        const deltaHvap = 40790;  // J/mol (Heat of vaporization for water)
+        const T1 = 373.15;  // Boiling point at 1 atm in Kelvin (100°C)
 
         // Create the water particles
         for (let i = 0; i < numParticles; i++) {
@@ -169,9 +150,16 @@
             });
         }
 
+        // Function to calculate the boiling point using the Clausius–Clapeyron relation
+        function calculateBoilingPoint(pressure) {
+            // T2 is in Kelvin
+            const T2 = 1 / ((Math.log(pressure / 1) * -R) / deltaHvap + 1 / T1);
+            return T2 - 273.15;  // Convert from Kelvin to Celsius
+        }
+
         // Update particle positions
         function updateParticles(temp, pressure) {
-            const boilingPoint = boilingPoints[pressure] || 100; // If pressure is undefined, assume 100°C
+            const boilingPoint = calculateBoilingPoint(pressure);
             const isBoiling = temp >= boilingPoint;
 
             particles.forEach(particle => {
