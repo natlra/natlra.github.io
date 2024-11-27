@@ -51,9 +51,18 @@ img {
     background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     color: white;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    overflow: hidden; /* Prevents text from overflowing before hover */
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out; /* Smooth transition for opacity and height */
+    height: 100%; /* Ensure the overlay can expand */
 }
 
+/* Hover effect to reveal paragraph over images */
+.image-container:hover .overlay {
+    opacity: 1;
+    height: auto; /* Allow overlay to expand with the content */
+}
+
+/* Ensure paragraphs inside the overlay are responsive */
 .overlay h2 {
     font-size: 1.8em;
     margin-bottom: 15px;
@@ -62,12 +71,8 @@ img {
 .overlay p {
     font-size: 1.2em;
 }
-
-/* Hover effect to reveal paragraph over images */
-.image-container:hover .overlay {
-    opacity: 1;
-}
 </style>
+
 </head>
 <body>
     <header>
