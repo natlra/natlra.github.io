@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Particle Kinematics Simulation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            background-color: #2c3e50; /* Dark Grey */
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        canvas {
+            border: 2px solid #7f8c8d; /* Lighter Grey */
+            background-color: #34495e; /* Dark Grey */
+        }
+
+        label {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #7f8c8d; /* Lighter Grey */
+            border: 1px solid #95a5a6; /* Even lighter grey */
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 200px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #16a085; /* Green focus border */
+            background-color: #2c3e50; /* Darken background on focus */
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield; /* Hide spinner in Firefox */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #16a085; /* Green */
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 220px;
+        }
+
+        button:hover {
+            background-color: #1abc9c; /* Lighter Green */
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-left: 20px;
+            margin-top: 20px;
+            margin-bottom: 40px; /* Added margin-bottom for more space between canvas and button */
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 20px;
+            margin-left: 220px;
+            font-weight: bold;
+        }
+
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #34495e; /* Dark Grey */
+            padding: 10px;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+        }
+
+        .navbar .menu-item {
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #2c3e50; /* Dark Grey */
+        }
+
+        .navbar .menu-item:hover {
+            background-color: #7f8c8d; /* Lighter Grey */
+        }
+
+        .navbar .back-button {
+            margin-top: auto;
+            background-color: #16a085;
+            color: white;
+            text-align: center;
+        }
+
+        .navbar .back-button:hover {
+            background-color: #1abc9c;
+        }
+
+        .content {
+            margin-left: 220px; /* Space for navbar */
+            padding: 20px;
+            width: calc(100% - 220px);
+            background-color: #34495e; /* Dark Grey */
+        }
+
+        /* Styling for simulation result box */
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #7f8c8d; /* Lighter Grey */
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            border: 2px solid #95a5a6;
+        }
+
+        .result-box strong {
+            color: white; /* White text for the strong tag */
+            font-size: 20px; /* Larger font size */
+            font-weight: bold; /* Make it bold */
+        }
+    </style>
+</head>
+<body>
+    <!-- Vertical Navbar -->
+    <div class="navbar">
+        <div class="menu-item" onclick="window.location.href='simulation01.html'">Water Particle Simulation</div>
+        <div class="menu-item" onclick="window.location.href='simulation02.html'">G-code Visualizer</div>
+        <div class="menu-item active" onclick="window.location.href='simulation03.html'">2D Projectile Motion</div>
+        <div class="menu-item back-button" onclick="window.location.href='index.html'">Back to Home</div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <!-- Heading -->
+        <h1>2D Projectile Motion</h1>
+
+        <!-- Controls -->
+        <div class="controls">
+            <label for="angle">Launch angle (Degrees):</label>
+            <input type="number" id="angle" min="1" max="90" value="45">
+            <label for="velocity">Initial velocity (m/s):</label>
+            <input type="number" id="velocity" min="1" max="999" value="50">
+            <button onclick="launchParticle()">Launch</button>
+        </div>
+
+        <!-- Canvas for simulation -->
+        <canvas id="simulationCanvas" width="800" height="400"></canvas>
+
+        <!-- Result Box -->
+        <div class="result-box" id="output"></div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+        const output = document.getElementById('output');
+
+        const g = 9.8; // Gravity in m/s^2
+
+        function drawGround() {
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - 20);
+            ctx.lineTo(canvas.width, canvas.height - 20);
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function precalculateTrajectory(angle, velocity) {
+            const radAngle = angle * (Math.PI / 180);
+            const velocityX = velocity * Math.cos(radAngle);
+            const velocityY = velocity * Math.sin(radAngle);
+
+            const flightTime = (2 * velocityY) / g;
+            const maxHorizontalDistance = velocityX * flightTime;
+            const maxHeight = (velocityY ** 2) / (2 * g);
+
+            return { maxHorizontalDistance, maxHeight, flightTime };
+        }
+
+        function adjustCanvasToFit(maxHorizontalDistance, maxHeight) {
+            const padding = 50; // Add some padding around the trajectory
+            const requiredWidth = maxHorizontalDistance + padding;
+            const requiredHeight = maxHeight + padding;
+
+            const scaleX = canvas.width / requiredWidth;
+            const scaleY = (canvas.height - 20) / requiredHeight;
+
+            return Math.min(scaleX, scaleY); // Use the smaller scale to fit both dimensions
+        }
+
+        function launchParticle() {
+            // Clear the canvas and reset output
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGround();
+            output.textContent = "";
+
+            // Get user inputs
+            const angle = parseFloat(document.getElementById('angle').value);
+            const velocity = parseFloat(document.getElementById('velocity').value);
+
+            if (angle < 1 || angle > 90 || isNaN(angle)) {
+                alert("Please enter a valid launch angle between 1 and 90 degrees.");
+                return;
+            }
+
+            if (velocity < 1 || velocity > 999 || isNaN(velocity)) {
+                alert("Please enter a valid initial velocity between 1 and 999 m/s.");
+                return;
+            }
+
+            // Precalculate trajectory
+            const { maxHorizontalDistance, maxHeight, flightTime } = precalculateTrajectory(angle, velocity);
+
+            // Adjust scale and set canvas to fit
+            const scale = adjustCanvasToFit(maxHorizontalDistance, maxHeight);
+
+            // Initial conditions
+            const initialX = 50; // Starting position
+            const initialY = canvas.height - 20; // Ground level
+            const radAngle = angle * (Math.PI / 180);
+            const velocityX = velocity * Math.cos(radAngle); // Horizontal velocity
+            const velocityY = velocity * Math.sin(radAngle); // Vertical velocity
+
+            let x = 0;
+            let y = 0;
+            let time = 0;
+            const dt = 0.05; // Time step in seconds
+
+            function update() {
+                // Update time
+                time += dt;
+
+                // Calculate new position
+                x = velocityX * time;
+                y = velocityY * time - 0.5 * g * time * time;
+
+                // Convert to canvas coordinates
+                const canvasX = initialX + x * scale;
+                const canvasY = initialY - y * scale;
+
+                // Clear and redraw
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawGround();
+
+                // Draw particle
+                ctx.beginPath();
+                ctx.arc(canvasX, canvasY, 5, 0, Math.PI * 2);
+                ctx.fillStyle = "red";
+                ctx.fill();
+
+                // Check if the particle hits the ground
+                if (canvasY >= initialY) {
+                    cancelAnimationFrame(animationFrame);
+
+                    output.innerHTML = `
+                        <strong>Simulation Results:</strong><br>
+                        Horizontal Distance: ${maxHorizontalDistance.toFixed(2)} m<br>
+                        Maximum Height: ${maxHeight.toFixed(2)} m<br>
+                    `;
+                    return;
+                }
+
+                // Request next frame
+                animationFrame = requestAnimationFrame(update);
+            }
+
+            // Start the simulation
+            update();
+        }
+
+        // Draw the ground initially
+        drawGround();
+    </script>
+</body>
+</html>
