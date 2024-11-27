@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Particle Simulation</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100vh; margin: 0; background-color: #2c3e50; }
+        canvas { border: 2px solid white; background-color: #34495e; }
+        label { color: white; font-size: 16px; margin: 10px; }
+        input { margin-bottom: 20px; }
+        .controls { display: flex; justify-content: center; }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <div>
+            <label for="temperature">Temperature (°C): <span id="tempValue">20</span></label>
+            <input type="range" id="temperature" min="0" max="150" value="20">
+        </div>
+        <div>
+            <label for="pressure">Pressure (atm): <span id="pressureValue">1</span></label>
+            <input type="range" id="pressure" min="0.5" max="2" step="0.1" value="1">
+        </div>
+    </div>
+    <canvas id="simulationCanvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+        const temperatureSlider = document.getElementById('temperature');
+        const pressureSlider = document.getElementById('pressure');
+        const tempValue = document.getElementById('tempValue');
+        const pressureValue = document.getElementById('pressureValue');
+
+        const numParticles = 100;  // Number of water particles
+        const particles = [];
+        const containerWidth = canvas.width;
+        const containerHeight = canvas.height;
+
+        // Constants for water boiling point
+        const boilingPoints = {
+            0.5: 81,  // Boiling point at 0.5 atm is 81°C
+            1: 100,   // Boiling point at 1 atm is 100°C
+            1.5: 110, // Boiling point at 1.5 atm is 110°C
+            2: 120    // Boiling point at 2 atm is 120°C
+        };
+
+        // Create the water particles
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * containerWidth,
+                y: Math.random() * containerHeight,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                size: 5,
+                isMovingFast: false
+            });
+        }
+
+        // Update particle positions
+        function updateParticles(temp, pressure) {
+            // We can simulate the boiling effect when the temperature reaches an adjusted threshold based on pressure
+            const boilingPoint = boilingPoints[pressure] || 100; // If pressure is undefined, assume 100°C
+            const isBoiling = temp >= boilingPoint;
+
+            particles.forEach(particle => {
+                if (isBoiling) {
+                    // Boiling: Increase particle velocity for fast movement
+                    particle.vx += (Math.random() - 0.5) * 0.5;
+                    particle.vy += (Math.random() - 0.5) * 0.5;
+                    particle.isMovingFast = true;
+                } else {
+                    // Non-boiling: Small random movement
+                    particle.vx += (Math.random() - 0.5) * 0.1;
+                    particle.vy += (Math.random() - 0.5) * 0.1;
+                    particle.isMovingFast = false;
+                }
+
+                // Update position
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+
+                // Bounce particles off the walls of the container
+                if (particle.x <= 0 || particle.x >= containerWidth) particle.vx = -particle.vx;
+                if (particle.y <= 0 || particle.y >= containerHeight) particle.vy = -particle.vy;
+            });
+        }
+
+        // Draw the particles
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+            particles.forEach(particle => {
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fillStyle = particle.isMovingFast ? 'red' : 'blue'; // Fast particles in red, slow in blue
+                ctx.fill();
+            });
+        }
+
+        // Update simulation based on temperature and pressure
+        function updateSimulation() {
+            const temperature = parseInt(temperatureSlider.value);
+            const pressure = parseFloat(pressureSlider.value);
+
+            tempValue.textContent = temperature;
+            pressureValue.textContent = pressure.toFixed(1);
+
+            updateParticles(temperature, pressure);
+            drawParticles();
+            requestAnimationFrame(updateSimulation);
+        }
+
+        // Start the simulation
+        updateSimulation();
+    </script>
+</body>
+</html>
