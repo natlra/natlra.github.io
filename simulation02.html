@@ -45,6 +45,13 @@
         .navbar .active {
             background-color: #7f8c8d; /* Lighter Grey */
         }
+        .navbar .back-button {
+            margin-top: auto;
+            background-color: #16a085;
+        }
+        .navbar .back-button:hover {
+            background-color: #1abc9c;
+        }
 
         /* Content Area */
         .content {
@@ -109,6 +116,7 @@
     <div class="menu-item" onclick="window.location.href='simulation01.html'">Water Particle Simulation</div>
     <div class="menu-item active" onclick="window.location.href='simulation02.html'">G-code Visualizer</div>
     <div class="menu-item" onclick="window.location.href='simulation03.html'">Future Simulation</div>
+    <div class="menu-item back-button" onclick="window.location.href='index.html'">Back to Home</div>
 </div>
 
 <!-- Content Area -->
@@ -259,53 +267,39 @@
     // Function to trace the shape step by step
     function traceShape() {
         if (path.length === 0) {
-            alert("Please draw a shape first.");
+            alert("Please draw a shape before tracing.");
             return;
         }
-
-        gcodeOutput.scrollTop = 0;
 
         traceIndex = 0;
         clearInterval(traceInterval);
         traceInterval = setInterval(() => {
-            if (traceIndex < path.length) {
-                currentX = path[traceIndex].x;
-                currentY = path[traceIndex].y;
-                drawPath();
-
-                gcodeOutput.innerHTML = gcode
-                    .map((line, index) => {
-                        if (index === traceIndex) {
-                            return `<span style="color: #e74c3c">${line}</span>`;
-                        }
-                        return line;
-                    })
-                    .join("\n");
-
-                traceIndex++;
-            } else {
-                currentX = path[path.length - 1].x;
-                currentY = path[path.length - 1].y;
-                drawPath();
-                gcodeOutput.innerHTML = gcode.join("\n");
+            if (traceIndex >= path.length) {
                 clearInterval(traceInterval);
+                alert("Tracing completed.");
+                return;
             }
-        }, 100);
+
+            const nextPoint = path[traceIndex++];
+            currentX = nextPoint.x;
+            currentY = nextPoint.y;
+            drawPath();
+        }, 100); // Adjust speed of tracing
     }
 
-    // Function to clear the drawn shape and reset the G-code output
+    // Function to clear the canvas and reset everything
     function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
         path = [];
         gcode = [];
         currentX = 300;
         currentY = 300;
-        drawPath(); // Redraw the grid and the initial state
-        updateGcodeOutput(); // Reset G-code output
+        updateGcodeOutput();
+        drawGrid(); // Redraw the grid
     }
 
-    // Initial drawing on the canvas
-    drawPath();
+    // Initial setup
+    drawGrid();
 </script>
-
 </body>
 </html>
