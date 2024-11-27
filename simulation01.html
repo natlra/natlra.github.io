@@ -87,9 +87,9 @@
 <body>
     <!-- Vertical Navbar for simulations -->
     <div class="navbar">
-        <div class="menu-item active" onclick="switchTab('simulation')">Water Particle Simulation</div>
-        <div class="menu-item" onclick="switchTab('simulation2')">Another Simulation</div>
-        <div class="menu-item" onclick="switchTab('simulation3')">Future Simulation</div>
+        <div class="menu-item active" onclick="window.location.href='simulation1.html'">Water Particle Simulation</div>
+        <div class="menu-item" onclick="window.location.href='simulation2.html'">Another Simulation</div>
+        <div class="menu-item" onclick="window.location.href='simulation3.html'">Future Simulation</div>
     </div>
 
     <!-- Content Area -->
@@ -213,19 +213,6 @@
 
         // Start the simulation
         updateSimulation();
-
-        // Switch between tabs
-        function switchTab(tabId) {
-            const tabs = document.querySelectorAll('.menu-item');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            tabs.forEach(tab => tab.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-
-            document.getElementById(tabId).classList.add('active');
-            const activeTab = document.querySelector(`.menu-item[onclick="switchTab('${tabId}')"]`);
-            activeTab.classList.add('active');
-        }
     </script>
 </body>
 </html>
