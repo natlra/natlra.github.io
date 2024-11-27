@@ -107,6 +107,16 @@
             font-size: 36px; /* Increased font size */
             margin-bottom: 20px;
         }
+
+        /* Highlighted G-code line style */
+        .highlighted {
+            background-color: #f39c12; /* Highlight color (yellow) */
+        }
+
+        /* Individual G-code line container */
+        .gcode-line {
+            margin: 2px 0;
+        }
     </style>
 </head>
 <body>
@@ -115,7 +125,7 @@
 <div class="navbar">
     <div class="menu-item" onclick="window.location.href='simulation01.html'">Water Particle Simulation</div>
     <div class="menu-item active" onclick="window.location.href='simulation02.html'">G-code Visualizer</div>
-    <div class="menu-item" onclick="window.location.href='simulation03.html'">2D Particle Kinematics</div>
+    <div class="menu-item" onclick="window.location.href='simulation03.html'">2D Projectile Motion</div>
     <div class="menu-item back-button" onclick="window.location.href='index.html'">Back to Home</div>
 </div>
 
@@ -214,7 +224,13 @@
 
     // Function to show the G-code in the output panel
     function updateGcodeOutput() {
-        gcodeOutput.textContent = gcode.join("\n");
+        gcodeOutput.innerHTML = ''; // Clear previous output
+        gcode.forEach(line => {
+            const div = document.createElement('div');
+            div.classList.add('gcode-line');
+            div.textContent = line;
+            gcodeOutput.appendChild(div);
+        });
     }
 
     // Function to generate G-code from the traced path
@@ -225,9 +241,9 @@
 
         path.forEach((point, index) => {
             if (index === 0) {
-                gcode.push(`G0 X${point.x} Y${point.y}`); // Rapid move to start point
+                gcode.push(`G0 X${point.x} Y${point.y}`); // Move to the start point
             } else {
-                gcode.push(`G1 X${point.x} Y${point.y}`); // Linear cut to the next point
+                gcode.push(`G1 X${point.x} Y${point.y} F1000`); // Draw to the next point
             }
         });
 
@@ -235,57 +251,69 @@
         updateGcodeOutput();
     }
 
-    // Mouse event listeners for drawing on canvas
+    // Mouse events for drawing on the canvas
     canvas.addEventListener('mousedown', (event) => {
         if (!drawingMode) return;
-
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
         currentX = event.clientX - rect.left;
         currentY = event.clientY - rect.top;
-        path.push({ x: currentX, y: currentY }); // Add first point
+        path.push({ x: currentX, y: currentY });
+        drawPath(); // Redraw the path
     });
 
     canvas.addEventListener('mousemove', (event) => {
         if (!isDrawing || !drawingMode) return;
-
         const rect = canvas.getBoundingClientRect();
         currentX = event.clientX - rect.left;
         currentY = event.clientY - rect.top;
-        path.push({ x: currentX, y: currentY }); // Add point to path
-        drawPath(); // Redraw the path on canvas
+        path.push({ x: currentX, y: currentY });
+        drawPath(); // Redraw the path
     });
 
     canvas.addEventListener('mouseup', () => {
         if (!drawingMode) return;
-
         isDrawing = false;
         generateGcodeFromPath(); // Generate G-code from the traced path
         drawPath(); // Final drawing
     });
 
-    // Function to trace the shape step by step
-    function traceShape() {
-        if (path.length === 0) {
-            alert("Please draw a shape before tracing.");
-            return;
-        }
+   function traceShape() {
+    if (path.length === 0) {
+        alert("Please draw a shape before tracing.");
+        return;
+    }
 
-        traceIndex = 0;
-        clearInterval(traceInterval);
-        traceInterval = setInterval(() => {
-            if (traceIndex >= path.length) {
-                clearInterval(traceInterval);
-                alert("Tracing completed.");
-                return;
-            }
-
+    traceIndex = 0;
+    clearInterval(traceInterval);
+    traceInterval = setInterval(() => {
+        if (traceIndex < path.length) {
             const nextPoint = path[traceIndex++];
             currentX = nextPoint.x;
             currentY = nextPoint.y;
             drawPath();
-        }, 100); // Adjust speed of tracing
-    }
+
+            // Highlight the corresponding G-code line
+            const allLines = gcodeOutput.querySelectorAll('.gcode-line');
+            allLines.forEach((line) => line.classList.remove('highlighted'));
+
+            if (allLines[traceIndex - 1]) {  // Highlight the current line
+                allLines[traceIndex - 1].classList.add('highlighted');
+            }
+        } else {
+            // Ensure the last line is highlighted before stopping
+            const allLines = gcodeOutput.querySelectorAll('.gcode-line');
+            allLines.forEach((line) => line.classList.remove('highlighted'));
+            if (allLines[traceIndex - 1]) {
+                allLines[traceIndex - 1].classList.add('highlighted');
+            }
+
+            clearInterval(traceInterval);
+            alert("Tracing completed.");
+        }
+    }, 100); // Adjust speed of tracing
+}
+
 
     // Function to clear the canvas and reset everything
     function clearCanvas() {
@@ -301,5 +329,6 @@
     // Initial setup
     drawGrid();
 </script>
+
 </body>
 </html>
