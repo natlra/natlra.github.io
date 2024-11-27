@@ -5,26 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Particle Simulation</title>
     <style>
-        body { display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100vh; margin: 0; background-color: #2c3e50; }
-        canvas { border: 2px solid white; background-color: #34495e; }
-        label { color: white; font-size: 16px; margin: 10px; }
-        input { margin-bottom: 20px; }
-        .controls { display: flex; justify-content: center; }
+        body { 
+            display: flex; 
+            justify-content: flex-start; 
+            align-items: flex-start; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #2c3e50; /* Dark Grey */
+            color: white;
+        }
+        canvas { 
+            border: 2px solid #7f8c8d; /* Lighter Grey */
+            background-color: #34495e; /* Dark Grey */
+        }
+        label { 
+            color: white; 
+            font-size: 16px; 
+            margin: 10px; 
+        }
+        input { 
+            margin-bottom: 20px; 
+            background-color: #7f8c8d; /* Lighter Grey */
+            border: 1px solid #95a5a6; /* Even lighter grey */
+            color: white;
+        }
+        .controls { 
+            display: flex; 
+            justify-content: center; 
+        }
+        h1 { 
+            color: white; 
+            font-size: 32px; 
+            margin-bottom: 20px; 
+        }
+        /* Vertical Navbar styles */
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #34495e; /* Dark Grey */
+            padding: 10px;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+        }
+        .navbar .menu-item {
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #2c3e50; /* Dark Grey */
+        }
+        .navbar .menu-item:hover {
+            background-color: #7f8c8d; /* Lighter Grey */
+        }
+        .navbar .active {
+            background-color: #7f8c8d; /* Lighter Grey */
+        }
+        /* Content Area */
+        .content {
+            margin-left: 220px; /* Space for navbar */
+            padding: 20px;
+            width: calc(100% - 220px);
+            background-color: #34495e; /* Dark Grey */
+        }
+        /* Tab content styles */
+        .tab-content {
+            display: none;
+            width: 100%;
+        }
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
-      <h1>Water Particle Simulation</h1>
-    <div class="controls">
-        <div>
-            <label for="temperature">Temperature (°C): <span id="tempValue">20</span></label>
-            <input type="range" id="temperature" min="0" max="150" value="20">
+    <!-- Vertical Navbar for simulations -->
+    <div class="navbar">
+        <div class="menu-item active" onclick="switchTab('simulation')">Water Particle Simulation</div>
+        <div class="menu-item" onclick="switchTab('simulation2')">Another Simulation</div>
+        <div class="menu-item" onclick="switchTab('simulation3')">Future Simulation</div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <!-- Heading -->
+        <h1>Water Particle Simulation</h1>
+
+        <!-- Water Particle Simulation Content -->
+        <div class="tab-content active" id="simulation">
+            <div class="controls">
+                <div>
+                    <label for="temperature">Temperature (°C): <span id="tempValue">20</span></label>
+                    <input type="range" id="temperature" min="0" max="150" value="20">
+                </div>
+                <div>
+                    <label for="pressure">Pressure (atm): <span id="pressureValue">1</span></label>
+                    <input type="range" id="pressure" min="0.5" max="2" step="0.1" value="1">
+                </div>
+            </div>
+            <canvas id="simulationCanvas" width="500" height="500"></canvas>
         </div>
-        <div>
-            <label for="pressure">Pressure (atm): <span id="pressureValue">1</span></label>
-            <input type="range" id="pressure" min="0.5" max="2" step="0.1" value="1">
+
+        <!-- Another Simulation Content -->
+        <div class="tab-content" id="simulation2">
+            <h2>Another Simulation Placeholder</h2>
+            <p>This is where another simulation will be displayed.</p>
+        </div>
+
+        <!-- Future Simulation Content -->
+        <div class="tab-content" id="simulation3">
+            <h2>Future Simulation Placeholder</h2>
+            <p>This is where a future simulation will be displayed.</p>
         </div>
     </div>
-    <canvas id="simulationCanvas" width="500" height="500"></canvas>
 
     <script>
         const canvas = document.getElementById('simulationCanvas');
@@ -61,7 +160,6 @@
 
         // Update particle positions
         function updateParticles(temp, pressure) {
-            // We can simulate the boiling effect when the temperature reaches an adjusted threshold based on pressure
             const boilingPoint = boilingPoints[pressure] || 100; // If pressure is undefined, assume 100°C
             const isBoiling = temp >= boilingPoint;
 
@@ -95,7 +193,7 @@
             particles.forEach(particle => {
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                ctx.fillStyle = particle.isMovingFast ? 'red' : 'blue'; // Fast particles in red, slow in blue
+                ctx.fillStyle = particle.isMovingFast ? '#e74c3c' : '#3498db'; // Fast particles in red, slow in blue
                 ctx.fill();
             });
         }
@@ -115,6 +213,19 @@
 
         // Start the simulation
         updateSimulation();
+
+        // Switch between tabs
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.menu-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            const activeTab = document.querySelector(`.menu-item[onclick="switchTab('${tabId}')"]`);
+            activeTab.classList.add('active');
+        }
     </script>
 </body>
 </html>
