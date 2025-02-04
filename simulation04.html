@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to SVG Converter</title>
+    <style>
+        body { 
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            height: 100vh; 
+            margin: 0; 
+            background-color: #2c3e50; /* Dark Grey */
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background-color: #34495e;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .main-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .content {
+            margin-left: 200px; /* Align perfectly with navbar */
+            padding: 20px;
+            width: calc(100% - 200px);
+            background-color: #2c3e50; /* Match body background */
+            height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #svgContainer {
+            margin-top: 20px;
+            background-color: #34495e; /* Dark Grey */
+            display: inline-block;
+            padding: 10px;
+            border: none;
+        }
+        label, h2 { 
+            color: white; 
+        }
+        input, select, button { 
+            margin-bottom: 10px; 
+            background-color: #7f8c8d; /* Lighter Grey */
+            border: none;
+            color: white;
+        }
+        /* Vertical Navbar styles */
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #34495e; /* Dark Grey */
+            padding: 10px;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+        }
+        .navbar .menu-item {
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #2c3e50; /* Dark Grey */
+        }
+        .navbar .menu-item:hover {
+            background-color: #7f8c8d; /* Lighter Grey */
+        }
+        .navbar .active {
+            background-color: #7f8c8d; /* Lighter Grey */
+        }
+        .navbar .back-button {
+            margin-top: auto;
+            background-color: #16a085;
+            color: white;
+            text-align: center;
+        }
+        .navbar .back-button:hover {
+            background-color: #1abc9c;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Text to SVG Converter</div>
+    <div class="main-container">
+        <div class="navbar">
+            <div class="menu-item" onclick="window.location.href='simulation01.html'">Water Particle Simulation</div>
+            <div class="menu-item" onclick="window.location.href='simulation02.html'">G-code Visualizer</div>
+            <div class="menu-item" onclick="window.location.href='simulation03.html'">2D Projectile Motion</div>
+            <div class="menu-item active">Text to SVG</div>
+            <div class="menu-item back-button" onclick="window.location.href='index.html'">Back</div>
+        </div>
+        <div class="content">
+            <input type="text" id="textInput" maxlength="50" placeholder="Enter text (max 50 chars)">
+            <select id="fontSelect">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Georgia">Georgia</option>
+            </select>
+            <button onclick="generateSVG()">Convert to SVG</button>
+            <button onclick="downloadSVG()">Download SVG</button>
+            <div id="svgContainer"></div>
+        </div>
+    </div>
+    <script>
+        function generateSVG() {
+            const text = document.getElementById('textInput').value;
+            const font = document.getElementById('fontSelect').value;
+            if (!text) return;
+            
+            const svg = `<svg width="400" height="100" xmlns="http://www.w3.org/2000/svg">
+                <text x="10" y="50" font-family="${font}" font-size="40" fill="white">${text}</text>
+            </svg>`;
+            
+            document.getElementById('svgContainer').innerHTML = svg;
+        }
+
+        function downloadSVG() {
+            const svgContent = document.getElementById('svgContainer').innerHTML;
+            if (!svgContent) return;
+            
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'text.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
