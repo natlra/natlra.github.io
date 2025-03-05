@@ -132,24 +132,25 @@
       const file = fileInput.files[0];
       const reader = new FileReader();
 
-      reader.onload = function(event) {
-        const arrayBuffer = event.target.result;
+    reader.onload = function(event) {
+  const arrayBuffer = event.target.result;
 
-        heic2any({
-          blob: new Blob([arrayBuffer]),
-          toType: "image/jpeg",
-          quality: 0.9
-        }).then(resultBlob => {
-          const url = URL.createObjectURL(resultBlob);
-          const downloadLink = document.getElementById('downloadLink');
-          downloadLink.href = url;
-          downloadLink.style.display = "block";
-          downloadLink.innerText = "Download JPG";
-        }).catch(error => {
-          console.error("Conversion failed:", error);
-          alert("Failed to convert the image.");
-        });
-      };
+  heic2any({
+    blob: new Blob([arrayBuffer], { type: file.type }),
+    toType: "image/jpeg",
+    quality: 0.9
+  }).then(resultBlob => {
+    const url = URL.createObjectURL(resultBlob);
+    const downloadLink = document.getElementById('downloadLink');
+    downloadLink.href = url;
+    downloadLink.style.display = "block";
+    downloadLink.innerText = "Download JPG";
+  }).catch(error => {
+    console.error("Conversion failed:", error);
+    alert("Failed to convert the image.");
+  });
+};
+
 
       reader.readAsArrayBuffer(file);
     }
