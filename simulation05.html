@@ -135,11 +135,8 @@
     reader.onload = function(event) {
   const arrayBuffer = event.target.result;
 
-  heic2any({
-    blob: new Blob([arrayBuffer], { type: file.type }),
-    toType: "image/jpeg",
-    quality: 0.9
-  }).then(resultBlob => {
+   heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 })
+    then(resultBlob => {
     const url = URL.createObjectURL(resultBlob);
     const downloadLink = document.getElementById('downloadLink');
     downloadLink.href = url;
@@ -150,7 +147,6 @@
     alert("Failed to convert the image.");
   });
 };
-
 
       reader.readAsArrayBuffer(file);
     }
