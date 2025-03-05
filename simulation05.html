@@ -123,30 +123,33 @@
   <script src="heic2any.js"></script>
   <script>
     function convertImage() {
-      const fileInput = document.getElementById('fileInput');
-      if (fileInput.files.length === 0) {
-        alert("Please select a HEIF/HEIC file.");
-        return;
-      }
+  const fileInput = document.getElementById('fileInput');
+  if (fileInput.files.length === 0) {
+    alert("Please select a HEIF/HEIC file.");
+    return;
+  }
 
-      const file = fileInput.files[0];
-      const reader = new FileReader();
+  const file = fileInput.files[0];
+  console.log("Selected file:", file);
 
-    reader.onload = function(event) {
-  const arrayBuffer = event.target.result;
-
-   heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 })
-    then(resultBlob => {
+  heic2any({
+    blob: file,
+    toType: "image/jpeg",
+    quality: 0.9
+  })
+  .then(resultBlob => {
     const url = URL.createObjectURL(resultBlob);
     const downloadLink = document.getElementById('downloadLink');
     downloadLink.href = url;
     downloadLink.style.display = "block";
     downloadLink.innerText = "Download JPG";
-  }).catch(error => {
+  })
+  .catch(error => {
     console.error("Conversion failed:", error);
     alert("Failed to convert the image.");
   });
-};
+}
+
 
       reader.readAsArrayBuffer(file);
     }
