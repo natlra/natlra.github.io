@@ -1,3 +1,27 @@
+skip to:contentpackage searchsign in
+❤
+Pro
+Teams
+Pricing
+Documentation
+npm
+Search packages
+Search
+heic2any
+TypeScript icon, indicating that this package has built-in type declarations
+0.0.4 • Public • Published 2 years ago
+/heic2any/dist/heic2any.js
+/
+heic2any
+/
+dist
+/
+heic2any.js
+
+
+Back
+285 LOC
+1.36 MB
 /*Copyrights for code authored by Yahoo Inc. is licensed under the following terms:
 MIT License
 Copyright  2017 Yahoo Inc.
@@ -283,3 +307,56 @@ function heic2any(ref) {
 
 return heic2any;
 }));
+Package Sidebar
+Install
+npm i heic2any
+
+Repository
+github.com/alexcorvi/heic2any
+
+Homepage
+github.com/alexcorvi/heic2any#readme
+
+Weekly Downloads
+157,137
+
+Version
+0.0.4
+
+License
+MIT
+
+Unpacked Size
+2.72 MB
+
+Total Files
+6
+
+Issues
+23
+
+Pull Requests
+1
+
+Last publish
+2 years ago
+
+Collaborators
+alexcorvi
+Try on RunKit
+Report malware
+Footer
+Support
+Help
+Advisories
+Status
+Contact npm
+Company
+About
+Blog
+Press
+Terms & Policies
+Policies
+Terms of Use
+Code of Conduct
+Privacy
