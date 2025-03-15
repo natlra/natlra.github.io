@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HEIF to JPG Converter</title>
+  <title>PDF Combiner</title>
   <style>
     body { 
       display: flex; 
@@ -104,54 +104,53 @@
   </style>
 </head>
 <body>
-  <div class="header">HEIF to JPG Converter</div>
+  <div class="header">PDF Combiner</div>
   <div class="main-container">
     <div class="navbar">
       <div class="menu-item" onclick="window.location.href='simulation01.html'">Water Particle Simulation</div>
       <div class="menu-item" onclick="window.location.href='simulation02.html'">G-code Visualizer</div>
       <div class="menu-item" onclick="window.location.href='simulation03.html'">2D Projectile Motion</div>
       <div class="menu-item" onclick="window.location.href='simulation04.html'">Text to SVG</div>
-      <div class="menu-item active" onclick="window.location.href='simulation05.html'">HEIF to JPG</div>
+      <div class="menu-item active" onclick="window.location.href='simulation05.html'">PDF Combiner</div>
       <div class="menu-item back-button" onclick="window.location.href='index.html'">Back</div>
     </div>
     <div class="content">
-      <input type="file" id="fileInput" accept=".heic, .heif">
-      <button onclick="convertImage()">Convert</button>
-      <a id="downloadLink" style="display: none;" download="converted.jpg">Download JPG</a>
+      <input type="file" id="fileInput" accept=".pdf" multiple>
+      <button onclick="mergePDFs()">Merge PDFs</button>
+      <a id="downloadLink" style="display: none;" download="merged.pdf">Download Merged PDF</a>
     </div>
   </div>
-  <script src="heic2any.js"></script>
+  <!-- Include pdf-lib library -->
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <script>
-    function convertImage() {
-  const fileInput = document.getElementById('fileInput');
-  if (fileInput.files.length === 0) {
-    alert("Please select a HEIF/HEIC file.");
-    return;
-  }
+    async function mergePDFs() {
+      const fileInput = document.getElementById('fileInput');
+      if (fileInput.files.length < 2) {
+        alert("Please select at least two PDF files to merge.");
+        return;
+      }
+      
+      const { PDFDocument } = PDFLib;
+      const mergedPdf = await PDFDocument.create();
 
-  const file = fileInput.files[0];
-  console.log("Selected file:", file);
+      // Loop through each selected PDF file
+      for (const file of fileInput.files) {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await PDFDocument.load(arrayBuffer);
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach(page => {
+          mergedPdf.addPage(page);
+        });
+      }
 
-  heic2any({
-    blob: file,
-    toType: "image/jpeg",
-    quality: 0.9
-  })
-  .then(resultBlob => {
-    const url = URL.createObjectURL(resultBlob);
-    const downloadLink = document.getElementById('downloadLink');
-    downloadLink.href = url;
-    downloadLink.style.display = "block";
-    downloadLink.innerText = "Download JPG";
-  })
-  .catch(error => {
-    console.error("Conversion failed:", error);
-    alert("Failed to convert the image.");
-  });
-}
-
-
-      reader.readAsArrayBuffer(file);
+      // Save the merged PDF and create a Blob URL for download
+      const mergedPdfFile = await mergedPdf.save();
+      const blob = new Blob([mergedPdfFile], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.getElementById('downloadLink');
+      downloadLink.href = url;
+      downloadLink.style.display = "block";
+      downloadLink.innerText = "Download Merged PDF";
     }
   </script>
 </body>
