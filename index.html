@@ -17,7 +17,7 @@
     <ul>
         <li><a href="#featured-posts">Projects</a></li>
         <li><a href="HTMLPersonal Life.html">Personal Life</a></li>
-        <li><a href="HTML2048.html">2048 MINI GAME</a></li>
+        <li><a href="HTML2048.html">Mini Games</a></li>
     </ul>
 </nav>
 
@@ -26,39 +26,66 @@
 </div>
 
 <section id="featured-posts">
+
+    <!-- MECH 200 PROJECTS -->
     <article class="content-box">
-        <h2>Clock Project</h2>
+        <h2>Mech 200 Projects</h2>
         <a href="HTMLclock1.html" class="content-link">
-            <img src="PXL_clock3.1.jpg" alt="Clock Project" class="content-image">
+            <img src="PXL_clock3.1.jpg" alt="Mech 200 Projects" class="content-image">
         </a>
-        <p>Dive into the most intense project in Mech 200.</p>
+        <p>
+            Clock Project, HAAS CNC Project, and Screwdriver Project from MECH 200.
+        </p>
     </article>
 
+    <!-- MECHATRONICS PROJECT -->
     <article class="content-box">
-        <h2>Coaster Project</h2>
-        <a href="HTMLCoaster.html" class="content-link">
-            <img src="PXL_20231211_194152822.jpg" alt="Coaster Project" class="content-image">
+        <h2>Mechatronics Project – Safe</h2>
+        <a href="#" class="content-link">
+            <!-- Placeholder image for now -->
+            <img src="PXL_clock3.1.jpg" alt="Mechatronics Safe Project" class="content-image">
         </a>
-        <p>HAAS CNC certification.</p>
+        <p>
+            Electromechanical safe featuring sensors, control logic, and embedded systems.
+        </p>
     </article>
 
+    <!-- DYNAMICS OF MACHINES PROJECT -->
     <article class="content-box">
-        <h2>Screwdriver Project</h2>
-        <a href="HTMLscrewdriver.html" class="content-link">
-            <img src="PXL_20231211_194352302.jpg" alt="Screwdriver Project" class="content-image">
+        <h2>Dynamics of Machines – HydroCrank</h2>
+        <a href="#" class="content-link">
+            <!-- Placeholder image for now -->
+            <img src="PXL_clock3.1.jpg" alt="HydroCrank Project" class="content-image">
         </a>
-        <p>Mech 200 end of year project.</p>
+        <p>
+            Kinematic and dynamic analysis of a crank-driven pumping mechanism.
+        </p>
     </article>
-    
+
+    <!-- MATCHA MILL PROJECT -->
+    <article class="content-box">
+        <h2>Matcha Mill Project</h2>
+        <a href="#" class="content-link">
+            <!-- Placeholder image for now -->
+            <img src="PXL_clock3.1.jpg" alt="Matcha Mill Project" class="content-image">
+        </a>
+        <p>
+            Precision-ground matcha mill focused on manufacturability, materials, and user experience.
+        </p>
+    </article>
+
+    <!-- SIMULATIONS / TOOLS -->
     <article class="content-box">
         <h2>Simulations and Tools</h2>
         <a href="simulation04.html" class="content-link">
             <img src="Screenshot 2024-11-26 222606.png" alt="Simulations" class="content-image">
         </a>
-        <p>Simple simulations and tools made during free time.</p>
+        <p>
+            Simple simulations and tools made during free time.
+        </p>
     </article>
-</section>
 
+</section>
 
 <footer>
     <p>
@@ -74,27 +101,21 @@
 </footer>
 
 <script>
-   // Smooth scroll to the "Projects" section when "Projects" link is clicked
+    // Smooth scroll to the "Projects" section
     document.querySelector('.navbar a[href="#featured-posts"]').addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent default anchor click behavior
-        
-        const targetSection = document.querySelector('#featured-posts');
-        const headerHeight = document.querySelector('.sticky-header').offsetHeight; // Get height of the sticky header
+        e.preventDefault();
 
-        // Calculate the position to scroll so the "Projects" section is centered in the viewport
+        const targetSection = document.querySelector('#featured-posts');
+        const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+
         const targetPosition = targetSection.offsetTop - headerHeight;
 
         window.scrollTo({
-            top: targetPosition, // Scroll to the top of the "Projects" section, accounting for the header
-            behavior: 'smooth' // Smooth scrolling
+            top: targetPosition,
+            behavior: 'smooth'
         });
     });
-
-
 </script>
-
-
-
 
 </body>
 </html>
