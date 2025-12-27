@@ -3,114 +3,151 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Personal Life</title>
+    <title>Background & Interests</title>
+
     <style>
-        /* General Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Ensure the body and html take the full height */
         html, body {
-            height: 100%; /* Make sure the background image covers the whole page */
+            height: 100%;
         }
 
-        /* Sticky Banner Styling */
-        .banner {
-            background-color: rgba(0, 0, 0, 0.8); /* Slight transparency for overlay effect */
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-            width: 100%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        /* Larger Heading in Banner */
-        .banner h1 {
-            font-size: 3em; /* Set the font size to the largest */
-            margin: 0;
-        }
-
-        /* Body Styling */
         body {
             font-family: Arial, sans-serif;
             color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
             min-height: 100vh;
-            overflow-y: auto;  /* Allows vertical scrolling */
-            overflow-x: hidden; /* Prevents horizontal scrolling */
+            overflow-y: auto;
+            overflow-x: hidden;
 
-            /* Background Image Styling */
-            background-image: url('IMG_g35.jpg');  /* Set the image as background */
-            background-size: cover; /* Ensures the image covers the screen */
-            background-position: center; /* Centers the image */
-            background-attachment: fixed; /* Keeps the image fixed when scrolling */
+            background-image: url('IMG_g35.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
-        /* Main Content Wrapper */
+        /* Sticky Banner */
+        .banner {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner h1 {
+            font-size: 2.5em;
+        }
+
+        /* Navigation */
+        .sub-nav {
+            margin-top: 10px;
+        }
+
+        .sub-nav a {
+            color: #D3D3D3;
+            margin: 0 12px;
+            text-decoration: none;
+            font-size: 0.95em;
+            border-bottom: 1px solid transparent;
+        }
+
+        .sub-nav a:hover {
+            border-bottom: 1px solid #D3D3D3;
+        }
+
+        /* Content Wrapper */
         .content {
-            margin: 20px;
+            margin: 30px 0;
             width: 90%;
             max-width: 800px;
         }
 
-        /* Individual Section Styling */
         section {
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black for readability */
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
-            margin: 20px 0;
+            margin: 25px 0;
             border-radius: 12px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-            text-align: justify;
         }
 
-        /* Distinct Header Styling */
         section h2 {
-            font-size: 1.8em;
+            font-size: 1.6em;
             margin-bottom: 10px;
-            color: #D3D3D3; /* Grey color for distinction */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            border-bottom: 2px solid #808080; /* Grey border */
+            color: #D3D3D3;
+            border-bottom: 2px solid #808080;
             padding-bottom: 5px;
+        }
+
+        section p {
+            line-height: 1.6;
+            text-align: justify;
         }
     </style>
 </head>
 
 <body>
+
     <div class="banner">
-        <h1>Personal Life</h1>
+        <h1>Background & Interests</h1>
+        <div class="sub-nav">
+            <a href="#background">Background</a>
+            <a href="#culinary">Professional Discipline</a>
+            <a href="#motorsports">Motorsports</a>
+        </div>
     </div>
 
     <div class="content">
-        <section>
-            <h2>Early Life</h2>
+
+        <section id="background">
+            <h2>Background</h2>
             <p>
-                I was born in Paris, France, and moved to the United States at the age of two. After three years, I returned to Paris, then came back to the US for another three years. From there, I moved to London, but after just one year, I relocated to Colorado, where I've been ever since. Living across different cultures and regions has given me a unique perspective on how people adapt and change around the world.
+                I was born in Paris, France, and spent my early childhood moving between Europe and the United States before settling permanently in Colorado. Growing up across multiple cultures and environments developed adaptability, communication skills, and an ability to integrate quickly into new teams—traits that continue to influence how I approach engineering projects and collaboration.
             </p>
         </section>
 
-        <section>
-            <h2>Chef's Life</h2>
+        <section id="culinary">
+            <h2>Professional Discipline</h2>
             <p>
-                During my time in Boulder, I had the opportunity to work at several restaurants, but one in particular had a profound impact on my professional development. I served as a Garm Chef at Pizzeria Locale, now known as Pizzeria Alberico. This experience was transformative, as it allowed me to work alongside chefs from Frasca Food and Wine, Pizzeria Alberico’s sister restaurant. Their mentorship reshaped my approach to food, refined my perspective on attention to detail, and enhanced my ability to collaborate with colleagues. Frasca Food and Wine, now the only Michelin Star restaurant in Boulder, provided a unique environment where I learned firsthand that dedication and hard work can lead to exceptional achievements.
+                Prior to engineering, I worked in high-end restaurants in Boulder, including Pizzeria Locale (now Pizzeria Alberico), where I served as a Garde Manger chef. Working alongside chefs affiliated with Frasca Food and Wine instilled a strong respect for process discipline, consistency, and attention to detail. This environment reinforced the importance of preparation, accountability, and executing under pressure—principles I now apply directly to technical and academic work.
             </p>
         </section>
 
-        <section>
-            <h2>Drifting</h2>
+        <section id="motorsports">
+            <h2>Motorsports & Engineering Outside the Classroom</h2>
             <p>
-                I have a strong passion for cars and precision driving. Currently, I am collaborating with a mechanic in Loveland to perform an LS engine swap in my track car, which has been extensively modified for drifting competitions. I have dedicated countless hours to honing my driving skills at the track, with the goal of competing during the summer season. This year, I am hopeful to secure a sponsor, allowing me to focus more on my driving and less on the constant maintenance and repairs of my car.
+                I actively build and campaign a drift car, currently undergoing an LS engine swap in collaboration with an experienced mechanic in Loveland. Beyond driving, I am directly involved in mechanical assembly, troubleshooting, wiring, and system integration. Track driving has sharpened my understanding of vehicle dynamics, failure modes, and rapid problem-solving in real-world conditions. My long-term goal is to compete consistently while continuing to deepen my engineering skill set.
             </p>
         </section>
+
     </div>
-</body>
 
+    <script>
+        // Smooth scroll for internal navigation
+        document.querySelectorAll('.sub-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerOffset = document.querySelector('.banner').offsetHeight;
+                const elementPosition = target.offsetTop;
+                const offsetPosition = elementPosition - headerOffset - 10;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
 </html>
