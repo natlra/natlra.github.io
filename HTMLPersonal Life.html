@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Background & Interests</title>
 
     <style>
@@ -12,28 +13,38 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            height: 100%;
+        html,
+        body {
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-
-            background-image: url('IMG_g35.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            position: relative;
+            background-color: #111;
         }
 
-        /* Sticky Banner */
-        .banner {
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(45%);
+        }
+
+        .sticky-header {
             background-color: rgba(0, 0, 0, 0.85);
             padding: 20px;
             text-align: center;
@@ -44,105 +55,176 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
 
-        .banner h1 {
+        .sticky-header h1 {
             font-size: 2.5em;
+            margin-bottom: 8px;
         }
 
-        /* Navigation */
+        .sticky-header p {
+            color: #d3d3d3;
+            font-size: 1em;
+        }
+
         .sub-nav {
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .sub-nav a {
-            color: #D3D3D3;
+            color: #d3d3d3;
             margin: 0 12px;
             text-decoration: none;
             font-size: 0.95em;
             border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
         }
 
         .sub-nav a:hover {
-            border-bottom: 1px solid #D3D3D3;
+            border-bottom: 1px solid #d3d3d3;
         }
 
-        /* Content Wrapper */
         .content {
-            margin: 30px 0;
+            margin: 30px auto;
             width: 90%;
-            max-width: 800px;
+            max-width: 950px;
         }
 
         section {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.72);
+            padding: 24px;
             margin: 25px 0;
             border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
         }
 
         section h2 {
-            font-size: 1.6em;
-            margin-bottom: 10px;
-            color: #D3D3D3;
+            font-size: 1.7em;
+            margin-bottom: 14px;
+            color: #d3d3d3;
             border-bottom: 2px solid #808080;
-            padding-bottom: 5px;
+            padding-bottom: 6px;
         }
 
         section p {
-            line-height: 1.6;
+            line-height: 1.7;
             text-align: justify;
+            margin-bottom: 16px;
+        }
+
+        .section-image {
+            width: 100%;
+            max-width: 700px;
+            display: block;
+            margin: 18px auto 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .headshot {
+            width: 100%;
+            max-width: 260px;
+            display: block;
+            margin: 18px auto 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .image-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: center;
+            margin-top: 18px;
+        }
+
+        .image-row img {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 700px) {
+            .sticky-header h1 {
+                font-size: 2em;
+            }
+
+            .sub-nav a {
+                display: inline-block;
+                margin: 6px 8px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="banner">
+    <div class="background-image">
+        <img src="StarsFOCO.jpeg" alt="Fort Collins night sky background">
+    </div>
+
+    <header class="sticky-header">
         <h1>Background & Interests</h1>
+        <p>Personal background, professional discipline, and hands-on engineering experience</p>
         <div class="sub-nav">
             <a href="#background">Background</a>
-            <a href="#culinary">Professional Discipline</a>
-            <a href="#motorsports">Motorsports</a>
+            <a href="#culinary">Chef Life</a>
+            <a href="#motorsports">G35 LS1 Swap</a>
         </div>
-    </div>
+    </header>
 
     <div class="content">
 
         <section id="background">
             <h2>Background</h2>
             <p>
-                I was born in Paris, France, and spent my early childhood moving between Europe and the United States before settling permanently in Colorado. Growing up across multiple cultures and environments developed adaptability, communication skills, and an ability to integrate quickly into new teams-traits that continue to influence how I approach engineering projects and collaboration.
+                I was born in Paris, France, and spent my early childhood moving between Europe and the United States before settling in Colorado. Growing up across different cultures and environments helped me become adaptable, observant, and comfortable working with many types of people. Those experiences continue to shape how I approach engineering, teamwork, and communication.
             </p>
+            <p>
+                Today, I am a Mechanical Engineering student at Colorado State University with a strong interest in design, manufacturing, fabrication, and automotive systems. I enjoy building projects that combine technical problem-solving with hands-on work, and I try to carry that mindset into everything from coursework to personal projects.
+            </p>
+            <img src="JTC_6754.jpeg" alt="Nathan headshot" class="headshot">
         </section>
 
         <section id="culinary">
-            <h2>Professional Discipline</h2>
+            <h2>Chef Life</h2>
             <p>
-                Prior to engineering, I worked in high-end restaurants in Boulder, including Pizzeria Locale (now Pizzeria Alberico), where I served as a Garde Manger chef. Working alongside chefs affiliated with Frasca Food and Wine instilled a strong respect for process discipline, consistency, and attention to detail. This environment reinforced the importance of preparation, accountability, and executing under pressure-principles I now apply directly to technical and academic work.
+                Before focusing fully on engineering, I worked in high-end restaurants in Boulder and developed a deep respect for the discipline of professional kitchens. I worked in environments where consistency, timing, preparation, and accountability mattered every single day. That experience taught me how much strong systems and attention to detail affect the quality of the final product.
             </p>
+            <p>
+                Working as a chef also helped me get comfortable performing under pressure. In a kitchen, there is very little room for hesitation, poor communication, or sloppy execution. That same mindset has carried over into my academic and engineering work, where process, precision, and reliability matter just as much.
+            </p>
+            <img src="OcotoChef.PNG" alt="Chef experience" class="section-image">
         </section>
 
         <section id="motorsports">
-            <h2>Motorsports & Engineering Outside the Classroom</h2>
+            <h2>G35 LS1 Swap</h2>
             <p>
-                I actively build and campaign a drift car, currently undergoing an LS engine swap in collaboration with an experienced mechanic in Loveland. Beyond driving, I am directly involved in mechanical assembly, troubleshooting, wiring, and system integration. Track driving has sharpened my understanding of vehicle dynamics, failure modes, and rapid problem-solving in real-world conditions. My long-term goal is to compete consistently while continuing to deepen my engineering skill set.
+                One of the biggest projects outside the classroom is my Infiniti G35 drift car, which is currently undergoing an LS1 swap. This project has given me direct experience with mechanical assembly, electrical troubleshooting, wiring integration, and overall system packaging. It has also pushed me to better understand how engine, chassis, and supporting systems must work together as one complete vehicle.
             </p>
+            <p>
+                Beyond just installing parts, the swap has involved real engineering judgment. I have had to think carefully about routing, fitment, packaging constraints, and electrical logic, especially when working through components like the dashboard and IPDM wiring. The project has made me better at diagnosing problems, breaking large tasks into manageable steps, and staying patient through complex fabrication and integration work.
+            </p>
+
+            <div class="image-row">
+                <img src="G35Bay.jpeg" alt="G35 LS1 engine bay">
+                <img src="G35Dash.jpeg" alt="G35 dashboard integration">
+                <img src="G35_IPDM_pinout.png" alt="G35 IPDM pinout diagram">
+            </div>
         </section>
 
     </div>
 
     <script>
-        // Smooth scroll for internal navigation
         document.querySelectorAll('.sub-nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
+
                 const target = document.querySelector(this.getAttribute('href'));
-                const headerOffset = document.querySelector('.banner').offsetHeight;
-                const elementPosition = target.offsetTop;
-                const offsetPosition = elementPosition - headerOffset - 10;
+                const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight - 10;
 
                 window.scrollTo({
-                    top: offsetPosition,
+                    top: targetPosition,
                     behavior: 'smooth'
                 });
             });
@@ -150,5 +232,5 @@
     </script>
 
 </body>
-</html>
 
+</html>
