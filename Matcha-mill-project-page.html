@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matcha Mill Project | Fresh Matcha on Demand</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            position: relative;
+            background-color: #111;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(32%);
+        }
+
+        .sticky-header {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .sticky-header h1 {
+            font-size: 2.4em;
+            margin-bottom: 8px;
+        }
+
+        .sticky-header p {
+            color: #d3d3d3;
+            font-size: 1em;
+        }
+
+        .sub-nav {
+            margin-top: 12px;
+        }
+
+        .sub-nav a {
+            color: #d3d3d3;
+            margin: 0 12px;
+            text-decoration: none;
+            font-size: 0.95em;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sub-nav a:hover {
+            border-bottom: 1px solid #d3d3d3;
+            color: #fff;
+        }
+
+        .content {
+            margin: 30px auto 50px auto;
+            width: 90%;
+            max-width: 1050px;
+        }
+
+        section {
+            background-color: rgba(0, 0, 0, 0.72);
+            padding: 24px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
+        }
+
+        section h2 {
+            font-size: 1.7em;
+            margin-bottom: 14px;
+            color: #d3d3d3;
+            border-bottom: 2px solid #808080;
+            padding-bottom: 6px;
+        }
+
+        section p {
+            line-height: 1.75;
+            text-align: justify;
+            margin-bottom: 16px;
+        }
+
+        .intro-text {
+            font-size: 1.05em;
+        }
+
+        .highlight-box {
+            background-color: rgba(255, 255, 255, 0.06);
+            border-left: 4px solid #9c9c9c;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 18px 0 10px 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 10px;
+            color: #f0f0f0;
+            font-size: 1.1em;
+        }
+
+        .highlight-box ul {
+            padding-left: 20px;
+            line-height: 1.8;
+            color: #ececec;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 6px;
+        }
+
+        .tag {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ededed;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.92em;
+        }
+
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .figure-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .figure-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .figure-card.large img {
+            height: 300px;
+        }
+
+        .figure-card .caption {
+            padding: 12px 14px 14px 14px;
+        }
+
+        .figure-card .caption h4 {
+            font-size: 1em;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .figure-card .caption p {
+            font-size: 0.95em;
+            margin-bottom: 0;
+            color: #d9d9d9;
+            text-align: left;
+            line-height: 1.55;
+        }
+
+        .source-label {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #f0f0f0;
+            font-size: 0.82em;
+            letter-spacing: 0.02em;
+        }
+
+        .full-width-image {
+            width: 100%;
+            max-width: 900px;
+            display: block;
+            margin: 18px auto 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            color: #d3d3d3;
+            padding: 20px 0 35px 0;
+        }
+
+        @media (max-width: 700px) {
+            .sticky-header h1 {
+                font-size: 1.95em;
+            }
+
+            .sub-nav a {
+                display: inline-block;
+                margin: 6px 8px;
+            }
+
+            .figure-card img,
+            .figure-card.large img {
+                height: 210px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!--
+        Portfolio image set kept intentionally small for overview format.
+        Strongest images kept in script:
+
+        1. Report_Figure08_IsometricAssembly.png
+        2. Presentation_Prototypes.png
+        3. Presentation_Assembly.png
+        4. Report_Figure10_ExplodedAssembly.png
+        5. Report_Figure13_LinearActuatorThrustBearing.png
+        6. Report_Figure24_WoodenEnclosure.png
+        7. Report_Figure15_ManualMillTestingSetup.png
+        8. Report_Figure18_RPMVsParticleSize.png
+    -->
+
+    <div class="background-image">
+        <img src="Report_Figure08_IsometricAssembly.png" alt="Matcha mill assembly background image">
+    </div>
+
+    <header class="sticky-header">
+        <h1>Matcha Mill Project</h1>
+        <p>Fresh, cafe-ready matcha milled to order through testing-driven mechanical design</p>
+        <div class="sub-nav">
+            <a href="#overview">Overview</a>
+            <a href="#role">My Role</a>
+            <a href="#design">Design</a>
+            <a href="#testing">Testing</a>
+            <a href="#results">Results</a>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <section id="overview">
+            <h2>Project Overview</h2>
+            <p class="intro-text">
+                The Matcha Mill project focused on designing and building a commercial matcha mill that allows baristas to grind fresh matcha to order. The goal was to create a system that was more practical for cafe use than traditional options by making it compact, repeatable, and easier to operate in a real beverage workflow. Instead of relying on pre-ground matcha that loses flavor and aroma over time, this design aimed to support fresher preparation directly at the point of use.
+            </p>
+            <p>
+                The final concept combined a vertically integrated grinding system, a linear actuator driven loading mechanism, a belt-driven power transmission system, removable grinding components, and a rigid frame that could hold alignment under load. The page is kept intentionally simple so it works as a strong portfolio overview rather than a full project archive.
+            </p>
+
+            <div class="tag-row">
+                <div class="tag">Mechanical Design</div>
+                <div class="tag">Testing and Validation</div>
+                <div class="tag">CAD Modeling</div>
+                <div class="tag">Assembly</div>
+                <div class="tag">Particle Size Analysis</div>
+                <div class="tag">Cafe Equipment Design</div>
+            </div>
+
+            <div class="figure-grid">
+                <div class="figure-card large">
+                    <img src="Report_Figure08_IsometricAssembly.png" alt="Isometric assembly of matcha mill">
+                    <div class="caption">
+                        <h4>Full Assembly View</h4>
+                        <p>Overall isometric view of the Matcha Mill and its final integrated layout.</p>
+                        <span class="source-label">Source: Report Figure 8</span>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Presentation_Prototypes.png" alt="Initial and final prototypes">
+                    <div class="caption">
+                        <h4>Prototype Progression</h4>
+                        <p>Shows how the design moved from the initial concept toward the final prototype.</p>
+                        <span class="source-label">Source: Presentation - Prototypes</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="role">
+            <h2>My Role in the Project</h2>
+            <p>
+                In this project, I was primarily in charge of testing, modeling, and assembly. My work centered on turning the design into something that could be physically built, adjusted, and validated through actual performance data. That meant contributing to CAD work, helping refine how the subsystems fit together, assembling mechanical components, and working through repeated iterations to make sure the mill could operate reliably under load.
+            </p>
+            <p>
+                The testing side was especially important because the final machine performance depended on real trial data rather than assumptions alone. A large part of my role involved evaluating how applied force, grinding speed, total grind time, and interval strategy affected particle size and consistency. That made the project a good mix of hands-on fabrication and data-based engineering decisions.
+            </p>
+
+            <div class="highlight-box">
+                <h3>Main areas I focused on</h3>
+                <ul>
+                    <li>CAD modeling and packaging of components into the final layout</li>
+                    <li>Mechanical assembly of the mill and its supporting hardware</li>
+                    <li>Building and refining the testing setup</li>
+                    <li>Evaluating RPM, force, grind time, and interval effects</li>
+                    <li>Helping move the design from prototype form toward a validated final system</li>
+                </ul>
+            </div>
+
+            <img src="Presentation_Assembly.png" alt="Assembly slide for matcha mill" class="full-width-image">
+        </section>
+
+        <section id="design">
+            <h2>Design Overview</h2>
+            <p>
+                The Matcha Mill was designed as a modular grinding system for single-dose cafe use. Its main subsystems included a lead-screw based axial loading system, removable grinding components, a belt-driven transmission system, and a rigid frame to maintain alignment. This modular approach made it possible to iterate on grinding geometry, loading conditions, and component packaging without completely redesigning the full machine each time.
+            </p>
+            <p>
+                For a portfolio page, the most useful design images are the ones that quickly show what the machine is, how it is built, and what makes it mechanically interesting. The images below were kept because they do that clearly without overcrowding the page.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card">
+                    <img src="Report_Figure10_ExplodedAssembly.png" alt="Exploded assembly view">
+                    <div class="caption">
+                        <h4>Exploded Assembly</h4>
+                        <p>Breakdown of the major parts that make up the full machine assembly.</p>
+                        <span class="source-label">Source: Report Figure 10</span>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Report_Figure13_LinearActuatorThrustBearing.png" alt="Linear actuator and thrust bearing assembly">
+                    <div class="caption">
+                        <h4>Core Mechanism</h4>
+                        <p>Highlights the loading and thrust-bearing system that makes the design technically interesting.</p>
+                        <span class="source-label">Source: Report Figure 13</span>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Report_Figure24_WoodenEnclosure.png" alt="Wooden enclosure">
+                    <div class="caption">
+                        <h4>Final Enclosure</h4>
+                        <p>Shows the packaged system and the safety-focused outer housing.</p>
+                        <span class="source-label">Source: Report Figure 24</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testing">
+            <h2>Testing and Validation</h2>
+            <p>
+                Testing was one of the most important parts of the Matcha Mill project because the design had to prove that it could actually produce usable matcha at the target quality level. The performance studies focused on variables such as applied force, RPM, total grind time, and interval strategy. Instead of assuming one configuration would work best, the machine was evaluated through a structured test setup that allowed those variables to be compared directly.
+            </p>
+            <p>
+                Since this page is meant to be an overview, the strongest testing image is the one that clearly shows the setup itself. That gives the viewer immediate context for how the project moved beyond concept work and into actual validation.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card large">
+                    <img src="Report_Figure15_ManualMillTestingSetup.png" alt="Manual mill testing setup">
+                    <div class="caption">
+                        <h4>Testing Setup</h4>
+                        <p>Experimental setup used to evaluate force, speed, and grind performance.</p>
+                        <span class="source-label">Source: Report Figure 15</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="results">
+            <h2>Results</h2>
+            <p>
+                The project successfully demonstrated that the machine could produce fresh matcha in the target size range under the best operating conditions. One of the most important outcomes was identifying the lowest useful speed that still gave strong results, which helped define a practical operating point for the machine.
+            </p>
+            <p>
+                For a portfolio page, one clear result graphic is stronger than a long gallery of similar graphs. This figure was kept because it quickly shows that the project was guided by real performance data rather than only design intent.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card large">
+                    <img src="Report_Figure18_RPMVsParticleSize.png" alt="RPM versus particle size">
+                    <div class="caption">
+                        <h4>Performance Result</h4>
+                        <p>Shows how grinding speed influenced particle size and helped identify the most practical operating range.</p>
+                        <span class="source-label">Source: Report Figure 18</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Built to match the portfolio style with a tighter, cleaner image set for a stronger overview page.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.sub-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight - 10;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
