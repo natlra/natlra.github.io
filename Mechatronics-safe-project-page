@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mechatronics Project | Code and Fingerprint Safe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            position: relative;
+            background-color: #111;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(30%);
+        }
+
+        .sticky-header {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .sticky-header h1 {
+            font-size: 2.4em;
+            margin-bottom: 8px;
+        }
+
+        .sticky-header p {
+            color: #d3d3d3;
+            font-size: 1em;
+        }
+
+        .sub-nav {
+            margin-top: 12px;
+        }
+
+        .sub-nav a {
+            color: #d3d3d3;
+            margin: 0 12px;
+            text-decoration: none;
+            font-size: 0.95em;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sub-nav a:hover {
+            border-bottom: 1px solid #d3d3d3;
+            color: #fff;
+        }
+
+        .content {
+            margin: 30px auto 50px auto;
+            width: 90%;
+            max-width: 1050px;
+        }
+
+        section {
+            background-color: rgba(0, 0, 0, 0.72);
+            padding: 24px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
+        }
+
+        section h2 {
+            font-size: 1.7em;
+            margin-bottom: 14px;
+            color: #d3d3d3;
+            border-bottom: 2px solid #808080;
+            padding-bottom: 6px;
+        }
+
+        section p {
+            line-height: 1.75;
+            text-align: justify;
+            margin-bottom: 16px;
+        }
+
+        .intro-text {
+            font-size: 1.05em;
+        }
+
+        .highlight-box {
+            background-color: rgba(255, 255, 255, 0.06);
+            border-left: 4px solid #9c9c9c;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 18px 0 10px 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 10px;
+            color: #f0f0f0;
+            font-size: 1.1em;
+        }
+
+        .highlight-box ul {
+            padding-left: 20px;
+            line-height: 1.8;
+            color: #ececec;
+        }
+
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .figure-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .figure-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .figure-card.large img {
+            height: 300px;
+        }
+
+        .figure-card .caption {
+            padding: 12px 14px 14px 14px;
+        }
+
+        .figure-card .caption h4 {
+            font-size: 1em;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .figure-card .caption p {
+            font-size: 0.95em;
+            margin-bottom: 0;
+            color: #d9d9d9;
+            text-align: left;
+            line-height: 1.55;
+        }
+
+        .full-width-image {
+            width: 100%;
+            max-width: 900px;
+            display: block;
+            margin: 18px auto 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 6px;
+        }
+
+        .tag {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ededed;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.92em;
+        }
+
+        footer {
+            text-align: center;
+            color: #d3d3d3;
+            padding: 20px 0 35px 0;
+        }
+
+        @media (max-width: 700px) {
+            .sticky-header h1 {
+                font-size: 1.95em;
+            }
+
+            .sub-nav a {
+                display: inline-block;
+                margin: 6px 8px;
+            }
+
+            .figure-card img,
+            .figure-card.large img {
+                height: 210px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!--
+        Suggested image filenames in chronological order from the report:
+        Figure01_FinalSafeClosed.jpeg
+        Figure02_DoorInteriorPCB.png
+        Figure03_SafeOpenFront.png
+        Figure04_SensorBracketCloseup.png
+        Figure05_SystemFlowchart.png
+        Figure06_FunctionalBlockDiagram.png
+        Figure07_FullWiringSchematic.png
+        Figure08_PCBWiringReference.png
+        Figure09_FinalPCBFront.jpeg
+        Figure10_FinalPCBBack.jpeg
+        Figure11_DoorOuterHalf.png
+        Figure12_DoorInnerHalf.png
+        Figure13_FinalDoorAssemblyTop.png
+        Figure14_FinalDoorAssemblyBottom.png
+        Appendix_A1_PreliminarySketch.png
+        Appendix_A2_WoodBoxFinished.jpeg
+        Appendix_A3_BoxConstruction.jpeg
+        Appendix_A4_ArduinoPinInsertLeft.jpeg
+        Appendix_A5_ArduinoPinInsertRight.jpeg
+        Appendix_A6_SolenoidCover.png
+        Appendix_A7_TouchscreenPins.jpeg
+        Appendix_A8_InitialBreadboardWiring.jpeg
+        Appendix_A9_InitialSoldering.jpeg
+        Appendix_A10_TouchscreenOnMega.jpeg
+    -->
+
+    <div class="background-image">
+        <img src="Figure01_FinalSafeClosed.jpeg" alt="Final safe closed background image">
+    </div>
+
+    <header class="sticky-header">
+        <h1>Mechatronics Project - Code and Fingerprint Safe</h1>
+        <p>Design, prototyping, assembly, testing, and system integration for a multi-input electromechanical safe</p>
+        <div class="sub-nav">
+            <a href="#overview">Overview</a>
+            <a href="#role">My Role</a>
+            <a href="#electronics">Electronics</a>
+            <a href="#mechanical">Mechanical Design</a>
+            <a href="#lessons">Lessons Learned</a>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <section id="overview">
+            <h2>Project Overview</h2>
+            <p class="intro-text">
+                This project focused on designing and building a safe that could be unlocked using either a fingerprint sensor or a four-digit touchscreen code. The system combined an Arduino Mega, fingerprint authentication, a touchscreen interface, door sensors, solenoids, an electromagnet, and a buzzer into one working mechatronic system. The final design was not just about making the safe open and close, but about managing the interaction between hardware, software logic, power distribution, and physical packaging in a reliable way.
+            </p>
+            <p>
+                One of the most rewarding parts of this project was seeing a full system come together from many smaller design decisions. The safe had to interpret user input, verify access, actuate internal locking hardware, monitor the door state, and trigger an alarm if the door stayed open too long. That meant the project required careful coordination between electronics, embedded logic, fabrication, and repeated troubleshooting through each stage of development.
+            </p>
+
+            <div class="tag-row">
+                <div class="tag">Arduino Mega</div>
+                <div class="tag">Fingerprint Sensor</div>
+                <div class="tag">Touchscreen Input</div>
+                <div class="tag">Solenoid Locking</div>
+                <div class="tag">Electromagnet Hold</div>
+                <div class="tag">State Machine Logic</div>
+            </div>
+
+            <div class="figure-grid">
+                <div class="figure-card large">
+                    <img src="Figure01_FinalSafeClosed.jpeg" alt="Final safe closed">
+                    <div class="caption">
+                        <h4>Figure 1</h4>
+                        <p>Final safe with the door closed, showing the completed outer form of the project.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Figure02_DoorInteriorPCB.png" alt="Inside of the door with PCB and components">
+                    <div class="caption">
+                        <h4>Figure 2</h4>
+                        <p>Inside of the door, where the PCB, wiring, and integrated components were packaged together.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure03_SafeOpenFront.png" alt="Safe open front view">
+                    <div class="caption">
+                        <h4>Figure 3</h4>
+                        <p>Open-door view of the finished safe, revealing the internal layout of the enclosure.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure04_SensorBracketCloseup.png" alt="Sensor and bracket closeup">
+                    <div class="caption">
+                        <h4>Figure 4</h4>
+                        <p>Close-up of the inner wall, showing the sensor and bracket arrangement used for closing and locking.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="role">
+            <h2>My Role in the Project</h2>
+            <p>
+                In this project, I handled the hands-on development side of the build. I took the lead on prototyping, testing, assembly, CAD modeling, repeated fitment checks, repeated system testing, and much of the research and design work that shaped the final version. That included working through how the door would physically package the electronics, how the locking hardware would fit, and how the system would behave once all of the components were integrated into one assembly.
+            </p>
+            <p>
+                My teammates supported the project by helping with documentation and purchasing, which made it possible for me to stay focused on iteration and implementation. That workflow let us move faster while still keeping the project organized. It also reflected how engineering teams often work in practice: some members keep procurement and written deliverables moving forward, while others push the prototype itself through design changes, integration, and testing.
+            </p>
+
+            <div class="highlight-box">
+                <h3>Main areas I focused on</h3>
+                <ul>
+                    <li>Researching the concept and selecting workable design directions</li>
+                    <li>CAD modeling and revising parts around component fit and packaging</li>
+                    <li>Physical prototyping and repeated troubleshooting</li>
+                    <li>Assembly of door hardware, electronics, and system integration</li>
+                    <li>Testing, retesting, and refining the build as problems appeared</li>
+                </ul>
+            </div>
+
+            <img src="Appendix_A3_BoxConstruction.jpeg" alt="Building the wooden box" class="full-width-image">
+        </section>
+
+        <section id="electronics">
+            <h2>Electronics, Logic, and Control</h2>
+            <p>
+                A major part of the project was building the logic that allowed multiple forms of access while still keeping the system secure and responsive. The safe was organized around a finite state machine that handled keypad entry, fingerprint authentication, unlocking, door-open timing, re-locking, and alarm behavior. Structuring the logic this way helped manage timing-sensitive events and made debugging far more organized as the project became more complex.
+            </p>
+            <p>
+                Electrically, the project required more than simply wiring everything to the Arduino. The touchscreen, fingerprint sensor, buzzer, and door sensor all had to communicate reliably with the controller, while the solenoids and electromagnet required separate power handling and switching components. The final build used a dedicated 12V supply for the actuators and a separate Arduino supply after power stability issues affected the fingerprint system during testing.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card">
+                    <img src="Figure05_SystemFlowchart.png" alt="System flowchart">
+                    <div class="caption">
+                        <h4>Figure 5</h4>
+                        <p>Flowchart used to plan the software logic for authentication, unlocking, and door-state behavior.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure06_FunctionalBlockDiagram.png" alt="Functional block diagram">
+                    <div class="caption">
+                        <h4>Figure 6</h4>
+                        <p>High-level block diagram showing how the Arduino, sensors, and actuators interact.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure07_FullWiringSchematic.png" alt="Full wiring schematic">
+                    <div class="caption">
+                        <h4>Figure 7</h4>
+                        <p>Complete schematic of the final electrical system, including switching and power distribution.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure08_PCBWiringReference.png" alt="PCB wiring reference">
+                    <div class="caption">
+                        <h4>Figure 8</h4>
+                        <p>Hand-drawn PCB guide used during assembly to keep soldering paths and connectors organized.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure09_FinalPCBFront.jpeg" alt="Front of final PCB">
+                    <div class="caption">
+                        <h4>Figure 9</h4>
+                        <p>Front side of the final soldered PCB after the design was refined through trial and error.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure10_FinalPCBBack.jpeg" alt="Back of final PCB">
+                    <div class="caption">
+                        <h4>Figure 10</h4>
+                        <p>Back side of the PCB, showing the final routing and soldered connections.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mechanical">
+            <h2>Mechanical Design and Integration</h2>
+            <p>
+                The mechanical side of the project required just as much iteration as the electronics. The door had to hold the fingerprint scanner, touchscreen, solenoids, door sensor, Arduino, and magnet while still allowing clean assembly and reliable locking. As the design evolved, multiple features had to be repositioned or reprinted to account for screw clearance, wiring space, component thickness, and the exact motion of the locking hardware.
+            </p>
+            <p>
+                The final design used a combination of 3D-printed parts and a wooden enclosure. That final direction came after early concept changes and fabrication constraints. Even after the parts fit individually, bringing them into one finished door assembly introduced new alignment issues that had to be corrected through more testing and adjustment.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card">
+                    <img src="Figure11_DoorOuterHalf.png" alt="Door outer half">
+                    <div class="caption">
+                        <h4>Figure 11</h4>
+                        <p>Outer half of the final door, with mounting features for the user-facing hardware.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure12_DoorInnerHalf.png" alt="Door inner half">
+                    <div class="caption">
+                        <h4>Figure 12</h4>
+                        <p>Inner half of the door, designed around the Arduino, electromagnet, and internal clearances.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure13_FinalDoorAssemblyTop.png" alt="Top view of final door assembly">
+                    <div class="caption">
+                        <h4>Figure 13</h4>
+                        <p>Top-side view of the final assembled door and its integrated components.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Figure14_FinalDoorAssemblyBottom.png" alt="Bottom view of final door assembly">
+                    <div class="caption">
+                        <h4>Figure 14</h4>
+                        <p>Bottom-side view of the final door assembly, showing the final packaging result.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Appendix_A1_PreliminarySketch.png" alt="Preliminary concept sketch">
+                    <div class="caption">
+                        <h4>Appendix A-1</h4>
+                        <p>Very early concept sketch showing how the design started before later revisions.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Appendix_A2_WoodBoxFinished.jpeg" alt="Finished wood box section">
+                    <div class="caption">
+                        <h4>Appendix A-2</h4>
+                        <p>Finished wooden box section that became part of the final enclosure approach.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lessons">
+            <h2>Lessons Learned</h2>
+            <p>
+                This project taught me how quickly a mechatronics build becomes a full systems problem. Power delivery, embedded timing, sensor consistency, and mechanical tolerancing all affected each other. Even when a subsystem worked on its own, that did not guarantee it would behave the same way after full integration. Because of that, repeated testing and rework became one of the most important parts of the project.
+            </p>
+            <p>
+                It also reinforced how valuable early integration is. Mechanical and electrical issues tend to stay hidden until everything is brought together, and by that point every change affects several other parts of the build. The project gave me stronger experience in packaging electronics into tight spaces, thinking through real assembly constraints, and balancing design intent with what is actually practical under time limits.
+            </p>
+
+            <div class="highlight-box">
+                <h3>Key takeaways</h3>
+                <ul>
+                    <li>Separate actuator power and control electronics carefully from the start</li>
+                    <li>Use structured state logic for timing-sensitive behavior</li>
+                    <li>Expect multiple design iterations for packaging and tolerancing</li>
+                    <li>Start full system integration earlier than feels necessary</li>
+                    <li>Testing is not one step at the end, it is part of the design process</li>
+                </ul>
+            </div>
+
+            <div class="figure-grid">
+                <div class="figure-card">
+                    <img src="Appendix_A8_InitialBreadboardWiring.jpeg" alt="Initial breadboard wiring">
+                    <div class="caption">
+                        <h4>Appendix A-8</h4>
+                        <p>Early breadboard stage before the build moved into a more permanent integrated form.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Appendix_A9_InitialSoldering.jpeg" alt="Initial soldering">
+                    <div class="caption">
+                        <h4>Appendix A-9</h4>
+                        <p>Early soldering work that shows the transition from prototype layout to final assembly.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Appendix_A10_TouchscreenOnMega.jpeg" alt="Touchscreen mounted on Arduino Mega">
+                    <div class="caption">
+                        <h4>Appendix A-10</h4>
+                        <p>Touchscreen mounted on the Arduino Mega, highlighting packaging constraints inside the safe.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Designed to match the style of the rest of the portfolio while focusing on the full mechatronics development process.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.sub-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight - 10;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
