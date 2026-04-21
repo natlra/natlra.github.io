@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matcha Mill Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            position: relative;
+            background-color: #111;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(32%);
+        }
+
+        .sticky-header {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .sticky-header h1 {
+            font-size: 2.4em;
+            margin-bottom: 8px;
+        }
+
+        .sticky-header p {
+            color: #d3d3d3;
+            font-size: 1em;
+        }
+
+        .sub-nav {
+            margin-top: 12px;
+        }
+
+        .sub-nav a {
+            color: #d3d3d3;
+            margin: 0 12px;
+            text-decoration: none;
+            font-size: 0.95em;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sub-nav a:hover {
+            border-bottom: 1px solid #d3d3d3;
+            color: #fff;
+        }
+
+        .content {
+            margin: 30px auto 50px auto;
+            width: 90%;
+            max-width: 1050px;
+        }
+
+        section {
+            background-color: rgba(0, 0, 0, 0.72);
+            padding: 24px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
+        }
+
+        section h2 {
+            font-size: 1.7em;
+            margin-bottom: 14px;
+            color: #d3d3d3;
+            border-bottom: 2px solid #808080;
+            padding-bottom: 6px;
+        }
+
+        section p {
+            line-height: 1.75;
+            text-align: justify;
+            margin-bottom: 16px;
+        }
+
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .figure-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .figure-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
+            display: block;
+            cursor: zoom-in;
+            padding: 10px;
+        }
+
+        .figure-card.large img {
+            height: 320px;
+        }
+
+        .figure-card .caption {
+            padding: 12px 14px 14px 14px;
+        }
+
+        .figure-card .caption h4 {
+            font-size: 1em;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .figure-card .caption p {
+            font-size: 0.95em;
+            margin-bottom: 0;
+            color: #d9d9d9;
+            text-align: left;
+            line-height: 1.55;
+        }
+
+        .full-width-image {
+            width: 100%;
+            max-width: 900px;
+            display: block;
+            margin: 18px auto 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
+            cursor: zoom-in;
+            padding: 10px;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 30px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            background-color: #111;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        footer {
+            text-align: center;
+            color: #d3d3d3;
+            padding: 20px 0 35px 0;
+        }
+
+        @media (max-width: 700px) {
+            .sticky-header h1 {
+                font-size: 1.95em;
+            }
+
+            .sub-nav a {
+                display: inline-block;
+                margin: 6px 8px;
+            }
+
+            .figure-card img,
+            .figure-card.large img {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-image">
+        <img src="Report_Figure08_IsometricAssembly.png" alt="Matcha Mill background image">
+    </div>
+
+    <header class="sticky-header">
+        <h1>Matcha Mill Project</h1>
+        <p>Commercial matcha mill for fresh, single-dose grinding</p>
+        <div class="sub-nav">
+            <a href="#introduction">Introduction</a>
+            <a href="#design">Comprehensive Design</a>
+            <a href="#testing">Testing and Performance</a>
+            <a href="#conclusion">Conclusion</a>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                The Matcha Mill project aims to design and manufacture a commercial matcha mill that allows baristas to mill fresh matcha to order. Current solutions are inefficient, expensive, and not designed for single-dose grinding. This project addresses the need for an affordable, effective, and barista-friendly matcha mill to improve the freshness, flavor, and aroma of matcha served in coffee shops.
+            </p>
+            <p>
+                In this project, I was mainly responsible for testing, modeling, and assembly. My work focused on building and refining the machine, helping develop the CAD and assembly layout, and validating performance through testing of force, RPM, grind time, interval strategy, and overall operation.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card large">
+                    <img src="Report_Figure08_IsometricAssembly.png" alt="Figure 8 Isometric View of Assembly" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 8: Isometric View of Assembly</h4>
+                        <p>The matcha mill is designed as a modular, vertically integrated grinding system optimized for single-dose, cafe scale operation.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Presentation_Prototypes.png" alt="Presentation Prototypes" class="zoomable">
+                    <div class="caption">
+                        <h4>Presentation: Prototypes</h4>
+                        <p>Initial and final prototype progression.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="design">
+            <h2>Comprehensive Design</h2>
+            <p>
+                The primary subsystems include a lead screw driven linear actuator for controlled axial loading, a removable frustum conical grinding head and base for particle size optimization, an integrated belt transmission system for torque transfer, and a rigid aluminum T-frame that maintains alignment under load. This design enables precise control of applied force, rotational speed and grinding duration. These three parameters are critical for achieving consistent particle sizes within the 5-10 micron target range while maintaining temperatures below degradation thresholds.
+            </p>
+            <p>
+                The system layout prioritizes both performance and usability by separating high load mechanical components from user interaction interfaces. The removable grinding bowl and head assembly allow rapid loading, unloading, and cleaning without disassembly of the full system, while the belt driven transmission isolates motor vibrations from the grinding interface. During this part of the project, my main contribution was modeling and assembly of the mechanical system.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card">
+                    <img src="Report_Figure10_ExplodedAssembly.png" alt="Figure 10 Exploded View of Assembly" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 10: Exploded View of Assembly</h4>
+                        <p>Output gear, input gear, weighted pillar, center rod, motor bracket, grinding head, T-frame, bowl, actuator base or sleeve, gear separator, support frame, grinding bowl base, and stainless steel grinding plates.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Report_Figure13_LinearActuatorThrustBearing.png" alt="Figure 13 Linear Actuator Thrust Bearing Assembly" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 13: Linear Actuator/Thrust Bearing Assembly</h4>
+                        <p>A thrust bearing assembly redirects axial grinding loads directly into the stainless steel grinding plates, ensuring smooth rotational motion while preventing excessive stress on the motor, belt system and structural components.</p>
+                    </div>
+                </div>
+                <div class="figure-card">
+                    <img src="Report_Figure24_WoodenEnclosure.png" alt="Figure 24 Wooden Enclosure" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 24: Wooden Enclosure</h4>
+                        <p>A fully enclosed wooden housing surrounds the mechanical and electrical systems, protecting users from accidental contact with moving components while also providing electrical insulation, reducing exposure to dust and debris, and offering sound dampening benefits.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testing">
+            <h2>Testing and Performance</h2>
+            <p>
+                Variables tested included force, RPM, head design, surface finish, time, and temperature. The testing setup used a triple spring setup connected to the grinding base. This allowed displacement to be measured and the amount of force applied to be calculated. This setup was used to determine the best speed to apply into the matcha mill.
+            </p>
+            <p>
+                Testing confirmed that the target particle size range of 5-10 microns was achieved. The optimal configuration was 15 kg of applied force, a total grind time of 3 minutes, 1-minute intervals with bowl tapping between cycles, and a speed of 120 RPM. My main contribution in this phase was testing the machine and using the results to guide refinement of the final design and assembly.
+            </p>
+
+            <div class="figure-grid">
+                <div class="figure-card large">
+                    <img src="Presentation_Assembly.png" alt="Presentation Assembly" class="zoomable">
+                    <div class="caption">
+                        <h4>Presentation: Assembly</h4>
+                        <p>Key components include the thrust bearing assembly, base lifting mechanism, and power transmission.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Report_Figure15_ManualMillTestingSetup.png" alt="Figure 15 Manual Mill Testing Setup" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 15: Manual Mill Testing Setup</h4>
+                        <p>The setup above shows the testing setup used to determine which force, RPM, and time needed to grind down to particle size.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Report_Figure18_RPMVsParticleSize.png" alt="Figure 18 RPM vs Average Particle Size" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 18: RPM vs. Average Particle Size</h4>
+                        <p>The grinding head RPM versus the corresponding average particle size showed that 120 RPM was the lowest usable RPM that provided the most optimal results.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>
+                The Matcha Mill project successfully demonstrates the feasibility of producing fresh, cafe-quality matcha on demand through a compact, user-focused mechanical system. Performance testing confirmed that the machine consistently achieves the target particle size range of 5-10 micrometers while maintaining a controlled temperature rise below 2 degrees Celsius per grinding cycle.
+            </p>
+            <p>
+                Experimental results showed 120 RPM, 15 kg of applied force, and a 3-minute total grind time using interval-based systems as the optimal configuration for balancing grinding efficiency, mechanical reliability, and uniform particles. From a usability standpoint, the Matcha Mill meets its design goal of being easy to use for baristas, requiring minimal training and integrating into typical coffee shop workflows.
+            </p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Thank you for reading.</p>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img id="lightboxImage" src="" alt="Expanded image">
+    </div>
+
+    <script>
+        document.querySelectorAll('.sub-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight - 10;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.zoomable').forEach(img => {
+            img.addEventListener('click', function () {
+                lightboxImage.src = this.src;
+                lightboxImage.alt = this.alt;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', function () {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
