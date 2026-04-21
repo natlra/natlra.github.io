@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matcha Mill Project | Fresh Matcha on Demand</title>
+    <title>Matcha Mill Project</title>
     <style>
         * {
             margin: 0;
@@ -49,7 +49,7 @@
             width: 100%;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 20;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
 
@@ -109,46 +109,6 @@
             margin-bottom: 16px;
         }
 
-        .intro-text {
-            font-size: 1.05em;
-        }
-
-        .highlight-box {
-            background-color: rgba(255, 255, 255, 0.06);
-            border-left: 4px solid #9c9c9c;
-            padding: 16px;
-            border-radius: 8px;
-            margin: 18px 0 10px 0;
-        }
-
-        .highlight-box h3 {
-            margin-bottom: 10px;
-            color: #f0f0f0;
-            font-size: 1.1em;
-        }
-
-        .highlight-box ul {
-            padding-left: 20px;
-            line-height: 1.8;
-            color: #ececec;
-        }
-
-        .tag-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-            margin-bottom: 6px;
-        }
-
-        .tag {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: #ededed;
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 0.92em;
-        }
-
         .figure-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -165,13 +125,16 @@
 
         .figure-card img {
             width: 100%;
-            height: 220px;
-            object-fit: cover;
+            height: 240px;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
             display: block;
+            cursor: zoom-in;
+            padding: 10px;
         }
 
         .figure-card.large img {
-            height: 300px;
+            height: 320px;
         }
 
         .figure-card .caption {
@@ -192,17 +155,6 @@
             line-height: 1.55;
         }
 
-        .source-label {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 6px 10px;
-            border-radius: 999px;
-            background-color: rgba(255, 255, 255, 0.08);
-            color: #f0f0f0;
-            font-size: 0.82em;
-            letter-spacing: 0.02em;
-        }
-
         .full-width-image {
             width: 100%;
             max-width: 900px;
@@ -210,6 +162,44 @@
             margin: 18px auto 0 auto;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
+            cursor: zoom-in;
+            padding: 10px;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 30px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            background-color: #111;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            line-height: 1;
         }
 
         footer {
@@ -230,183 +220,133 @@
 
             .figure-card img,
             .figure-card.large img {
-                height: 210px;
+                height: 220px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!--
-        Portfolio image set kept intentionally small for overview format.
-        Strongest images kept in script:
-
-        1. Report_Figure08_IsometricAssembly.png
-        2. Presentation_Prototypes.png
-        3. Presentation_Assembly.png
-        4. Report_Figure10_ExplodedAssembly.png
-        5. Report_Figure13_LinearActuatorThrustBearing.png
-        6. Report_Figure24_WoodenEnclosure.png
-        7. Report_Figure15_ManualMillTestingSetup.png
-        8. Report_Figure18_RPMVsParticleSize.png
-    -->
-
     <div class="background-image">
-        <img src="Report_Figure08_IsometricAssembly.png" alt="Matcha mill assembly background image">
+        <img src="Report_Figure08_IsometricAssembly.png" alt="Matcha Mill background image">
     </div>
 
     <header class="sticky-header">
         <h1>Matcha Mill Project</h1>
-        <p>Fresh, cafe-ready matcha milled to order through testing-driven mechanical design</p>
+        <p>Commercial matcha mill for fresh, single-dose grinding</p>
         <div class="sub-nav">
-            <a href="#overview">Overview</a>
-            <a href="#role">My Role</a>
-            <a href="#design">Design</a>
-            <a href="#testing">Testing</a>
-            <a href="#results">Results</a>
+            <a href="#introduction">Introduction</a>
+            <a href="#design">Comprehensive Design</a>
+            <a href="#testing">Testing and Performance</a>
+            <a href="#conclusion">Conclusion</a>
         </div>
     </header>
 
     <div class="content">
 
-        <section id="overview">
-            <h2>Project Overview</h2>
-            <p class="intro-text">
-                The Matcha Mill project focused on designing and building a commercial matcha mill that allows baristas to grind fresh matcha to order. The goal was to create a system that was more practical for cafe use than traditional options by making it compact, repeatable, and easier to operate in a real beverage workflow. Instead of relying on pre-ground matcha that loses flavor and aroma over time, this design aimed to support fresher preparation directly at the point of use.
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                The Matcha Mill project aims to design and manufacture a commercial matcha mill that allows baristas to mill fresh matcha to order. Current solutions are inefficient, expensive, and not designed for single-dose grinding. This project addresses the need for an affordable, effective, and barista-friendly matcha mill to improve the freshness, flavor, and aroma of matcha served in coffee shops.
             </p>
             <p>
-                The final concept combined a vertically integrated grinding system, a linear actuator driven loading mechanism, a belt-driven power transmission system, removable grinding components, and a rigid frame that could hold alignment under load. The page is kept intentionally simple so it works as a strong portfolio overview rather than a full project archive.
+                In this project, I was mainly responsible for testing, modeling, and assembly. My work focused on building and refining the machine, helping develop the CAD and assembly layout, and validating performance through testing of force, RPM, grind time, interval strategy, and overall operation.
             </p>
-
-            <div class="tag-row">
-                <div class="tag">Mechanical Design</div>
-                <div class="tag">Testing and Validation</div>
-                <div class="tag">CAD Modeling</div>
-                <div class="tag">Assembly</div>
-                <div class="tag">Particle Size Analysis</div>
-                <div class="tag">Cafe Equipment Design</div>
-            </div>
 
             <div class="figure-grid">
                 <div class="figure-card large">
-                    <img src="Report_Figure08_IsometricAssembly.png" alt="Isometric assembly of matcha mill">
+                    <img src="Report_Figure08_IsometricAssembly.png" alt="Figure 8 Isometric View of Assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Full Assembly View</h4>
-                        <p>Overall isometric view of the Matcha Mill and its final integrated layout.</p>
-                        <span class="source-label">Source: Report Figure 8</span>
+                        <h4>Figure 8: Isometric View of Assembly</h4>
+                        <p>The matcha mill is designed as a modular, vertically integrated grinding system optimized for single-dose, cafe scale operation.</p>
                     </div>
                 </div>
                 <div class="figure-card large">
-                    <img src="Presentation_Prototypes.png" alt="Initial and final prototypes">
+                    <img src="Presentation_Prototypes.png" alt="Presentation Prototypes" class="zoomable">
                     <div class="caption">
-                        <h4>Prototype Progression</h4>
-                        <p>Shows how the design moved from the initial concept toward the final prototype.</p>
-                        <span class="source-label">Source: Presentation - Prototypes</span>
+                        <h4>Presentation: Prototypes</h4>
+                        <p>Initial and final prototype progression.</p>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="role">
-            <h2>My Role in the Project</h2>
-            <p>
-                In this project, I was primarily in charge of testing, modeling, and assembly. My work centered on turning the design into something that could be physically built, adjusted, and validated through actual performance data. That meant contributing to CAD work, helping refine how the subsystems fit together, assembling mechanical components, and working through repeated iterations to make sure the mill could operate reliably under load.
-            </p>
-            <p>
-                The testing side was especially important because the final machine performance depended on real trial data rather than assumptions alone. A large part of my role involved evaluating how applied force, grinding speed, total grind time, and interval strategy affected particle size and consistency. That made the project a good mix of hands-on fabrication and data-based engineering decisions.
-            </p>
-
-            <div class="highlight-box">
-                <h3>Main areas I focused on</h3>
-                <ul>
-                    <li>CAD modeling and packaging of components into the final layout</li>
-                    <li>Mechanical assembly of the mill and its supporting hardware</li>
-                    <li>Building and refining the testing setup</li>
-                    <li>Evaluating RPM, force, grind time, and interval effects</li>
-                    <li>Helping move the design from prototype form toward a validated final system</li>
-                </ul>
-            </div>
-
-            <img src="Presentation_Assembly.png" alt="Assembly slide for matcha mill" class="full-width-image">
         </section>
 
         <section id="design">
-            <h2>Design Overview</h2>
+            <h2>Comprehensive Design</h2>
             <p>
-                The Matcha Mill was designed as a modular grinding system for single-dose cafe use. Its main subsystems included a lead-screw based axial loading system, removable grinding components, a belt-driven transmission system, and a rigid frame to maintain alignment. This modular approach made it possible to iterate on grinding geometry, loading conditions, and component packaging without completely redesigning the full machine each time.
+                The primary subsystems include a lead screw driven linear actuator for controlled axial loading, a removable frustum conical grinding head and base for particle size optimization, an integrated belt transmission system for torque transfer, and a rigid aluminum T-frame that maintains alignment under load. This design enables precise control of applied force, rotational speed and grinding duration. These three parameters are critical for achieving consistent particle sizes within the 5-10 micron target range while maintaining temperatures below degradation thresholds.
             </p>
             <p>
-                For a portfolio page, the most useful design images are the ones that quickly show what the machine is, how it is built, and what makes it mechanically interesting. The images below were kept because they do that clearly without overcrowding the page.
+                The system layout prioritizes both performance and usability by separating high load mechanical components from user interaction interfaces. The removable grinding bowl and head assembly allow rapid loading, unloading, and cleaning without disassembly of the full system, while the belt driven transmission isolates motor vibrations from the grinding interface. During this part of the project, my main contribution was modeling and assembly of the mechanical system.
             </p>
 
             <div class="figure-grid">
                 <div class="figure-card">
-                    <img src="Report_Figure10_ExplodedAssembly.png" alt="Exploded assembly view">
+                    <img src="Report_Figure10_ExplodedAssembly.png" alt="Figure 10 Exploded View of Assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Exploded Assembly</h4>
-                        <p>Breakdown of the major parts that make up the full machine assembly.</p>
-                        <span class="source-label">Source: Report Figure 10</span>
+                        <h4>Figure 10: Exploded View of Assembly</h4>
+                        <p>Output gear, input gear, weighted pillar, center rod, motor bracket, grinding head, T-frame, bowl, actuator base or sleeve, gear separator, support frame, grinding bowl base, and stainless steel grinding plates.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Report_Figure13_LinearActuatorThrustBearing.png" alt="Linear actuator and thrust bearing assembly">
+                    <img src="Report_Figure13_LinearActuatorThrustBearing.png" alt="Figure 13 Linear Actuator Thrust Bearing Assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Core Mechanism</h4>
-                        <p>Highlights the loading and thrust-bearing system that makes the design technically interesting.</p>
-                        <span class="source-label">Source: Report Figure 13</span>
+                        <h4>Figure 13: Linear Actuator/Thrust Bearing Assembly</h4>
+                        <p>A thrust bearing assembly redirects axial grinding loads directly into the stainless steel grinding plates, ensuring smooth rotational motion while preventing excessive stress on the motor, belt system and structural components.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Report_Figure24_WoodenEnclosure.png" alt="Wooden enclosure">
+                    <img src="Report_Figure24_WoodenEnclosure.png" alt="Figure 24 Wooden Enclosure" class="zoomable">
                     <div class="caption">
-                        <h4>Final Enclosure</h4>
-                        <p>Shows the packaged system and the safety-focused outer housing.</p>
-                        <span class="source-label">Source: Report Figure 24</span>
+                        <h4>Figure 24: Wooden Enclosure</h4>
+                        <p>A fully enclosed wooden housing surrounds the mechanical and electrical systems, protecting users from accidental contact with moving components while also providing electrical insulation, reducing exposure to dust and debris, and offering sound dampening benefits.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="testing">
-            <h2>Testing and Validation</h2>
+            <h2>Testing and Performance</h2>
             <p>
-                Testing was one of the most important parts of the Matcha Mill project because the design had to prove that it could actually produce usable matcha at the target quality level. The performance studies focused on variables such as applied force, RPM, total grind time, and interval strategy. Instead of assuming one configuration would work best, the machine was evaluated through a structured test setup that allowed those variables to be compared directly.
+                Variables tested included force, RPM, head design, surface finish, time, and temperature. The testing setup used a triple spring setup connected to the grinding base. This allowed displacement to be measured and the amount of force applied to be calculated. This setup was used to determine the best speed to apply into the matcha mill.
             </p>
             <p>
-                Since this page is meant to be an overview, the strongest testing image is the one that clearly shows the setup itself. That gives the viewer immediate context for how the project moved beyond concept work and into actual validation.
+                Testing confirmed that the target particle size range of 5-10 microns was achieved. The optimal configuration was 15 kg of applied force, a total grind time of 3 minutes, 1-minute intervals with bowl tapping between cycles, and a speed of 120 RPM. My main contribution in this phase was testing the machine and using the results to guide refinement of the final design and assembly.
             </p>
 
             <div class="figure-grid">
                 <div class="figure-card large">
-                    <img src="Report_Figure15_ManualMillTestingSetup.png" alt="Manual mill testing setup">
+                    <img src="Presentation_Assembly.png" alt="Presentation Assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Testing Setup</h4>
-                        <p>Experimental setup used to evaluate force, speed, and grind performance.</p>
-                        <span class="source-label">Source: Report Figure 15</span>
+                        <h4>Presentation: Assembly</h4>
+                        <p>Key components include the thrust bearing assembly, base lifting mechanism, and power transmission.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Report_Figure15_ManualMillTestingSetup.png" alt="Figure 15 Manual Mill Testing Setup" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 15: Manual Mill Testing Setup</h4>
+                        <p>The setup above shows the testing setup used to determine which force, RPM, and time needed to grind down to particle size.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Report_Figure18_RPMVsParticleSize.png" alt="Figure 18 RPM vs Average Particle Size" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 18: RPM vs. Average Particle Size</h4>
+                        <p>The grinding head RPM versus the corresponding average particle size showed that 120 RPM was the lowest usable RPM that provided the most optimal results.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="results">
-            <h2>Results</h2>
+        <section id="conclusion">
+            <h2>Conclusion</h2>
             <p>
-                The project successfully demonstrated that the machine could produce fresh matcha in the target size range under the best operating conditions. One of the most important outcomes was identifying the lowest useful speed that still gave strong results, which helped define a practical operating point for the machine.
+                The Matcha Mill project successfully demonstrates the feasibility of producing fresh, cafe-quality matcha on demand through a compact, user-focused mechanical system. Performance testing confirmed that the machine consistently achieves the target particle size range of 5-10 micrometers while maintaining a controlled temperature rise below 2 degrees Celsius per grinding cycle.
             </p>
             <p>
-                For a portfolio page, one clear result graphic is stronger than a long gallery of similar graphs. This figure was kept because it quickly shows that the project was guided by real performance data rather than only design intent.
+                Experimental results showed 120 RPM, 15 kg of applied force, and a 3-minute total grind time using interval-based systems as the optimal configuration for balancing grinding efficiency, mechanical reliability, and uniform particles. From a usability standpoint, the Matcha Mill meets its design goal of being easy to use for baristas, requiring minimal training and integrating into typical coffee shop workflows.
             </p>
-
-            <div class="figure-grid">
-                <div class="figure-card large">
-                    <img src="Report_Figure18_RPMVsParticleSize.png" alt="RPM versus particle size">
-                    <div class="caption">
-                        <h4>Performance Result</h4>
-                        <p>Shows how grinding speed influenced particle size and helped identify the most practical operating range.</p>
-                        <span class="source-label">Source: Report Figure 18</span>
-                    </div>
-                </div>
-            </div>
         </section>
 
     </div>
@@ -414,6 +354,11 @@
     <footer>
         <p>Thank you for reading.</p>
     </footer>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img id="lightboxImage" src="" alt="Expanded image">
+    </div>
 
     <script>
         document.querySelectorAll('.sub-nav a').forEach(link => {
@@ -429,6 +374,34 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.zoomable').forEach(img => {
+            img.addEventListener('click', function () {
+                lightboxImage.src = this.src;
+                lightboxImage.alt = this.alt;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', function () {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                lightbox.classList.remove('active');
+            }
         });
     </script>
 </body>
