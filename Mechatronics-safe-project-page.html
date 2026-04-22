@@ -39,7 +39,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(30%);
+            filter: brightness(32%);
         }
 
         .sticky-header {
@@ -49,7 +49,7 @@
             width: 100%;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 20;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
 
@@ -135,7 +135,7 @@
 
         .figure-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 18px;
             margin-top: 18px;
         }
@@ -149,13 +149,16 @@
 
         .figure-card img {
             width: 100%;
-            height: 220px;
-            object-fit: cover;
+            height: 240px;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
             display: block;
+            cursor: zoom-in;
+            padding: 10px;
         }
 
         .figure-card.large img {
-            height: 300px;
+            height: 320px;
         }
 
         .figure-card .caption {
@@ -183,22 +186,76 @@
             margin: 18px auto 0 auto;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
+            cursor: zoom-in;
+            padding: 10px;
         }
 
-        .tag-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-            margin-bottom: 6px;
+        .parts-note {
+            color: #d9d9d9;
+            font-size: 0.95em;
         }
 
-        .tag {
+        .parts-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .parts-table th,
+        .parts-table td {
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .parts-table th {
             background-color: rgba(255, 255, 255, 0.08);
-            color: #ededed;
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 0.92em;
+            color: #ffffff;
+        }
+
+        .parts-table td {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: #d9d9d9;
+            line-height: 1.55;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 30px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            background-color: #111;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            line-height: 1;
         }
 
         footer {
@@ -219,40 +276,12 @@
 
             .figure-card img,
             .figure-card.large img {
-                height: 210px;
+                height: 220px;
             }
         }
     </style>
 </head>
 <body>
-
-    <!--
-        Suggested image filenames in chronological order from the report:
-        Figure01_FinalSafeClosed.jpeg
-        Figure02_DoorInteriorPCB.png
-        Figure03_SafeOpenFront.png
-        Figure04_SensorBracketCloseup.png
-        Figure05_SystemFlowchart.png
-        Figure06_FunctionalBlockDiagram.png
-        Figure07_FullWiringSchematic.png
-        Figure08_PCBWiringReference.png
-        Figure09_FinalPCBFront.jpeg
-        Figure10_FinalPCBBack.jpeg
-        Figure11_DoorOuterHalf.png
-        Figure12_DoorInnerHalf.png
-        Figure13_FinalDoorAssemblyTop.png
-        Figure14_FinalDoorAssemblyBottom.png
-        Appendix_A1_PreliminarySketch.png
-        Appendix_A2_WoodBoxFinished.jpeg
-        Appendix_A3_BoxConstruction.jpeg
-        Appendix_A4_ArduinoPinInsertLeft.jpeg
-        Appendix_A5_ArduinoPinInsertRight.jpeg
-        Appendix_A6_SolenoidCover.png
-        Appendix_A7_TouchscreenPins.jpeg
-        Appendix_A8_InitialBreadboardWiring.jpeg
-        Appendix_A9_InitialSoldering.jpeg
-        Appendix_A10_TouchscreenOnMega.jpeg
-    -->
 
     <div class="background-image">
         <img src="Figure01_FinalSafeClosed.jpeg" alt="Final safe closed background image">
@@ -267,6 +296,7 @@
             <a href="#electronics">Electronics</a>
             <a href="#mechanical">Mechanical Design</a>
             <a href="#lessons">Lessons Learned</a>
+            <a href="#parts-index">Parts Index</a>
         </div>
     </header>
 
@@ -280,43 +310,37 @@
             <p>
                 One of the most rewarding parts of this project was seeing a full system come together from many smaller design decisions. The safe had to interpret user input, verify access, actuate internal locking hardware, monitor the door state, and trigger an alarm if the door stayed open too long. That meant the project required careful coordination between electronics, embedded logic, fabrication, and repeated troubleshooting through each stage of development.
             </p>
-
-            <div class="tag-row">
-                <div class="tag">Arduino Mega</div>
-                <div class="tag">Fingerprint Sensor</div>
-                <div class="tag">Touchscreen Input</div>
-                <div class="tag">Solenoid Locking</div>
-                <div class="tag">Electromagnet Hold</div>
-                <div class="tag">State Machine Logic</div>
-            </div>
+            <p class="parts-note">
+                * Several of the images on this page include numbered callouts. Those numbers correspond to the labeled parts index at the bottom of the page.
+            </p>
 
             <div class="figure-grid">
                 <div class="figure-card large">
-                    <img src="Figure01_FinalSafeClosed.jpeg" alt="Final safe closed">
+                    <img src="Figure01_FinalSafeClosed.jpeg" alt="Final safe closed" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 1</h4>
-                        <p>Final safe with the door closed, showing the completed outer form of the project.</p>
+                        <h4>Figure 1: Final Safe Closed*</h4>
+                        <p>Final safe with the door closed, showing the completed outer form of the project and the labeled callouts used throughout the report.</p>
                     </div>
                 </div>
                 <div class="figure-card large">
-                    <img src="Figure02_DoorInteriorPCB.png" alt="Inside of the door with PCB and components">
+                    <img src="Figure02_DoorInteriorPCB.png" alt="Inside of the door with PCB and components" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 2</h4>
+                        <h4>Figure 2: Door Interior and PCB*</h4>
                         <p>Inside of the door, where the PCB, wiring, and integrated components were packaged together.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure03_SafeOpenFront.png" alt="Safe open front view">
+                    <img src="Figure03_SafeOpenFront.png" alt="Safe open front view" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 3</h4>
+                        <h4>Figure 3: Safe Open Front View*</h4>
                         <p>Open-door view of the finished safe, revealing the internal layout of the enclosure.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure04_SensorBracketCloseup.png" alt="Sensor and bracket closeup">
+                    <img src="Figure04_SensorBracketCloseup.png" alt="Sensor and bracket closeup" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 4</h4>
-                        <p>Close-up of the inner wall, showing the sensor and bracket arrangement used for closing and locking.</p>
+                        <h4>Figure 4: Sensor and Bracket Closeup*</h4>
+                        <p>Close-up of the inner wall, showing the door sensor location and the metal bracket area used during closing and locking.</p>
                     </div>
                 </div>
             </div>
@@ -328,7 +352,10 @@
                 In this project, I handled the hands-on development side of the build. I took the lead on prototyping, testing, assembly, CAD modeling, repeated fitment checks, repeated system testing, and much of the research and design work that shaped the final version. That included working through how the door would physically package the electronics, how the locking hardware would fit, and how the system would behave once all of the components were integrated into one assembly.
             </p>
             <p>
-                My teammates supported the project by helping with documentation and purchasing, which made it possible for me to stay focused on iteration and implementation. That workflow let us move faster while still keeping the project organized. It also reflected how engineering teams often work in practice: some members keep procurement and written deliverables moving forward, while others push the prototype itself through design changes, integration, and testing.
+                My teammates supported the project by helping with documentation and purchasing, which made it possible for me to stay focused on iteration and implementation. That workflow let us move faster while still keeping the project organized. It also reflected how engineering teams often work in practice, where some members keep procurement and written deliverables moving while others push the prototype itself through design changes, integration, and testing.
+            </p>
+            <p>
+                I am also currently working on a V2 of this project in my free time. The goal is to improve packaging, alignment, power delivery, and overall reliability based on the issues and lessons that came out of the first build.
             </p>
 
             <div class="highlight-box">
@@ -342,7 +369,7 @@
                 </ul>
             </div>
 
-            <img src="Appendix_A3_BoxConstruction.jpeg" alt="Building the wooden box" class="full-width-image">
+            <img src="Appendix_A3_BoxConstruction.jpeg" alt="Building the wooden box" class="full-width-image zoomable">
         </section>
 
         <section id="electronics">
@@ -356,44 +383,44 @@
 
             <div class="figure-grid">
                 <div class="figure-card">
-                    <img src="Figure05_SystemFlowchart.png" alt="System flowchart">
+                    <img src="Figure05_SystemFlowchart.png" alt="System flowchart" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 5</h4>
+                        <h4>Figure 5: System Flowchart</h4>
                         <p>Flowchart used to plan the software logic for authentication, unlocking, and door-state behavior.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure06_FunctionalBlockDiagram.png" alt="Functional block diagram">
+                    <img src="Figure06_FunctionalBlockDiagram.png" alt="Functional block diagram" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 6</h4>
+                        <h4>Figure 6: Functional Block Diagram</h4>
                         <p>High-level block diagram showing how the Arduino, sensors, and actuators interact.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure07_FullWiringSchematic.png" alt="Full wiring schematic">
+                    <img src="Figure07_FullWiringSchematic.png" alt="Full wiring schematic" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 7</h4>
+                        <h4>Figure 7: Full Wiring Schematic</h4>
                         <p>Complete schematic of the final electrical system, including switching and power distribution.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure08_PCBWiringReference.png" alt="PCB wiring reference">
+                    <img src="Figure08_PCBWiringReference.png" alt="PCB wiring reference" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 8</h4>
+                        <h4>Figure 8: PCB Wiring Reference</h4>
                         <p>Hand-drawn PCB guide used during assembly to keep soldering paths and connectors organized.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure09_FinalPCBFront.jpeg" alt="Front of final PCB">
+                    <img src="Figure09_FinalPCBFront.jpeg" alt="Front of final PCB" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 9</h4>
+                        <h4>Figure 9: Final PCB Front</h4>
                         <p>Front side of the final soldered PCB after the design was refined through trial and error.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure10_FinalPCBBack.jpeg" alt="Back of final PCB">
+                    <img src="Figure10_FinalPCBBack.jpeg" alt="Back of final PCB" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 10</h4>
+                        <h4>Figure 10: Final PCB Back</h4>
                         <p>Back side of the PCB, showing the final routing and soldered connections.</p>
                     </div>
                 </div>
@@ -411,44 +438,44 @@
 
             <div class="figure-grid">
                 <div class="figure-card">
-                    <img src="Figure11_DoorOuterHalf.png" alt="Door outer half">
+                    <img src="Figure11_DoorOuterHalf.png" alt="Door outer half" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 11</h4>
+                        <h4>Figure 11: Door Outer Half</h4>
                         <p>Outer half of the final door, with mounting features for the user-facing hardware.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure12_DoorInnerHalf.png" alt="Door inner half">
+                    <img src="Figure12_DoorInnerHalf.png" alt="Door inner half" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 12</h4>
+                        <h4>Figure 12: Door Inner Half</h4>
                         <p>Inner half of the door, designed around the Arduino, electromagnet, and internal clearances.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure13_FinalDoorAssemblyTop.png" alt="Top view of final door assembly">
+                    <img src="Figure13_FinalDoorAssemblyTop.png" alt="Top view of final door assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 13</h4>
+                        <h4>Figure 13: Final Door Assembly Top</h4>
                         <p>Top-side view of the final assembled door and its integrated components.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Figure14_FinalDoorAssemblyBottom.png" alt="Bottom view of final door assembly">
+                    <img src="Figure14_FinalDoorAssemblyBottom.png" alt="Bottom view of final door assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Figure 14</h4>
+                        <h4>Figure 14: Final Door Assembly Bottom</h4>
                         <p>Bottom-side view of the final door assembly, showing the final packaging result.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Appendix_A1_PreliminarySketch.png" alt="Preliminary concept sketch">
+                    <img src="Appendix_A1_PreliminarySketch.png" alt="Preliminary concept sketch" class="zoomable">
                     <div class="caption">
-                        <h4>Appendix A-1</h4>
+                        <h4>Appendix A-1: Preliminary Sketch</h4>
                         <p>Very early concept sketch showing how the design started before later revisions.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Appendix_A2_WoodBoxFinished.jpeg" alt="Finished wood box section">
+                    <img src="Appendix_A2_WoodBoxFinished.jpeg" alt="Finished wood box section" class="zoomable">
                     <div class="caption">
-                        <h4>Appendix A-2</h4>
+                        <h4>Appendix A-2: Finished Wood Box</h4>
                         <p>Finished wooden box section that became part of the final enclosure approach.</p>
                     </div>
                 </div>
@@ -477,34 +504,108 @@
 
             <div class="figure-grid">
                 <div class="figure-card">
-                    <img src="Appendix_A8_InitialBreadboardWiring.jpeg" alt="Initial breadboard wiring">
+                    <img src="Appendix_A8_InitialBreadboardWiring.jpeg" alt="Initial breadboard wiring" class="zoomable">
                     <div class="caption">
-                        <h4>Appendix A-8</h4>
+                        <h4>Appendix A-8: Initial Breadboard Wiring</h4>
                         <p>Early breadboard stage before the build moved into a more permanent integrated form.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Appendix_A9_InitialSoldering.jpeg" alt="Initial soldering">
+                    <img src="Appendix_A9_InitialSoldering.jpeg" alt="Initial soldering" class="zoomable">
                     <div class="caption">
-                        <h4>Appendix A-9</h4>
+                        <h4>Appendix A-9: Initial Soldering</h4>
                         <p>Early soldering work that shows the transition from prototype layout to final assembly.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="Appendix_A10_TouchscreenOnMega.jpeg" alt="Touchscreen mounted on Arduino Mega">
+                    <img src="Appendix_A10_TouchscreenOnMega.jpeg" alt="Touchscreen mounted on Arduino Mega" class="zoomable">
                     <div class="caption">
-                        <h4>Appendix A-10</h4>
+                        <h4>Appendix A-10: Touchscreen on Arduino Mega</h4>
                         <p>Touchscreen mounted on the Arduino Mega, highlighting packaging constraints inside the safe.</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <section id="parts-index">
+            <h2>Parts Index</h2>
+            <p>
+                This index explains the numbered callouts shown in the labeled overview images above. The main numbered components come from the report parts list, while a few labels used in the body text and image callouts are included here as supporting references for clarity.*
+            </p>
+
+            <table class="parts-table">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Component</th>
+                        <th>Description / Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>Arduino Mega</td>
+                        <td>Main controller used to coordinate inputs, timing logic, locking behavior, and outputs.</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Basic Fingerprint Sensor</td>
+                        <td>Optical fingerprint scanner used as one of the two unlocking methods.</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2.8&quot; TFT Touch Shield</td>
+                        <td>Touchscreen LCD used for code entry and visual feedback to the user.</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Push-Pull Solenoids</td>
+                        <td>Two 12V solenoids used as the internal deadbolt locking mechanism.</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Magnetic Contact Switch / Door Sensor</td>
+                        <td>Two-part magnetic sensor used to detect when the door is fully closed.</td>
+                    </tr>
+                    <tr>
+                        <td>4.1</td>
+                        <td>Door-Side Sensor Half</td>
+                        <td>The portion of the magnetic contact switch mounted in the door.</td>
+                    </tr>
+                    <tr>
+                        <td>4.2</td>
+                        <td>Wall-Side Sensor Half</td>
+                        <td>The portion of the magnetic contact switch mounted inside the safe wall.</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Electromagnet</td>
+                        <td>Used to pull and hold the door fully closed so the solenoids can re-engage properly.</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Buzzer</td>
+                        <td>Alarm that sounds if the door remains open longer than the allowed time.</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Metal Brackets</td>
+                        <td>Metal bracket surfaces inside the safe that interact with the electromagnet during closing.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
     </div>
 
     <footer>
-        <p>Thank you for reading</p>
+        <p>Thank you for reading.</p>
     </footer>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img id="lightboxImage" src="" alt="Expanded image">
+    </div>
 
     <script>
         document.querySelectorAll('.sub-nav a').forEach(link => {
@@ -520,6 +621,34 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.zoomable').forEach(img => {
+            img.addEventListener('click', function () {
+                lightboxImage.src = this.src;
+                lightboxImage.alt = this.alt;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', function () {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                lightbox.classList.remove('active');
+            }
         });
     </script>
 </body>
