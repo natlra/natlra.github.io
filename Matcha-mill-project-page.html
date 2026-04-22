@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HydroCrank Project</title>
+    <title>Matcha Mill Project</title>
     <style>
         * {
             margin: 0;
@@ -39,7 +39,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(30%);
+            filter: brightness(32%);
         }
 
         .sticky-header {
@@ -228,17 +228,17 @@
 <body>
 
     <div class="background-image">
-        <img src="HydroCrank_CAD_Isometric.png" alt="HydroCrank background image">
+        <img src="Report_Figure08_IsometricAssembly.png" alt="Matcha Mill background image">
     </div>
 
     <header class="sticky-header">
-        <h1>HydroCrank Project</h1>
-        <p>Human powered water pump designed for low resource and off grid use</p>
+        <h1>Matcha Mill Project</h1>
+        <p>Commercial matcha mill for fresh, single-dose grinding</p>
         <div class="sub-nav">
             <a href="#introduction">Introduction</a>
-            <a href="#analysis">Design and Analysis</a>
-            <a href="#prototype">Prototype and Fabrication</a>
-            <a href="#testing">Testing and Outcome</a>
+            <a href="#design">Comprehensive Design</a>
+            <a href="#testing">Testing and Performance</a>
+            <a href="#conclusion">Conclusion</a>
         </div>
     </header>
 
@@ -247,101 +247,106 @@
         <section id="introduction">
             <h2>Introduction</h2>
             <p>
-                HydroCrank is a human powered pumping mechanism developed in MECH 324 - Dynamics of Machines. The project focused on converting continuous rotational input into controlled reciprocating piston motion so water could be moved without relying on electrical infrastructure. The design was intended for simple, off grid operation, while still being manufacturable, serviceable, and mechanically clear in how loads move through the system.
+                The Matcha Mill project aims to design and manufacture a commercial matcha mill that allows baristas to mill fresh matcha to order. Current solutions are inefficient, expensive, and not designed for single-dose grinding. This project addresses the need for an affordable, effective, and barista-friendly matcha mill to improve the freshness, flavor, and aroma of matcha served in coffee shops.
             </p>
             <p>
-                The final concept combines crank, rocker, and slider style motion into a compact pumping assembly. My work centered on the mechanism layout, force based design decisions, MATLAB driven evaluation of joint loading and input torque, and fabrication of a full scale printed prototype that could validate motion, sealing, and overall functionality.
+                In this project, I was mainly responsible for testing, modeling, and assembly. My work focused on building and refining the machine, helping develop the CAD and assembly layout, and validating performance through testing of force, RPM, grind time, interval strategy, and overall operation.
             </p>
 
             <div class="figure-grid">
                 <div class="figure-card large">
-                    <img src="HydroCrank_CAD_Isometric.png" alt="HydroCrank CAD isometric view" class="zoomable">
+                    <img src="Report_Figure08_IsometricAssembly.png" alt="Figure 8 Isometric View of Assembly" class="zoomable">
                     <div class="caption">
-                        <h4>CAD Isometric View</h4>
-                        <p>The full assembly shows how the hand driven linkage, piston, pump body, and outlet path were integrated into a single compact mechanism.</p>
+                        <h4>Figure 8: Isometric View of Assembly</h4>
+                        <p>The matcha mill is designed as a modular, vertically integrated grinding system optimized for single-dose, cafe scale operation.</p>
                     </div>
                 </div>
                 <div class="figure-card large">
-                    <img src="HydroCrank_Transparent_Assembly.png" alt="HydroCrank transparent assembly view" class="zoomable">
+                    <img src="Presentation_Prototypes.png" alt="Presentation Prototypes" class="zoomable">
                     <div class="caption">
-                        <h4>Transparent Assembly View</h4>
-                        <p>This section view highlights the internal piston and sealing geometry that allow reciprocating motion to generate useful pumping action.</p>
+                        <h4>Presentation: Prototypes</h4>
+                        <p>Initial and final prototype progression.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="analysis">
-            <h2>Design and Analysis</h2>
+        <section id="design">
+            <h2>Comprehensive Design</h2>
             <p>
-                The HydroCrank was analyzed as a planar linkage system with a manually driven crankshaft, transmission links, and a piston assembly subjected to a conservative pumping load. A full force analysis was completed in MATLAB across the full range of motion using kinematic results carried forward from the earlier stage of the project. This allowed joint reaction forces and required input torque to be evaluated before final fabrication.
+                The primary subsystems include a lead screw driven linear actuator for controlled axial loading, a removable frustum conical grinding head and base for particle size optimization, an integrated belt transmission system for torque transfer, and a rigid aluminum T-frame that maintains alignment under load. This design enables precise control of applied force, rotational speed and grinding duration. These three parameters are critical for achieving consistent particle sizes within the 5-10 micron target range while maintaining temperatures below degradation thresholds.
             </p>
             <p>
-                The analysis showed that the piston side joint carried the highest loading, which matched expectations because it directly transmitted the pumping force. The mechanism still maintained a useful mechanical advantage for manual operation, and the geometry was iterated to reduce peak user torque while keeping joint loads within a reasonable range for a printed prototype.
-            </p>
-
-            <div class="figure-grid">
-                <div class="figure-card">
-                    <img src="HydroCrank_Mechanism_View.png" alt="HydroCrank mechanism side view" class="zoomable">
-                    <div class="caption">
-                        <h4>Mechanism Side View</h4>
-                        <p>The side view makes the motion path easy to read and shows how crank rotation is converted into piston travel within the pump body.</p>
-                    </div>
-                </div>
-                <div class="figure-card">
-                    <img src="HydroCrank_Full_Prototype.jpg" alt="HydroCrank full prototype" class="zoomable">
-                    <div class="caption">
-                        <h4>Full Prototype</h4>
-                        <p>The printed prototype preserved the intended geometry while giving a direct way to evaluate assembly quality, motion smoothness, and real component fit.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="prototype">
-            <h2>Prototype and Fabrication</h2>
-            <p>
-                All major structural parts were produced with FDM 3D printing using PLA Pro, which allowed the mechanism to be iterated quickly while maintaining enough stiffness for testing. Printed parts were sealed and assembled with standard fasteners, and the pump body and piston geometry were refined around sealing performance, friction, and manufacturability.
-            </p>
-            <p>
-                Fabrication work also involved evaluating part orientation, printed surface quality, gasket integration, and coating strategy. The sealing surfaces and piston assembly were especially important because the physical prototype had to demonstrate compression behavior while still moving freely enough for hand operation.
+                The system layout prioritizes both performance and usability by separating high load mechanical components from user interaction interfaces. The removable grinding bowl and head assembly allow rapid loading, unloading, and cleaning without disassembly of the full system, while the belt driven transmission isolates motor vibrations from the grinding interface. During this part of the project, my main contribution was modeling and assembly of the mechanical system.
             </p>
 
             <div class="figure-grid">
                 <div class="figure-card">
-                    <img src="HydroCrank_Pump_Body_Print.jpg" alt="HydroCrank pump body printing" class="zoomable">
+                    <img src="Report_Figure10_ExplodedAssembly.png" alt="Figure 10 Exploded View of Assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Pump Body Printing</h4>
-                        <p>The pump body was printed at full scale so wall thickness, fit, and internal geometry could be validated before final assembly.</p>
+                        <h4>Figure 10: Exploded View of Assembly</h4>
+                        <p>Output gear, input gear, weighted pillar, center rod, motor bracket, grinding head, T-frame, bowl, actuator base or sleeve, gear separator, support frame, grinding bowl base, and stainless steel grinding plates.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="HydroCrank_Double_Gasket_Seal.jpg" alt="HydroCrank gasket seal detail" class="zoomable">
+                    <img src="Report_Figure13_LinearActuatorThrustBearing.png" alt="Figure 13 Linear Actuator Thrust Bearing Assembly" class="zoomable">
                     <div class="caption">
-                        <h4>Double Gasket Seal</h4>
-                        <p>The piston sealing system used a double gasket arrangement to improve compression efficiency and reduce blow by during reciprocating motion.</p>
+                        <h4>Figure 13: Linear Actuator/Thrust Bearing Assembly</h4>
+                        <p>A thrust bearing assembly redirects axial grinding loads directly into the stainless steel grinding plates, ensuring smooth rotational motion while preventing excessive stress on the motor, belt system and structural components.</p>
                     </div>
                 </div>
                 <div class="figure-card">
-                    <img src="HydroCrank_Flex_Seal_Piston.jpg" alt="HydroCrank piston sealing detail" class="zoomable">
+                    <img src="Report_Figure24_WoodenEnclosure.png" alt="Figure 24 Wooden Enclosure" class="zoomable">
                     <div class="caption">
-                        <h4>Piston and Seal Detail</h4>
-                        <p>Flex Seal coating was applied to help compensate for printed porosity and improve short term water sealing during testing.</p>
+                        <h4>Figure 24: Wooden Enclosure</h4>
+                        <p>A fully enclosed wooden housing surrounds the mechanical and electrical systems, protecting users from accidental contact with moving components while also providing electrical insulation, reducing exposure to dust and debris, and offering sound dampening benefits.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="testing">
-            <h2>Testing and Outcome</h2>
+            <h2>Testing and Performance</h2>
             <p>
-                Full range of motion testing confirmed that the mechanism could cycle through the intended stroke without locking at toggle positions. The prototype demonstrated the overall pumping concept, validated the mechanical layout, and showed that the required user input stayed within a realistic manual operating range.
+                Variables tested included force, RPM, head design, surface finish, time, and temperature. The testing setup used a triple spring setup connected to the grinding base. This allowed displacement to be measured and the amount of force applied to be calculated. This setup was used to determine the best speed to apply into the matcha mill.
             </p>
             <p>
-                Testing also made the current limitations clear. Friction at the piston and seal interface remained one of the main issues, especially at low speed, and future iterations would benefit from more radial clearance and improved sealing tolerance. Even with those limitations, the HydroCrank successfully demonstrated how a compact, human powered linkage can be used to drive a pump through a full printed prototype.
+                Testing confirmed that the target particle size range of 5-10 microns was achieved. The optimal configuration was 15 kg of applied force, a total grind time of 3 minutes, 1-minute intervals with bowl tapping between cycles, and a speed of 120 RPM. My main contribution in this phase was testing the machine and using the results to guide refinement of the final design and assembly.
             </p>
 
-            <img src="HydroCrank_Operation.gif" alt="HydroCrank operation gif" class="full-width-image zoomable">
+            <div class="figure-grid">
+                <div class="figure-card large">
+                    <img src="Presentation_Assembly.png" alt="Presentation Assembly" class="zoomable">
+                    <div class="caption">
+                        <h4>Presentation: Assembly</h4>
+                        <p>Key components include the thrust bearing assembly, base lifting mechanism, and power transmission.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Report_Figure15_ManualMillTestingSetup.png" alt="Figure 15 Manual Mill Testing Setup" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 15: Manual Mill Testing Setup</h4>
+                        <p>The setup above shows the testing setup used to determine which force, RPM, and time needed to grind down to particle size.</p>
+                    </div>
+                </div>
+                <div class="figure-card large">
+                    <img src="Report_Figure18_RPMVsParticleSize.png" alt="Figure 18 RPM vs Average Particle Size" class="zoomable">
+                    <div class="caption">
+                        <h4>Figure 18: RPM vs. Average Particle Size</h4>
+                        <p>The grinding head RPM versus the corresponding average particle size showed that 120 RPM was the lowest usable RPM that provided the most optimal results.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>
+                The Matcha Mill project successfully demonstrates the feasibility of producing fresh, cafe-quality matcha on demand through a compact, user-focused mechanical system. Performance testing confirmed that the machine consistently achieves the target particle size range of 5-10 micrometers while maintaining a controlled temperature rise below 2 degrees Celsius per grinding cycle.
+            </p>
+            <p>
+                Experimental results showed 120 RPM, 15 kg of applied force, and a 3-minute total grind time using interval-based systems as the optimal configuration for balancing grinding efficiency, mechanical reliability, and uniform particles. From a usability standpoint, the Matcha Mill meets its design goal of being easy to use for baristas, requiring minimal training and integrating into typical coffee shop workflows.
+            </p>
         </section>
 
     </div>
