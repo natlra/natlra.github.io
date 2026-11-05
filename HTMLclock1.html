@@ -1,137 +1,260 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Clock Project</title>
-    <style>
-        /* General Reset */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clock Project</title>
+<style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html,
         body {
+            min-height: 100%;
             font-family: Arial, sans-serif;
             color: #fff;
-            background-color: #000;
-            line-height: 1.6;
-            font-size: 1.1em;
-            text-align: center;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        header {
-            background-color: #808080;
-            padding: 10px;
-            color: #fff;
-        }
-
-        /* Paragraph font size adjustment */
-        p {
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-
-        /* Styling for images in sections */
-        .image-container {
+        body {
             position: relative;
-            margin: 20px 0;
-            border: 3px solid #fff;  /* Small border between images */
-            max-width: 100%;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+            background-color: #111;
         }
 
-        img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        /* Overlay content styling */
-        .overlay {
-            position: absolute;
+        .background-image {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(32%);
+        }
+
+        .sticky-header {
+            background-color: rgba(0, 0, 0, 0.85);
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-            color: white;
-            opacity: 0;
-            overflow: hidden; /* Prevents text from overflowing before hover */
-            transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out; /* Smooth transition for opacity and height */
-            height: 100%; /* Ensure the overlay can expand */
+            text-align: center;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* Hover effect to reveal paragraph over images */
-        .image-container:hover .overlay {
-            opacity: 1;
-            height: auto; /* Allow overlay to expand with the content */
+        .sticky-header h1 {
+            font-size: 2.4em;
+            margin-bottom: 8px;
         }
 
-        .overlay h2 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
+        .sticky-header p {
+            color: #d3d3d3;
+            font-size: 1em;
         }
 
-        .overlay p {
-            font-size: 1.2em;
+        .sub-nav {
+            margin-top: 12px;
         }
 
-        /* Styling for sections */
+        .sub-nav a {
+            color: #d3d3d3;
+            margin: 0 12px;
+            text-decoration: none;
+            font-size: 0.95em;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sub-nav a:hover {
+            border-bottom: 1px solid #d3d3d3;
+            color: #fff;
+        }
+
+        .content {
+            margin: 30px auto 50px auto;
+            width: 90%;
+            max-width: 1050px;
+        }
+
         section {
-            padding: 20px;
-            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.72);
+            padding: 24px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
         }
 
         section h2 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
+            font-size: 1.7em;
+            margin-bottom: 14px;
+            color: #d3d3d3;
+            border-bottom: 2px solid #808080;
+            padding-bottom: 6px;
         }
 
-        section ul {
-            list-style-type: disc;
-            margin-left: 20px;
+        section p {
+            line-height: 1.75;
+            text-align: justify;
+            margin-bottom: 16px;
+        }
+
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .figure-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .figure-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
+            display: block;
+            cursor: zoom-in;
+            padding: 10px;
+        }
+
+        .figure-card.large img {
+            height: 320px;
+        }
+
+        .figure-card .caption {
+            padding: 12px 14px 14px 14px;
+        }
+
+        .figure-card .caption h4 {
+            font-size: 1em;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .figure-card .caption p {
+            font-size: 0.95em;
+            margin-bottom: 0;
+            color: #d9d9d9;
+            text-align: left;
+            line-height: 1.55;
+        }
+
+        .full-width-image {
+            width: 100%;
+            max-width: 900px;
+            display: block;
+            margin: 18px auto 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.45);
+            cursor: zoom-in;
+            padding: 10px;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 30px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            background-color: #111;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            line-height: 1;
         }
 
         footer {
-            padding: 20px;
-            background-color: #333;
-            color: white;
             text-align: center;
+            color: #d3d3d3;
+            padding: 20px 0 35px 0;
         }
-    </style>
+
+        @media (max-width: 700px) {
+            .sticky-header h1 {
+                font-size: 1.95em;
+            }
+
+            .sub-nav a {
+                display: inline-block;
+                margin: 6px 8px;
+            }
+
+            .figure-card img,
+            .figure-card.large img {
+                height: 220px;
+            }
+        }
+    
+        section h3 { color: #d3d3d3; font-size: 1.2em; margin: 24px 0 12px; }
+        section ul { padding-left: 24px; margin: 0 0 18px; line-height: 1.75; }
+        .figure-grid { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+        .lightbox-close { background: none; border: 0; }
+        @media (max-width: 700px) {
+            section { padding: 18px; }
+            section p { text-align: left; }
+        }
+</style>
 </head>
 <body>
-
-    <header>
-        <h1>2023 Clock Project</h1>
-        <p>Exploring the Art of Precision Machining</p>
-    </header>
-
-    <!-- Section 1 with image and overlay (Project Overview & About) -->
-    <section>
-        <div class="image-container">
-            <img src="PXL_clock1.1.jpg" alt="clock1">
-            <div class="overlay">
-                <h2>Project Overview</h2>
+<div class="background-image"><img src="PXL_clock1.1.jpg" alt=""></div>
+<header class="sticky-header">
+<h1>2023 Clock Project</h1>
+<p>Exploring the Art of Precision Machining</p>
+<nav class="sub-nav" aria-label="Project sections">
+<a href="#overview">Overview</a>
+<a href="#manufacturing">Manufacturing</a>
+<a href="#costs">Costs and Outcome</a>
+</nav>
+</header>
+<main class="content">
+<section id="overview">
+<h2>Project Overview</h2>
                 <p>This page provides an overview of the Clock Project, an exciting initiative focused on learning the basic controls of manual lathes and mills.</p>
-                <h2>About</h2>
+                <h3>About</h3>
                 <p>The Clock Project is arguably the most challenging project in Mech 200. This project consists of producing four different parts that go together to build a clock. The clock is made up of an aluminum base, a brass pen/pencil holder, a steel pen/pencil holder, a plastic clock face, and the clock assembly. Each piece is manufactured with very tight dimension tolerances and requires careful planning.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 2 with image and overlay (Features & Cost Estimate) -->
-    <section>
-        <div class="image-container">
-            <img src="PXL_clock2.1.jpg" alt="clock2">
-            <div class="overlay">
-                <h2>Features</h2>
+<div class="figure-grid"><div class="figure-card large"><img class="zoomable" src="PXL_clock1.1.jpg" alt="Completed clock and pen holder assembly" tabindex="0" role="button" aria-label="Enlarge: Completed clock and pen holder assembly"></div></div>
+</section>
+<section id="manufacturing">
+<h2>Manufacturing and Cost Estimate</h2>
                 <p>Each clock part has to be manufactured with the correct machine and tooling. Some of these include:</p>
                 <ul>
                     <li>Pen/Pencil Holders: Manual Lathe</li>
@@ -139,7 +262,7 @@
                     <li>Plastic Face: Bandsaw</li>
                     <li>Finishing touches: Tumbler and Bead Blaster</li>
                 </ul>
-                <h2>Cost Estimate</h2>
+                <h3>Cost Estimate</h3>
                 <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes. A detailed cost estimate ensures effective project budgeting and resource allocation.</p>
                 <ul>
                     <li>Aluminum Raw Stock: $10.27</li>
@@ -150,16 +273,10 @@
                     <li>Labor Cost: $24.77 x ~22 hours = $544.94</li>
                     <li>Total Individual Clock Cost: $572.41</li>
                 </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 3 with image and overlay (Reducing Costs & Final Comments) -->
-    <section>
-        <div class="image-container">
-            <img src="PXL_clock3.1.jpg" alt="clock3">
-            <div class="overlay">
-                <h2>Reducing Manufacturing Costs</h2>
+<div class="figure-grid"><div class="figure-card large"><img class="zoomable" src="PXL_clock2.1.jpg" alt="Clock components and machined details" tabindex="0" role="button" aria-label="Enlarge: Clock components and machined details"></div></div>
+</section>
+<section id="costs">
+<h2>Manufacturing Costs and Outcome</h2>
                 <p>Efficient manufacturing practices can help reduce costs. Consider the following strategies when manufacturing these clocks at a large scale:</p>
                 <ul>
                     <li>Utilization of CNC machining.</li>
@@ -167,7 +284,7 @@
                     <li>Buy bulk raw stock to reduce individual material cost.</li>
                     <li>Match demand curve with supply.</li>
                 </ul>
-                <h2>Cost Estimate for 10,000 Units</h2>
+                <h3>Cost Estimate for 10,000 Units</h3>
                 <p>Producing the clock parts involves costs associated with materials, machine time, and finishing processes.</p>
                 <ul>
                     <li>Material Cost Reduces ~10% when buying bulk</li>
@@ -178,12 +295,62 @@
                     <li>One Time Cost; CNC G-code: $68.70</li>
                     <li>Total Cost to Manufacture 10,000 clocks: $866,686.70</li>
                 </ul>
-                <h2>Other Comments</h2>
+                <h3>Other Comments</h3>
                 <p>The clock was a very challenging project that put my manufacturing abilities to the test. My only issue with this project is that it is extremely difficult to operate machines with such precision with no prior experience. This project forced me to concentrate on every single movement on the machine and helped me understand how to achieve such precision and accuracy while using manual machinery.</p>
-            </div>
-        </div>
-    </section>
+<div class="figure-grid"><div class="figure-card large"><img class="zoomable" src="PXL_clock3.1.jpg" alt="Additional view of the finished clock project" tabindex="0" role="button" aria-label="Enlarge: Additional view of the finished clock project"></div></div>
+</section>
+</main>
+<footer><p>Thank you for reading.</p></footer>
+<div class="lightbox" id="lightbox">
+<button class="lightbox-close" id="lightboxClose" aria-label="Close expanded image">&times;</button>
+<img id="lightboxImage" alt="Expanded image">
+</div>
+<script>
+        document.querySelectorAll('.sub-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
 
-    
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight - 10;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.zoomable').forEach(img => {
+            img.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+            });
+            img.addEventListener('click', function () {
+                lightboxImage.src = this.src;
+                lightboxImage.alt = this.alt;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', function () {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
