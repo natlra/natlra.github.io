@@ -279,7 +279,54 @@
                 height: 220px;
             }
         }
-    </style>
+    
+        /* Distinct summary banner, section tabs, and 2048-style home control. */
+        header.project-header {
+            background: rgba(17,17,17,.96); color: #fff; text-align: center;
+            width: 100%; padding: 20px; margin: 0; box-sizing: border-box;
+            position: sticky; top: 0; z-index: 20; box-shadow: 0 4px 6px #0008;
+            font-family: Arial, sans-serif;
+        }
+        header.project-header h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin: 0 0 12px; line-height: 1.2; }
+        header.project-header .sub-nav {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+            margin: 0; padding: 12px 0 0; border-top: 1px solid #ffffff26;
+        }
+        header.project-header .sub-nav a {
+            display: inline-block; color: #e8e8e8; background: #292929;
+            border: 1px solid #555; border-radius: 6px; margin: 0;
+            padding: 8px 14px; font-size: .9rem; line-height: 1.35; text-decoration: none;
+            transition: background-color .2s, border-color .2s;
+        }
+        header.project-header .sub-nav a:hover { background: #424242; border-color: #aaa; color: #fff; }
+        .project-summary {
+            box-sizing: border-box; display: block; width: 90%; max-width: 1050px;
+            margin: 26px auto 0; padding: 18px 24px; text-align: left;
+            background: linear-gradient(110deg, rgba(var(--summary-tint),.97), rgba(20,20,20,.96));
+            border: 1px solid var(--summary-accent); border-left: 5px solid var(--summary-accent);
+            border-radius: 10px; box-shadow: 0 6px 16px #0004; font-family: Arial, sans-serif;
+        }
+        .project-summary .summary-label {
+            display: block; color: var(--summary-accent); font-size: .72rem;
+            font-weight: bold; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px;
+        }
+        .project-summary p { color: #fff; margin: 0; font-size: 1.1rem; line-height: 1.6; text-align: left; }
+        .back-to-home {
+            position: fixed; bottom: 20px; left: 20px; padding: 10px 20px;
+            background-color: #3498db; color: white; border: none; border-radius: 5px;
+            font-family: Arial, sans-serif; font-size: 16px; line-height: normal;
+            text-decoration: none; cursor: pointer; transition: background-color .3s ease; z-index: 100;
+        }
+        .back-to-home:hover { background-color: #2980b9; }
+        .back-to-home:focus-visible, .sub-nav a:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+        body { padding-bottom: 80px; }
+        @media (max-width: 700px) {
+            header.project-header { padding: 14px 12px; }
+            header.project-header .sub-nav a { padding: 7px 10px; font-size: .82rem; }
+            .project-summary { padding: 16px 18px; margin-top: 18px; }
+        }
+
+</style>
 </head>
 <body>
 
@@ -287,18 +334,21 @@
         <img src="Figure01_FinalSafeClosed.jpeg" alt="Final safe closed background image">
     </div>
 
-    <header class="sticky-header">
-        <h1>Mechatronics Project - Code and Fingerprint Safe</h1>
-        <p>Design, prototyping, assembly, testing, and system integration for a multi-input electromechanical safe</p>
-        <div class="sub-nav">
+    <header class="sticky-header project-header">
+<h1>Mechatronics Project - Code and Fingerprint Safe</h1>
+<nav class="sub-nav" aria-label="Page sections">
             <a href="#overview">Overview</a>
             <a href="#role">My Role</a>
             <a href="#electronics">Electronics</a>
             <a href="#mechanical">Mechanical Design</a>
             <a href="#lessons">Lessons Learned</a>
             <a href="#parts-index">Parts Index</a>
-        </div>
-    </header>
+        </nav>
+</header>
+<aside class="project-summary" style="--summary-accent: #c4b1ff; --summary-tint: 48,34,79;" aria-label="Page description">
+<span class="summary-label">Project summary</span>
+<p>Design, prototyping, assembly, testing, and system integration for a multi-input electromechanical safe</p>
+</aside>
 
     <div class="content">
 
@@ -651,5 +701,6 @@
             }
         });
     </script>
+<a class="back-to-home" href="index.html">Back to Home</a>
 </body>
 </html>
