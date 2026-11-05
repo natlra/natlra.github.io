@@ -92,7 +92,25 @@
         .tab-content.active {
             display: block;
         }
-    </style>
+    
+        * { box-sizing: border-box; }
+        body { min-height: 100vh; height: auto; }
+        .controls { flex-wrap: wrap; justify-content: flex-start; gap: 18px; }
+        .controls label { display: block; margin: 0 0 10px; }
+        .controls input { width: 240px; max-width: 100%; accent-color: #55c8ff; }
+        canvas { width: min(100%, 540px); height: auto; border-radius: 12px; background: #142637; }
+        .readout { line-height: 1.8; margin: 0 0 16px; color: #d4f5ff; }
+        .model-note { max-width: 680px; line-height: 1.6; color: #d4dfe8; }
+        .actions { display: flex; gap: 12px; margin-top: 16px; }
+        button { background: #167d88; color: white; padding: 10px 18px; border: 1px solid #83d6df; border-radius: 6px; cursor: pointer; }
+        button:focus-visible, input:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+        @media (max-width: 720px) {
+            body { display: block; }
+            .navbar { position: static; width: 100%; height: auto; }
+            .content { margin-left: 0; width: 100%; }
+            h1 { font-size: 28px; }
+        }
+</style>
 </head>
 <body>
     <div class="navbar">
@@ -111,109 +129,175 @@
             <div class="controls">
                 <div>
                     <label for="temperature">Temperature (°C): <span id="tempValue">20</span></label>
-                    <input type="range" id="temperature" min="20" max="150" value="20">
+                    <input type="range" id="temperature" min="0" max="150" step="0.1" value="20">
                 </div>
                 <div>
                     <label for="pressure">Pressure (atm): <span id="pressureValue">1</span></label>
                     <input type="range" id="pressure" min="0.5" max="2" step="0.1" value="1">
                 </div>
             </div>
-            <canvas id="simulationCanvas" width="500" height="500"></canvas>
+            
+<div class="readout">
+<strong>10× playback</strong> · <span id="phaseValue"></span><br>
+Model time: <span id="clockValue">0.0 s</span> · Solid settling: <span id="freezeValue">0%</span><br>
+Estimated boiling point: <span id="boilingValue"></span>
+</div>
+<canvas id="simulationCanvas" width="500" height="500" role="img" aria-label="Animated particles showing water cooling, freezing, and heating"></canvas>
+<div class="actions"><button id="pauseButton" aria-pressed="false">Pause</button><button id="resetButton">Reset particles</button></div>
+<p class="model-note">Drag temperature down to 0°C and hold it there to watch motion gradually settle; warm it again to release the particles. Blue: liquid · pale blue: ice · orange: vapor.</p>
+<p class="model-note">Illustrative particle model: 1 second of playback advances 10 seconds of model time. Distances and molecular speeds are scaled for visibility, and freezing time is illustrative. At 0°C, particles become confined with tiny vibrations; real molecules do not stop moving. The simplified freezing transition uses 0°C throughout this pressure range; pressure adjusts the estimated boiling point.</p>
+
         </div>
     </div>
 
     <script>
-        const canvas = document.getElementById('simulationCanvas');
-        const ctx = canvas.getContext('2d');
-        const temperatureSlider = document.getElementById('temperature');
-        const pressureSlider = document.getElementById('pressure');
-        const tempValue = document.getElementById('tempValue');
-        const pressureValue = document.getElementById('pressureValue');
-
-        const numParticles = 100;  // Number of water particles
-        const particles = [];
-        const containerWidth = canvas.width;
-        const containerHeight = canvas.height;
-
-        // Constants for Clausius-Clapeyron Relation
-        const R = 8.314;  // J/mol·K (Universal gas constant)
-        const deltaHvap = 40790;  // J/mol (Heat of vaporization for water)
-        const T1 = 373.15;  // Boiling point at 1 atm in Kelvin (100°C)
-
-        // Create the water particles
-        for (let i = 0; i < numParticles; i++) {
-            particles.push({
-                x: Math.random() * containerWidth,
-                y: Math.random() * containerHeight,
-                vx: (Math.random() - 0.5) * 2,
-                vy: (Math.random() - 0.5) * 2,
-                size: 5,
-                isMovingFast: false
-            });
+const canvas = document.getElementById('simulationCanvas');
+const ctx = canvas.getContext('2d');
+const temperatureSlider = document.getElementById('temperature');
+const pressureSlider = document.getElementById('pressure');
+const tempValue = document.getElementById('tempValue');
+const pressureValue = document.getElementById('pressureValue');
+const phaseValue = document.getElementById('phaseValue');
+const clockValue = document.getElementById('clockValue');
+const freezeValue = document.getElementById('freezeValue');
+const SPEED = 10;
+const STEP = 1 / 120; // Model seconds; independent of display refresh rate.
+const RADIUS = 5;
+const particles = [];
+let elapsed = 0, accumulator = 0, previousTime = null, solid = 0, paused = false;
+const clamp = (x, low, high) => Math.max(low, Math.min(high, x));
+function gaussian() {
+    return Math.sqrt(-2 * Math.log(Math.max(1e-12, Math.random()))) * Math.cos(2 * Math.PI * Math.random());
+}
+function boilingPoint(pressure) {
+    return 1 / (1 / 373.15 - 8.314 * Math.log(pressure) / 40790) - 273.15;
+}
+function reset() {
+    particles.length = 0;
+    solid = 0;
+    elapsed = 0;
+    accumulator = 0;
+    previousTime = null;
+    // Spaced, slightly jittered starting positions avoid initial overlaps.
+    for (let i = 0; i < 100; i++) {
+        const x = 34 + (i % 10) * 48 + (Math.random() - 0.5) * 12;
+        const y = 34 + Math.floor(i / 10) * 48 + (Math.random() - 0.5) * 12;
+        particles.push({x, y, vx: gaussian() * 6, vy: gaussian() * 6,
+            anchorX: x, anchorY: y, phase: Math.random() * Math.PI * 2});
+    }
+    updateLabels();
+    draw();
+}
+function updateLabels() {
+    const temp = Number(temperatureSlider.value);
+    const pressure = Number(pressureSlider.value);
+    tempValue.textContent = temp.toFixed(1);
+    pressureValue.textContent = pressure.toFixed(1);
+    temperatureSlider.setAttribute('aria-valuetext', temp.toFixed(1) + ' degrees Celsius');
+    phaseValue.textContent = temp === 0 ? (solid > 0.98 ? 'Ice · small vibrations' : 'Freezing · motion settling')
+        : solid > 0.02 ? 'Melting' : temp >= boilingPoint(pressure) ? 'Vapor' : 'Liquid';
+    document.getElementById('boilingValue').textContent = boilingPoint(pressure).toFixed(1) + ' °C';
+    clockValue.textContent = elapsed.toFixed(1) + ' s';
+    freezeValue.textContent = Math.round(solid * 100) + '%';
+}
+function step(dt) {
+    const temp = Number(temperatureSlider.value);
+    const gas = temp >= boilingPoint(Number(pressureSlider.value));
+    const freezing = temp === 0;
+    const oldSolid = solid;
+    solid += ((freezing ? 1 : 0) - solid) * (1 - Math.exp(-dt / (freezing ? 12 : 8)));
+    if (freezing && oldSolid < 0.001) {
+        particles.forEach(p => { p.anchorX = p.x; p.anchorY = p.y; });
+    }
+    // Kelvin sets thermal energy. Mobility changes at freezing, not a false 0 K at 0 °C.
+    const mobility = Math.pow(1 - solid, 2);
+    const sigma = (gas ? 15 : 6) * Math.sqrt((temp + 273.15) / 293.15) * mobility;
+    const damping = gas ? 0.65 : 2.4;
+    const decay = Math.exp(-damping * dt);
+    const noise = sigma * Math.sqrt(1 - decay * decay);
+    for (const p of particles) {
+        p.vx = p.vx * decay + gaussian() * noise;
+        p.vy = p.vy * decay + gaussian() * noise;
+        // Soft restoring forces immobilize the solid gradually without teleporting particles.
+        p.vx += (p.anchorX - p.x) * solid * 8 * dt;
+        p.vy += (p.anchorY - p.y) * solid * 8 * dt;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+    }
+    // Equal-mass elastic contacts: exchange only approaching normal velocities.
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const a = particles[i], b = particles[j];
+            let dx = b.x - a.x, dy = b.y - a.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance >= RADIUS * 2) continue;
+            const nx = distance > 1e-9 ? dx / distance : 1;
+            const ny = distance > 1e-9 ? dy / distance : 0;
+            const correction = (RADIUS * 2 - distance) / 2;
+            a.x -= nx * correction; a.y -= ny * correction;
+            b.x += nx * correction; b.y += ny * correction;
+            const relative = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+            if (relative < 0) {
+                a.vx += relative * nx; a.vy += relative * ny;
+                b.vx -= relative * nx; b.vy -= relative * ny;
+            }
         }
-
-        // Function to calculate the boiling point using the Clausius–Clapeyron relation
-        function calculateBoilingPoint(pressure) {
-            // T2 is in Kelvin
-            const T2 = 1 / ((Math.log(pressure / 1) * -R) / deltaHvap + 1 / T1);
-            return T2 - 273.15;  // Convert from Kelvin to Celsius
-        }
-
-        // Update particle positions
-        function updateParticles(temp, pressure) {
-            const boilingPoint = calculateBoilingPoint(pressure);
-            const isBoiling = temp >= boilingPoint;
-
-            particles.forEach(particle => {
-                if (isBoiling) {
-                    // Boiling: Increase particle velocity for fast movement
-                    particle.vx += (Math.random() - 0.5) * 0.5;
-                    particle.vy += (Math.random() - 0.5) * 0.5;
-                    particle.isMovingFast = true;
-                } else {
-                    // Non-boiling: Small random movement
-                    particle.vx += (Math.random() - 0.5) * 0.1;
-                    particle.vy += (Math.random() - 0.5) * 0.1;
-                    particle.isMovingFast = false;
-                }
-
-                // Update position
-                particle.x += particle.vx;
-                particle.y += particle.vy;
-
-                // Bounce particles off the walls of the container
-                if (particle.x <= 0 || particle.x >= containerWidth) particle.vx = -particle.vx;
-                if (particle.y <= 0 || particle.y >= containerHeight) particle.vy = -particle.vy;
-            });
-        }
-
-        // Draw the particles
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-
-            particles.forEach(particle => {
-                ctx.beginPath();
-                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                ctx.fillStyle = particle.isMovingFast ? '#e74c3c' : '#3498db'; // Fast particles in red, slow in blue
-                ctx.fill();
-            });
-        }
-
-        // Update simulation based on temperature and pressure
-        function updateSimulation() {
-            const temperature = parseInt(temperatureSlider.value);
-            const pressure = parseFloat(pressureSlider.value);
-
-            tempValue.textContent = temperature;
-            pressureValue.textContent = pressure.toFixed(1);
-
-            updateParticles(temperature, pressure);
-            drawParticles();
-            requestAnimationFrame(updateSimulation);
-        }
-
-        // Start the simulation
-        updateSimulation();
-    </script>
+    }
+    for (const p of particles) {
+        if (p.x < RADIUS) { p.x = RADIUS; p.vx = Math.abs(p.vx); }
+        if (p.x > canvas.width - RADIUS) { p.x = canvas.width - RADIUS; p.vx = -Math.abs(p.vx); }
+        if (p.y < RADIUS) { p.y = RADIUS; p.vy = Math.abs(p.vy); }
+        if (p.y > canvas.height - RADIUS) { p.y = canvas.height - RADIUS; p.vy = -Math.abs(p.vy); }
+    }
+    elapsed += dt;
+}
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const gas = Number(temperatureSlider.value) >= boilingPoint(Number(pressureSlider.value));
+    for (const p of particles) {
+        // Tiny solid-state vibration remains visible; translation has settled.
+        const x = clamp(p.x + solid * 0.35 * Math.sin(elapsed * 2 + p.phase), RADIUS, canvas.width - RADIUS);
+        const y = clamp(p.y + solid * 0.35 * Math.cos(elapsed * 2.3 + p.phase), RADIUS, canvas.height - RADIUS);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - p.vx * 0.25, y - p.vy * 0.25);
+        ctx.strokeStyle = gas ? 'rgba(255,170,105,0.45)' : 'rgba(96,205,255,0.4)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = solid > 0.5 ? '#d4f5ff' : gas ? '#ffad75' : '#55c8ff';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x - 1.5, y - 1.5, 1.3, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffffaa';
+        ctx.fill();
+    }
+}
+function frame(now) {
+    if (previousTime === null) previousTime = now;
+    // Discard long background-tab gaps rather than catching up invisibly.
+    const wallDt = Math.min((now - previousTime) / 1000, 0.1);
+    previousTime = now;
+    if (!paused) {
+        accumulator += wallDt * SPEED;
+        while (accumulator + 1e-12 >= STEP) { step(STEP); accumulator -= STEP; }
+    }
+    draw();
+    updateLabels();
+    requestAnimationFrame(frame);
+}
+temperatureSlider.addEventListener('input', updateLabels);
+pressureSlider.addEventListener('input', updateLabels);
+document.getElementById('pauseButton').addEventListener('click', function () {
+    paused = !paused;
+    this.textContent = paused ? 'Resume' : 'Pause';
+    this.setAttribute('aria-pressed', String(paused));
+});
+document.getElementById('resetButton').addEventListener('click', reset);
+document.addEventListener('visibilitychange', () => { previousTime = null; accumulator = 0; });
+reset();
+requestAnimationFrame(frame);
+</script>
 </body>
 </html>
