@@ -120,31 +120,30 @@
             transition: background-color .2s, border-color .2s;
         }
         header.project-header .sub-nav a:hover { background: #424242; border-color: #aaa; color: #fff; }
-        .project-summary {
-            box-sizing: border-box; display: block; width: 90%; max-width: 1050px;
-            margin: 26px auto 0; padding: 18px 24px; text-align: left;
-            background: linear-gradient(110deg, rgba(var(--summary-tint),.97), rgba(20,20,20,.96));
-            border: 1px solid var(--summary-accent); border-left: 5px solid var(--summary-accent);
-            border-radius: 10px; box-shadow: 0 6px 16px #0004; font-family: Arial, sans-serif;
+
+        header.project-header .project-summary {
+            display: block; width: 100%; max-width: 1050px; box-sizing: border-box;
+            margin: 0 auto 14px; padding: 12px 18px;
+            background: #262626; border: 0; border-left: 3px solid #aaa;
+            border-radius: 0; box-shadow: none; text-align: center;
         }
-        .project-summary .summary-label {
-            display: block; color: var(--summary-accent); font-size: .72rem;
-            font-weight: bold; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px;
+        header.project-header .project-summary p {
+            color: #e0e0e0; margin: 0; font-size: 1rem; line-height: 1.5;
+            font-weight: normal; text-align: center;
         }
-        .project-summary p { color: #fff; margin: 0; font-size: 1.1rem; line-height: 1.6; text-align: left; }
         .back-to-home {
             position: fixed; bottom: 20px; left: 20px; padding: 10px 20px;
-            background-color: #3498db; color: white; border: none; border-radius: 5px;
+            background-color: #555555; color: white; border: none; border-radius: 5px;
             font-family: Arial, sans-serif; font-size: 16px; line-height: normal;
             text-decoration: none; cursor: pointer; transition: background-color .3s ease; z-index: 100;
         }
-        .back-to-home:hover { background-color: #2980b9; }
+        .back-to-home:hover { background-color: #707070; }
         .back-to-home:focus-visible, .sub-nav a:focus-visible { outline: 3px solid white; outline-offset: 3px; }
         body { padding-bottom: 80px; }
         @media (max-width: 700px) {
             header.project-header { padding: 14px 12px; }
             header.project-header .sub-nav a { padding: 7px 10px; font-size: .82rem; }
-            .project-summary { padding: 16px 18px; margin-top: 18px; }
+            header.project-header .project-summary { padding: 10px 12px; margin: 0 auto 12px; }
         }
 
 </style>
@@ -152,6 +151,7 @@
 <body>
     <header class="sticky-header project-header">
 <h1>2023 Screwdriver Project</h1>
+<div class="project-summary" aria-label="Page description"><p>Heat and Manufacturing</p></div>
 <nav class="sub-nav" aria-label="Page sections"><a href="#project-section-1">Project Overview</a>
 <a href="#project-section-2">About This Project</a>
 <a href="#project-section-3">Cost Estimate</a>
@@ -160,10 +160,7 @@
 <a href="#project-section-6">Other Comments</a>
 </nav>
 </header>
-<aside class="project-summary" style="--summary-accent: #ffac8c; --summary-tint: 79,39,29;" aria-label="Page description">
-<span class="summary-label">Project summary</span>
-<p>Heat and Manufacturing</p>
-</aside>
+
 
     <!-- Section 1 with image background -->
     <section id="project-section-1" class="section-1">
